@@ -8,12 +8,20 @@ namespace Gruvo.Models
 {
     public class UserInfo
     {
-        public int Id { get; set; }
-        public string Login { get; set; }
-        [DataType(DataType.Password)] 
+        public long Id { get; set; }
+        public string Login { get; set; }        
         public string Password { get; set; }
-        [DataType(DataType.EmailAddress)] 
         public string Email { get; set; }
-        public string ProfileDesc { get; set; }
+       // public string About { get; set; }
+        public DateTime RegDateTime { get; set; }
+       // public DateTime Bday { get; set; }
+
+        public UserInfo(long id, string login, string email, DateTime regDateTime)
+        {
+            this.Id = id;
+            this.Login = login;
+            this.Email = email;
+            this.RegDateTime = regDateTime;
+        }
     }
 }
