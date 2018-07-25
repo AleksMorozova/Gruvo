@@ -128,5 +128,36 @@ namespace Gruvo.DAL
             return list;
         }
 
+        public IEnumerable<Post> GetUserPosts(long id)
+        {
+            List<Post> list = new List<Post>();
+            try
+            {
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+
+                command.CommandText = @"select * from posts where userid = @id";
+                command.Parameters.Add("@id", SqlDbType.BigInt);
+                command.Parameters["@id"].Value = id;
+
+                using (SqlDataReader dataReader = command.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        list.Add(new Post((long)dataReader["Postid"], (long)dataReader["userid"], (string)dataReader["message"], (DateTime)dataReader["postdate"]));
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return list;
+        }
     }
 }
