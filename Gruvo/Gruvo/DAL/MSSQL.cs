@@ -14,7 +14,6 @@ namespace Gruvo.DAL
             connection = new SqlConnection(connectionString);
             userDAO = new MSSQLUserDAO(connection);
             postDAO = new MSSQLPostDAO(connection);
-           // subsDAO = new MSSQLSubsDAO(connection);
         }
     }
 }

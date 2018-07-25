@@ -10,10 +10,8 @@ namespace Gruvo.DAL
     {
         protected IUserDAO userDAO;
         protected IPostDAO postDAO;
-        protected ISubs subsDAO;
 
         public IUserDAO UserDAO { get { return userDAO; } }
         public IPostDAO PostDAO { get { return postDAO; } }
-       // public ISubs SubstDAO { get { return subsDAO; } }
     }
 }

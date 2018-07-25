@@ -45,7 +45,6 @@ namespace Gruvo.DAL
             }
         }
 
-        //marked void -> bool
         public void DeleteUser(int id)
         {
             try
@@ -71,7 +70,6 @@ namespace Gruvo.DAL
             }
         }
 
-        //marked void -> bool
         public void DeleteUser(string login)
         {
             try
@@ -96,7 +94,6 @@ namespace Gruvo.DAL
             }
         }
 
-        //marked null or throw Exception
         public UserInfo GetUser(int id)
         {
             UserInfo user = null;
@@ -127,7 +124,6 @@ namespace Gruvo.DAL
             return user;
         }
 
-        //marked null or throw Exception
         public UserInfo GetUser(string login)
         {
             UserInfo user = null;
@@ -156,7 +152,6 @@ namespace Gruvo.DAL
             return user;
         }
 
-        //marked null or throw Exception
         public IEnumerable<UserInfo> GetUsers()
         {
             List<UserInfo> list = new List<UserInfo>();
@@ -183,8 +178,7 @@ namespace Gruvo.DAL
             return list;
         }
 
-        //marked void -> bool
-        public void UpdateUser(int id, string login, string password, string email)
+        public void UpdateCredentianals(int id, string login, string password, string email)
         {
             try
             {
@@ -216,7 +210,7 @@ namespace Gruvo.DAL
             }
         }
 
-        public void UpdateUser(int id, string about, DateTime bday)
+        public void UpdateUserInfo(int id, string about, DateTime bday)
         {
             try
             {
@@ -233,6 +227,111 @@ namespace Gruvo.DAL
 
                     command.Parameters.Add("@userid", SqlDbType.BigInt);
                     command.Parameters["@userid"].Value = id;
+
+                    command.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void Subscribe(long userId1, long userId2, DateTime subdate)
+        {
+            try
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = @"insert into subscriptions values (@userid1, @userid2,@subdate)";
+                    command.Parameters.Add("@userid1", SqlDbType.BigInt);
+                    command.Parameters["@userid1"].Value = userId1;
+
+                    command.Parameters.Add("@userid2", SqlDbType.BigInt);
+                    command.Parameters["@userid2"].Value = userId2;
+
+                    command.Parameters.Add("@subdate", SqlDbType.Date);
+                    command.Parameters["@subdate"].Value = subdate;
+
+                    command.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<UserInfo> GetSubscriptions(long id)
+        {
+            List<UserInfo> list = new List<UserInfo>();
+            try
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = @"select userid, login, email, Regdate from users join subscriptions on userid = subscribedid where subscriberid = @userid";
+                    command.Parameters.Add("@userid", SqlDbType.BigInt);
+                    command.Parameters["@userid"].Value = id;
+
+                    using (SqlDataReader dr = command.ExecuteReader())
+                    {
+                        while (dr.Read())
+                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr[".Regdate"]));
+                    }
+                }
+                connection.Close();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return list;
+        }
+
+        public IEnumerable<UserInfo> GetSubscribers(long id)
+        {
+            List<UserInfo> list = new List<UserInfo>();
+            try
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = @"select userid, login, users.email, Regdate from users join subscriptions on userid = subscriberid where subscribedid = @userid";
+                    command.Parameters.Add("@userid", SqlDbType.BigInt);
+                    command.Parameters["@userid"].Value = id;
+
+                    using (SqlDataReader dr = command.ExecuteReader())
+                    {
+                        while (dr.Read())
+                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr["Regdate"]));
+                    }
+                }
+                connection.Close();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return list;
+        }
+
+        public void Unsubscribe(long userId1, long userId2)
+        {
+            try
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = @"delete from subscriptions where subscriberid = @userid1 and subscribedid = @userid2";
+                    command.Parameters.Add("@userid1", SqlDbType.BigInt);
+                    command.Parameters["@userid1"].Value = userId1;
+
+                    command.Parameters.Add("@userid2", SqlDbType.BigInt);
+                    command.Parameters["@userid2"].Value = userId2;
 
                     command.ExecuteNonQuery();
                 }

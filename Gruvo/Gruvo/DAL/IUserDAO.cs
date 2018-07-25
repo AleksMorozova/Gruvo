@@ -14,9 +14,17 @@ namespace Gruvo.DAL
         UserInfo GetUser(int id);
         UserInfo GetUser(string login);
 
-        void UpdateUser(int id, string login, string password, string email);
-        void UpdateUser(int id, string about, DateTime bday);
+        void UpdateCredentianals(int id, string login, string password, string email);
+        void UpdateUserInfo(int id, string about, DateTime bday);
         void DeleteUser(int id);
         void DeleteUser(string login);
+
+        void Subscribe(long userId1, long userId2, DateTime subdate);
+
+        IEnumerable<UserInfo> GetSubscribers(long id);
+        IEnumerable<UserInfo> GetSubscriptions(long id);
+
+        void Unsubscribe(long userid1, long userid2);
+
     }
 }

@@ -41,8 +41,7 @@ namespace Gruvo.DAL
                 connection.Close();
             }
 }
-
-        //marked void -> bool
+        
         public void DeletePost(long id)
         {
             try
@@ -66,7 +65,7 @@ namespace Gruvo.DAL
                 connection.Close();
             }
         }
-        //marked null or throw exceprion
+
         public Post GetPost(long id)
         {
             Post post = null;
@@ -96,7 +95,7 @@ namespace Gruvo.DAL
             }
             return post;
         }
-        //marked null or throw exceprion
+
         public IEnumerable<Post> GetPostsForUser(long id)
         {
             List<Post> list = new List<Post>();
@@ -128,5 +127,6 @@ namespace Gruvo.DAL
             }
             return list;
         }
+
     }
 }
