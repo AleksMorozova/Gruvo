@@ -15,6 +15,9 @@ namespace Gruvo.Models
         public DateTime RegDateTime { get; set; }
         public DateTime Bday { get; set; }
 
+        public IEnumerable<UserInfo> Subscriptions { get; set; }
+        public IEnumerable<UserInfo> Subscribers { get; set; }
+
         public UserInfo(long id, string login, string email, DateTime regDateTime)
         {
             this.Id = id;
