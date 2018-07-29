@@ -5,16 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { LoginPageComponent } from './login-page/login-page.component';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { SignupFormComponent } from './signup-form/signup-form.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginPageComponent,
-    LoginFormComponent,
-    SignupFormComponent
+    AppComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
