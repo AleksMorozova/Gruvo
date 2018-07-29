@@ -5,20 +5,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+
+//import your components and servises here
 
 @NgModule({
   declarations: [
     AppComponent
+    //Put other components here
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: AppComponent, pathMatch: 'full' }
-    ])
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    /*AuthService,
+      AuthGuard*/
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
