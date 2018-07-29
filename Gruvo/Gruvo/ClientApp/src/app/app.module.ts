@@ -5,17 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { ProfileComponent } from './profile/profile.component';
-import { TweetComponent } from './tweet/tweet.component';
-import { MenuComponent } from './menu/menu.component';
-import { ProfileService } from './profile/profile.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ProfileComponent,
-    TweetComponent,
-    MenuComponent
+    AppComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -25,7 +18,7 @@ import { ProfileService } from './profile/profile.service';
       { path: '', component: AppComponent, pathMatch: 'full' }
     ])
   ],
-  providers: [ProfileService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
