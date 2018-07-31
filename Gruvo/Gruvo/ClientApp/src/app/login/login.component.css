@@ -17,19 +17,20 @@
 }
 
 .inner {
-  width: 100%;
   display: flex;
-  justify-content: center;
+  flex-flow: row;
   align-items: center;
   margin-top: 100px;
   margin-bottom: 75px;
+  padding-left: 75px;
+  padding-right: 75px;
 }
 
 a:hover{
   color:green;
 }
 
-.header {
-  display: flex;
-  justify-content: center;
+.login-form{
+  max-width:450px;
+
 }
