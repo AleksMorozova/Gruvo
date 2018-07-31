@@ -9,7 +9,7 @@ namespace Gruvo.Models
     public class UserInfo
     {
         public long Id { get; set; }
-        public string Login { get; set; }        
+        public string Login { get; set; }
         public string Email { get; set; }
         public string About { get; set; }
         public DateTime RegDateTime { get; set; }
@@ -22,7 +22,5 @@ namespace Gruvo.Models
             this.Email = email;
             this.RegDateTime = regDateTime;
         }
-
-
     }
 }
