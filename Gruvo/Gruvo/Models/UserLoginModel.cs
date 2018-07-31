@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gruvo.Models
 {
-    public class UserLogin
+    public class UserLoginModel
     {
         public string Email { get; set; }
         public string Password { get; set; }

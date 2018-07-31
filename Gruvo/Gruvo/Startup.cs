@@ -12,8 +12,9 @@ using System.Text;
 
 namespace Gruvo
 {
+    //TODO: Cookie authentication
     public class Startup
-    {       
+    {
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,10 +33,7 @@ namespace Gruvo
                         ValidateIssuer = false,
                         ValidateAudience = false,
                         ValidateLifetime = false,
-                        RequireExpirationTime = false,
-                        //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("LldkfkgsnASda123As45mAgnkApqweiWi")),
-                        ValidateIssuerSigningKey = true
-                        
+                        RequireExpirationTime = false                        
                     };
                 });
 

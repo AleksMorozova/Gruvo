@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Gruvo.DAL;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Gruvo.Controllers
 {
@@ -20,13 +21,11 @@ namespace Gruvo.Controllers
         public static List<UserInfo> Users = DataBase.UserDAO.GetUsers().ToList();
         public static Dictionary<string, UserInfo> TokenUserPairs = new Dictionary<string, UserInfo>();
 
-        [HttpPost]
-        public IActionResult Login([FromBody]UserLogin user)
+        [HttpPost, Route("login")]
+        public IActionResult Login([FromBody]UserLoginModel user)
         {
             if (user == null)
                 return BadRequest();
-            //var email = Request.Form["email"];
-            //var password = Request.Form["password"];
 
             UserInfo userFromDB = DataBase.UserDAO.GetUserByEmailAndPwd(user.Email, user.Password);
 
@@ -41,7 +40,34 @@ namespace Gruvo.Controllers
 
             TokenUserPairs.Add(token, userFromDB);
 
+            // TODO: Redirect
+
             return Ok(token);
+        }
+
+        [HttpPost, Route("signup")]
+        public IActionResult Register([FromBody]UserSignUpModel user)
+        {
+            if (user == null)
+                return BadRequest();
+
+            try
+            {
+                DataBase.UserDAO.AddUser(user.Login, user.Password, user.Email, DateTime.Now);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            // TODO: Redirect
+
+            return Ok("Success!");
+        }
+
+        [HttpPost, Authorize]
+        public IActionResult TestAuth()
+        {
+            return Ok("Authorized!");
         }
     }
 }

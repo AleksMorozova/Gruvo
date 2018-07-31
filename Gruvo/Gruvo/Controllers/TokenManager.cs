@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Gruvo.DAL;
+using Gruvo.Controllers;
 
 namespace Gruvo.Models
 {
