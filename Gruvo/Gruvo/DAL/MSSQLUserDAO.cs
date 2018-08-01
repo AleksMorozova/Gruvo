@@ -109,7 +109,9 @@ namespace Gruvo.DAL
                 using (SqlDataReader dataReader = command.ExecuteReader())
                 {
                     while (dataReader.Read())
-                    user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]);
+                    {
+                        user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]);
+                    }
                 }
             }
             catch (SqlException ex)
@@ -139,7 +141,41 @@ namespace Gruvo.DAL
                     using (SqlDataReader dataReader = command.ExecuteReader())
                     {
                         while (dataReader.Read())
+                        {
                             user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]);
+                        }
+                    }
+                }
+                connection.Close();
+            }
+
+            catch (Exception)
+            {
+                throw;
+            }
+            return user;
+        }
+
+        public UserInfo GetUserByEmailAndPwd(string email, string password)
+        {
+            UserInfo user = null;
+            try
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = @"select UserId,Login,Email,RegDate from users where Email = @email and Password = @pwd";
+                    command.Parameters.Add("@email", SqlDbType.VarChar);
+                    command.Parameters["@email"].Value = email;
+                    command.Parameters.Add("@pwd", SqlDbType.VarChar);
+                    command.Parameters["@pwd"].Value = password;
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]);
+                        }
                     }
                 }
                 connection.Close();
@@ -280,7 +316,9 @@ namespace Gruvo.DAL
                     using (SqlDataReader dr = command.ExecuteReader())
                     {
                         while (dr.Read())
+                        {
                             list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr[".Regdate"]));
+                        }
                     }
                 }
                 connection.Close();
@@ -307,7 +345,9 @@ namespace Gruvo.DAL
                     using (SqlDataReader dr = command.ExecuteReader())
                     {
                         while (dr.Read())
+                        {
                             list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr["Regdate"]));
+                        }
                     }
                 }
                 connection.Close();
