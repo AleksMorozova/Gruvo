@@ -8,7 +8,4 @@ import { ITweet } from './tweet.model';
 })
 export class TweetComponent  {
   @Input() tweet: ITweet;
-
-  constructor() { }
-
 }

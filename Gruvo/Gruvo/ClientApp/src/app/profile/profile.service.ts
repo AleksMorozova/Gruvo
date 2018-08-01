@@ -11,7 +11,7 @@ export class ProfileService {
       login: 'Tarasoff',
       followers: 159,
       followings: 855,
-      posts: 666,
+      posts: 5,
       about: 'bla bla bla bla bla',
       regDate: new Date(1999, 1, 1)
     };
