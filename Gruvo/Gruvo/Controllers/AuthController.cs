@@ -16,7 +16,34 @@ namespace Gruvo.Controllers
     public class AuthController : ControllerBase
     {
         [HttpPost, Route("login")]
-        public IActionResult Login([FromBody]UserLoginModel user)
+        public async Task<IActionResult> Login([FromBody]UserLoginModel user)
+        {
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            UserInfo userFromDB = AccessDatabase.MsSQL()
+                                                .UserDAO
+                                                .GetUserByEmailAndPwd(user.Email, user.Password);
+            
+            if (userFromDB == null)
+            {
+                return Unauthorized();
+            }
+
+            string token = TokenManager.GenerateToken(userFromDB.Id);
+
+            TokenUserPairs.GetInstance().GetPairs().Add(token, userFromDB);
+            Response.Cookies.Append("Gruvo", token);
+
+            var cookies2 = Request.Cookies.Keys;
+
+            return Ok("Success!");
+        }
+
+        [HttpPost, Route("signup")]
+        public IActionResult Signup([FromBody]UserSignUpModel user)
         {
             try
             {
@@ -25,60 +52,30 @@ namespace Gruvo.Controllers
                     return BadRequest();
                 }
 
-                UserInfo userFromDB = AccessDatabase.MsSQL()
-                                                    .UserDAO
-                                                    .GetUserByEmailAndPwd(user.Email, user.Password);
-
-                if (userFromDB == null)
+                try
                 {
-                    return Unauthorized();
+                    AccessDatabase.MsSQL()
+                                  .UserDAO
+                                  .AddUser(user.Login, user.Password, user.Email, DateTime.Now);
                 }
-
-                var token = TokenManager.GenerateToken(userFromDB.Id);
-                CookieOptions options = new CookieOptions();
-                options.Expires = DateTime.Now.AddDays(1);
-
-                Response.Cookies.Append("gruvo_token", token, options);
-
-                TokenUserPairs.GetInstance().GetPairs().Add(token, userFromDB);
-
+                catch
+                {
+                    return BadRequest();
+                }
                 // TODO: Redirect
 
-                return Ok(token);
+                return Ok("Success!");
             }
             catch
-            {               
+            {
                 return BadRequest("Something went wrong");
             }
         }
 
-        [HttpPost, Route("signup")]
-        public IActionResult Signup([FromBody]UserSignUpModel user)
-        {
-            if (user == null)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                AccessDatabase.MsSQL()
-                              .UserDAO
-                              .AddUser(user.Login, user.Password, user.Email, DateTime.Now);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-            // TODO: Redirect
-
-            return Ok("Success!");
-        }
-
-        [HttpPost, Authorize]
+        [Authorize(Policy = "GruvoCookie"), Route("test")]
         public IActionResult TestAuth()
         {
-            return Ok("Authorized!");
+            return Ok("Authorized!!!!!!!!!!!");
         }
     }
 }
