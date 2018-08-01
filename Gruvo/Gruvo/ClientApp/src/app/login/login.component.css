@@ -1,19 +1,14 @@
-.navbar-brand {
-  font-family: 'Kaushan Script', cursive;
-  font-size: 54px;
-  color: white;
-}
-
-.navbar-brand:hover {
-    color: green;
-  }
-
-.header, .footer {
-  background-color: rgb(51, 51, 102);
-  height: 80px;
+.content {
   width: 100%;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-flow: column;
+  align-content: stretch;
+  background: linear-gradient( rgba(35,43,85,0.75), rgba(35,43,85,0.95));
+  background-size: cover;
+  box-shadow: 0px 0px 22px 5px rgba(0,0,0,0.5) inset, 0 20px 20px -20px #000 inset;
+  color: white;
 }
 
 .intro {
@@ -21,31 +16,21 @@
   font-weight: bold;
 }
 
-.content {
-  display: flex;
-  flex-flow:column;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient( rgba(35,43,85,0.75), rgba(35,43,85,0.95));
-  box-shadow: 0px 0px 22px 5px rgba(0,0,0,0.5) inset, 0 20px 20px -20px #000 inset;
-}
-
 .inner {
   display: flex;
-  width:100%;
   flex-flow: row;
   align-items: center;
-  justify-content:space-around;
   margin-top: 100px;
+  margin-bottom: 75px;
+  padding-left: 75px;
+  padding-right: 75px;
+}
+
+a:hover{
+  color:green;
 }
 
 .login-form{
-  min-width:450px;
-}
+  max-width:450px;
 
-.wrapper {
-  display: flex;
-  flex-flow: column;
-  height: 100vh;
-  color: white;
 }
