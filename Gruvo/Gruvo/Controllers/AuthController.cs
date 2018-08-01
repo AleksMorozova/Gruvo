@@ -16,34 +16,47 @@ namespace Gruvo.Controllers
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody]UserLoginModel user)
         {
-            if (user == null)
-                return BadRequest();
+            try
+            {
+                if (user == null)
+                {
+                    return BadRequest();
+                }
 
-            UserInfo userFromDB = AccessDatabase.MsSQL()
-                                                .UserDAO
-                                                .GetUserByEmailAndPwd(user.Email, user.Password);
+                UserInfo userFromDB = AccessDatabase.MsSQL()
+                                                    .UserDAO
+                                                    .GetUserByEmailAndPwd(user.Email, user.Password);
 
-            if (userFromDB == null)
-                return Unauthorized();
+                if (userFromDB == null)
+                {
+                    return Unauthorized();
+                }
 
-            var token = TokenManager.GenerateToken(userFromDB.Id);
-            CookieOptions options = new CookieOptions();
-            options.Expires = DateTime.Now.AddDays(1);
+                var token = TokenManager.GenerateToken(userFromDB.Id);
+                CookieOptions options = new CookieOptions();
+                options.Expires = DateTime.Now.AddDays(1);
 
-            Response.Cookies.Append("gruvo_token", token, options);
+                Response.Cookies.Append("gruvo_token", token, options);
 
-            TokenUserPairs.GetInstance().GetPairs().Add(token, userFromDB);
+                TokenUserPairs.GetInstance().GetPairs().Add(token, userFromDB);
 
-            // TODO: Redirect
+                // TODO: Redirect
 
-            return Ok(token);
+                return Ok(token);
+            }
+            catch
+            {               
+                return BadRequest("Something went wrong");
+            }
         }
 
         [HttpPost, Route("signup")]
-        public IActionResult Register([FromBody]UserSignUpModel user)
+        public IActionResult Signup([FromBody]UserSignUpModel user)
         {
             if (user == null)
+            {
                 return BadRequest();
+            }
 
             try
             {

@@ -19,14 +19,18 @@ namespace Gruvo.Data
         public static AccessDatabase GetInstance()
         {
             if (instance == null)
+            {
                 instance = new AccessDatabase();
+            }
             return instance;
         }
 
         public static MSSQL MsSQL()
         {
-            if(db == null)
+            if (db == null)
+            {
                 db = new MSSQL("Data Source=INTEL;Initial Catalog=Gruvo;Integrated Security=True");
+            }
             return db;
         }
     }
