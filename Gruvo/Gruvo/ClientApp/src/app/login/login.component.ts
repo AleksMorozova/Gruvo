@@ -1,4 +1,5 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'gr-login',
@@ -7,5 +8,12 @@ import { Component, OnInit, HostBinding } from '@angular/core';
 })
 export class LoginComponent {
   email: string;
-  password: string; 
+  password: string;
+
+  constructor(private loginService: LoginService) { }
+
+  LogIn(email: string, password: string): void {
+    console.log(this.loginService.LogIn(email, password));
+  }
+
  }
