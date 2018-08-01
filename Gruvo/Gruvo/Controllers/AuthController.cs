@@ -13,17 +13,15 @@ namespace Gruvo.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private static MSSQL DataBase = new MSSQL("Data Source=INTEL;Initial Catalog=Gruvo;Integrated Security=True");
-
-        public static List<UserInfo> Users = DataBase.UserDAO.GetUsers().ToList();
-
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody]UserLoginModel user)
         {
             if (user == null)
                 return BadRequest();
 
-            UserInfo userFromDB = DataBase.UserDAO.GetUserByEmailAndPwd(user.Email, user.Password);
+            UserInfo userFromDB = AccessDatabase.MsSQL()
+                                                .UserDAO
+                                                .GetUserByEmailAndPwd(user.Email, user.Password);
 
             if (userFromDB == null)
                 return Unauthorized();
@@ -49,7 +47,9 @@ namespace Gruvo.Controllers
 
             try
             {
-                DataBase.UserDAO.AddUser(user.Login, user.Password, user.Email, DateTime.Now);
+                AccessDatabase.MsSQL()
+                              .UserDAO
+                              .AddUser(user.Login, user.Password, user.Email, DateTime.Now);
             }
             catch
             {
