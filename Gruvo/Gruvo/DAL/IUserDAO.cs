@@ -13,6 +13,7 @@ namespace Gruvo.DAL
         IEnumerable<UserInfo> GetUsers();
         UserInfo GetUser(int id);
         UserInfo GetUser(string login);
+        UserInfo GetUserByEmailAndPwd(string email, string password);
 
         void UpdateCredentianals(int id, string login, string password, string email);
         void UpdateUserInfo(int id, string about, DateTime bday);
