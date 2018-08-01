@@ -13,6 +13,7 @@ namespace Gruvo.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize(Policy = "GruvoCookie")]
         public IActionResult Index()
         {
             return View();
