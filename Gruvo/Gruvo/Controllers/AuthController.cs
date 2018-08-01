@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Gruvo.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
 using Gruvo.DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using Gruvo.Data;
 
 namespace Gruvo.Controllers
 {
@@ -19,7 +16,6 @@ namespace Gruvo.Controllers
         private static MSSQL DataBase = new MSSQL("Data Source=INTEL;Initial Catalog=Gruvo;Integrated Security=True");
 
         public static List<UserInfo> Users = DataBase.UserDAO.GetUsers().ToList();
-        public static Dictionary<string, UserInfo> TokenUserPairs = new Dictionary<string, UserInfo>();
 
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody]UserLoginModel user)
@@ -38,7 +34,7 @@ namespace Gruvo.Controllers
 
             Response.Cookies.Append("gruvo_token", token, options);
 
-            TokenUserPairs.Add(token, userFromDB);
+            TokenUserPairs.GetInstance().GetPairs().Add(token, userFromDB);
 
             // TODO: Redirect
 
