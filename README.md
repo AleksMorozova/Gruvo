@@ -26,7 +26,7 @@ These instructions will get you a copy of the project up and running on your loc
     F5 from either [VScode] (https://code.visualstudio.com/) or [Visual Studio IDE](https://www.visualstudio.com/)
     
 ## Built with
-* ASP.NET Core 2.0
+* ASP.NET Core 2.1
 * Angular
 * Angular CLI
 
