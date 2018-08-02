@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Gruvo.Models;
 using Microsoft.AspNetCore.Mvc;
-using Gruvo.DAL;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Gruvo.Data;
+using Gruvo.DTL;
+using System.Threading.Tasks;
+using Gruvo.BLL;
 
 namespace Gruvo.Controllers
 {
@@ -31,13 +30,15 @@ namespace Gruvo.Controllers
             }
 
             string token = TokenManager.GenerateToken(userFromDB.Id);
-
+            
             TokenUserPairs.GetInstance().GetPairs().Add(token, userFromDB);
-            Response.Cookies.Append("Gruvo", token);
+            Response.Cookies.Append("Gruvo", token, new Microsoft.AspNetCore.Http.CookieOptions()
+            {
+                Domain = "." + Request.Host.Host,
+                MaxAge = TimeSpan.FromHours(10)
+            });
 
-            var cookies2 = Request.Cookies.Keys;
-
-            return Ok("Success!");
+            return Ok("Success!" + Request.Cookies["Gruvo"]);
         }
 
         [HttpPost, Route("signup")]

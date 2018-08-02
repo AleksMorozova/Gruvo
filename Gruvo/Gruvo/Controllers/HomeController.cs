@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Gruvo.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Gruvo.Controllers
 {

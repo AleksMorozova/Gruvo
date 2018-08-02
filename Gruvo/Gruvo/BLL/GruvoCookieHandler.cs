@@ -1,3 +1,10 @@
+﻿using Gruvo.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Gruvo.BLL
 {
@@ -14,10 +21,10 @@ namespace Gruvo.BLL
         {
             if (_httpContext.Request.Cookies.ContainsKey("Gruvo"))
             {
-                if(TokenUserPairs.GetInstance().GetPairs().ContainsKey(_httpContext
-                    .Request
-                    .Cookies["Gruvo"]))
-                context.Succeed(requirement);
+                if (TokenUserPairs.GetInstance().GetPairs().ContainsKey(_httpContext.Request.Cookies["Gruvo"]))
+                {
+                    context.Succeed(requirement);
+                }
             }
 
             return Task.CompletedTask;
