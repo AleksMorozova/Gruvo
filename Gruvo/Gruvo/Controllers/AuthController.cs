@@ -13,7 +13,7 @@ namespace Gruvo.Controllers
     public class AuthController : ControllerBase
     {
         [HttpPost, Route("login")]
-        public async Task<IActionResult> Login([FromBody]UserLoginModel user)
+        public IActionResult Login([FromBody]UserLoginModel user)
         {
             if (user == null)
             {
@@ -32,13 +32,17 @@ namespace Gruvo.Controllers
             string token = TokenManager.GenerateToken(userFromDB.Id);
             
             TokenUserPairs.GetInstance().GetPairs().Add(token, userFromDB);
-            Response.Cookies.Append("Gruvo", token, new Microsoft.AspNetCore.Http.CookieOptions()
-            {
-                Domain = "." + Request.Host.Host,
-                MaxAge = TimeSpan.FromHours(10)
-            });
+            Response.Cookies.Append("Gruvo", token);
 
-            return Ok("Success!" + Request.Cookies["Gruvo"]);
+            return Ok("Success!");
+        }
+
+        [Authorize(Policy = "GruvoCookie"), Route("logout")]
+        public IActionResult LogOut()
+        {
+            Response.Cookies.Delete("Gruvo");
+
+            return Redirect("/");
         }
 
         [HttpPost, Route("signup")]

@@ -12,13 +12,10 @@ namespace Gruvo.BLL
     {
         private HttpContext _httpContext;
 
-        public GruvoCookieHandler(IHttpContextAccessor httpContextAccessor)
-        {
-            _httpContext = httpContextAccessor.HttpContext;
-        }
-
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, GruvoCookieRequirement requirement)
         {
+            _httpContext = ((AuthorizationFilterContext)context.Resource).HttpContext;
+
             if (_httpContext.Request.Cookies.ContainsKey("Gruvo"))
             {
                 if (TokenUserPairs.GetInstance().GetPairs().ContainsKey(_httpContext.Request.Cookies["Gruvo"]))
