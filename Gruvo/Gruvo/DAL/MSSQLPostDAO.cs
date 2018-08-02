@@ -81,7 +81,9 @@ namespace Gruvo.DAL
                 using (SqlDataReader dataReader = command.ExecuteReader())
                 {
                     while (dataReader.Read())
+                    {
                         post = new Post((long)dataReader["Postid"], (long)dataReader["userid"], (string)dataReader["message"], (DateTime)dataReader["postdate"]);
+                    }
                 }
             }
             catch (SqlException ex)

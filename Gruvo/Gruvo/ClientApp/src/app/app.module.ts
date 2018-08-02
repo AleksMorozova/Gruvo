@@ -5,20 +5,39 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './login/login.component';
+import { LoginService } from './login/login.service';
+import { SignupComponent } from './signup/signup.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { TweetComponent } from './tweet/tweet.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileService } from './profile/profile.service';
+import { MenuComponent } from './menu/menu.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    LoginComponent,
+    SignupComponent,
+    ProfileComponent,
+    MenuComponent,
+    TweetComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: AppComponent, pathMatch: 'full' }
-    ])
+    AppRoutingModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [
+    LoginService,
+    ProfileService
+  ]
 })
 export class AppModule { }
