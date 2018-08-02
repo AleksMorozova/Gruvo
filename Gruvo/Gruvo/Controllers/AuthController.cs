@@ -20,7 +20,7 @@ namespace Gruvo.Controllers
                 return BadRequest();
             }
 
-            UserInfo userFromDB = AccessDatabase.MsSQL()
+            UserInfo userFromDB = Store.MsSQL()
                                                 .UserDAO
                                                 .GetUserByEmailAndPwd(user.Email, user.Password);
             
@@ -57,7 +57,7 @@ namespace Gruvo.Controllers
 
                 try
                 {
-                    AccessDatabase.MsSQL()
+                    Store.MsSQL()
                                   .UserDAO
                                   .AddUser(user.Login, user.Password, user.Email, DateTime.Now);
                 }

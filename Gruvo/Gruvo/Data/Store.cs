@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace Gruvo.Data
 {
-    public class AccessDatabase
+    public class Store
     {
-        private static AccessDatabase instance;
+        private static Store instance;
         private static MSSQL db;
 
-        private AccessDatabase()
+        private Store()
         {
 
         }
 
-        public static AccessDatabase GetInstance()
+        public static Store GetInstance()
         {
             if (instance == null)
             {
-                instance = new AccessDatabase();
+                instance = new Store();
             }
             return instance;
         }
