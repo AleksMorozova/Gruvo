@@ -7,6 +7,8 @@ using Gruvo.DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Gruvo.Data;
+using Gruvo.DTL;
+using Gruvo.BLL;
 
 namespace Gruvo.Controllers
 {
