@@ -1,4 +1,4 @@
-namespace Gruvo.DTL
+﻿namespace Gruvo.DTL
 {
     public class UserSignUpModel
     {
