@@ -12,9 +12,9 @@ namespace Gruvo.Controllers
     public class AuthController : ControllerBase
     {
         [HttpPost, Route("login")]
-        public async Task<IActionResult> Login([FromBody]UserLoginModel user)
+        public IActionResult Login([FromBody]UserLoginModel user)
         {
-            if (user == null)
+            try
             {
                 if (user == null)
                 {
@@ -35,7 +35,7 @@ namespace Gruvo.Controllers
 
                 return Ok("Success!");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest("Something went wrong");
             }
