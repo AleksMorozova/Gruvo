@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Gruvo.BLL

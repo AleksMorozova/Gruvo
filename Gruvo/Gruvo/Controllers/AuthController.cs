@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Gruvo.Data;
 using Gruvo.DTL;
-using System.Threading.Tasks;
 using Gruvo.BLL;
 
 namespace Gruvo.Controllers
@@ -15,26 +14,31 @@ namespace Gruvo.Controllers
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody]UserLoginModel user)
         {
-            if (user == null)
+            try
             {
-                return BadRequest();
-            }
+                if (user == null)
+                {
+                    return BadRequest();
+                }
 
-            UserInfo userFromDB = Store.MsSQL()
-                                                .UserDAO
-                                                .GetUserByEmailAndPwd(user.Email, user.Password);
-            
-            if (userFromDB == null)
+                UserInfo userFromDB = Store.MsSQL().UserDAO.GetUserByEmailAndPwd(user.Email, user.Password);
+
+                if (userFromDB == null)
+                {
+                    return Unauthorized();
+                }
+
+                string token = TokenManager.GenerateToken(userFromDB.Id);
+
+                TokenUserPairs.GetInstance().GetPairs().Add(token, userFromDB);
+                Response.Cookies.Append("Gruvo", token);
+
+                return Ok("Success!");
+            }
+            catch(Exception ex)
             {
-                return Unauthorized();
+                return BadRequest("Something went wrong");
             }
-
-            string token = TokenManager.GenerateToken(userFromDB.Id);
-            
-            TokenUserPairs.GetInstance().GetPairs().Add(token, userFromDB);
-            Response.Cookies.Append("Gruvo", token);
-
-            return Ok("Success!");
         }
 
         [Authorize(Policy = "GruvoCookie"), Route("logout")]
@@ -55,21 +59,13 @@ namespace Gruvo.Controllers
                     return BadRequest();
                 }
 
-                try
-                {
-                    Store.MsSQL()
-                                  .UserDAO
-                                  .AddUser(user.Login, user.Password, user.Email, DateTime.Now);
-                }
-                catch
-                {
-                    return BadRequest();
-                }
+                Store.MsSQL().UserDAO.AddUser(user.Login, user.Password, user.Email, DateTime.Now);
+
                 // TODO: Redirect
 
                 return Ok("Success!");
             }
-            catch
+            catch(Exception ex)
             {
                 return BadRequest("Something went wrong");
             }
