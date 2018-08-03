@@ -12,9 +12,9 @@ namespace Gruvo.Controllers
     public class AuthController : ControllerBase
     {
         [HttpPost, Route("login")]
-        public IActionResult Login([FromBody]UserLoginModel user)
+        public async Task<IActionResult> Login([FromBody]UserLoginModel user)
         {
-            try
+            if (user == null)
             {
                 if (user == null)
                 {
