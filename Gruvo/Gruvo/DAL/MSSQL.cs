@@ -6,7 +6,7 @@ using Gruvo.Models;
 
 namespace Gruvo.DAL
 {
-    public class MSSQL : DAO
+    public class MSSQL : BaseDAO
     {
         private readonly SqlConnection connection;
         public MSSQL(string connectionString)

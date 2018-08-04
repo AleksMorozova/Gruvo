@@ -6,7 +6,7 @@ using Gruvo.Models;
 
 namespace Gruvo.DAL
 {
-    public abstract class DAO
+    public abstract class BaseDAO
     {
         protected IUserDAO userDAO;
         protected IPostDAO postDAO;
