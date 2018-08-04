@@ -16,7 +16,9 @@ These instructions will get you a copy of the project up and running on your loc
 git clone https://github.com/AleksMorozova/Gruvo.git
 ```
 2. Create database
+
 Execute script from "script for creation of DB" folder on sql server
+
 3. Add connection string to appsettings.json 
 ```
 { 
@@ -26,6 +28,7 @@ Execute script from "script for creation of DB" folder on sql server
 }
 ```
 3. Run Server
+
 F5 from either [VScode](https://code.visualstudio.com/) or [Visual Studio IDE](https://www.visualstudio.com/)
     
 ## Built with
