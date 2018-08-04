@@ -1,6 +1,4 @@
-﻿using Gruvo.DAL;
-
-namespace Gruvo.Data
+﻿namespace Gruvo.DAL
 {
     public class Store
     {
