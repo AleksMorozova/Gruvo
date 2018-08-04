@@ -1,7 +1,7 @@
 ﻿using Gruvo.Models;
 using System.Collections.Generic;
 
-namespace Gruvo.Data
+namespace Gruvo.BLL
 {
     public class TokenUserPairs
     {
