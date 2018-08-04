@@ -2,9 +2,9 @@
 using Gruvo.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Gruvo.Data;
 using Gruvo.DTL;
 using Gruvo.BLL;
+using Gruvo.DAL;
 
 namespace Gruvo.Controllers
 {
