@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Gruvo.DAL
+namespace Gruvo.DAL.Repository
 {
-    public class MSSQL : BaseDAO, IMSSQLRepository
+    public class MSSQLRepository : BaseRepository
     {
-        public MSSQL(IConfiguration configuration)
+        public MSSQLRepository(IConfiguration configuration)
         {
             string connectionStr = configuration.GetConnectionString("GruvoMSSQL");
             userDAO = new MSSQLUserDAO(connectionStr);

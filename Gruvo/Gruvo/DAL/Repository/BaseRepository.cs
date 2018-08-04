@@ -1,6 +1,6 @@
-﻿namespace Gruvo.DAL
+﻿namespace Gruvo.DAL.Repository
 {
-    public abstract class BaseDAO
+    public abstract class BaseRepository
     {
         protected IUserDAO userDAO;
         protected IPostDAO postDAO;

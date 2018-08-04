@@ -4,16 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Gruvo.DTL;
 using Gruvo.BLL;
-using Gruvo.DAL;
+using Gruvo.DAL.Repository;
 
 namespace Gruvo.Controllers
 {
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private IMSSQLRepository _repository;
+        private BaseRepository _repository;
 
-        public AuthController(IMSSQLRepository repository)
+        public AuthController(BaseRepository repository)
         {
             _repository = repository;
         }
