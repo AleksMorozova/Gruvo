@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+//TODO: add validators to check if email/login is taken
+
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { LoginService } from '../login/login.service';
 
 @Component({
@@ -7,14 +10,17 @@ import { LoginService } from '../login/login.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
+  signupForm: FormGroup;
 
-  login: string;
-  email: string;
-  password: string;
+  constructor(private loginService: LoginService, formBuilder: FormBuilder) {
+    this.signupForm = formBuilder.group({
+      'login': ['', Validators.compose([Validators.required])],
+      'email': ['', Validators.compose([Validators.required, Validators.email])],
+      'password': ['', Validators.required]
+    });
+  }
 
-  constructor(private loginService: LoginService) { }
-
-  SignUp(login: string, email: string, password: string): void{
-    console.log(this.loginService.SignUp(login, email, password));
+  SignUp(formData: object): void{
+    console.log(this.loginService.SignUp(formData.login, formData.email, formData.password));
   }
 }

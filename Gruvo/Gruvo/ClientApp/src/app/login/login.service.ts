@@ -1,3 +1,5 @@
+//TODO add methods to check if email/login is taken
+
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -12,4 +14,5 @@ export class LoginService {
     if (Login && email && password) return true;
     return false;   
   }
+
  }

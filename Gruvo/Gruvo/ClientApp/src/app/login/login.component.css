@@ -10,26 +10,27 @@
 }
 
 .intro {
+
   font-size: 16px;
   font-weight: bold;
 }
 
 .inner {
   display: flex;
-  width:100%;
+  width: 100%;
   flex-flow: row;
   align-items: center;
-  justify-content:space-around; 
+  justify-content: space-around;
   margin-top: 150px;
   margin-bottom: 75px;
   padding-left: 75px;
   padding-right: 75px;
 }
 
-a:hover{
-  color:green;
-}
-
 .login-form{
   min-width:450px;
+}
+
+.not-valid{
+  background: rgba(255,0,0,0.3);
 }
