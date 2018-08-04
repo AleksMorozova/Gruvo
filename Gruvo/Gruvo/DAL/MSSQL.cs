@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Data;
-using Gruvo.Models;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace Gruvo.DAL
 {
-    public class MSSQL : BaseDAO
+    public class MSSQL : BaseDAO, IMSSQLRepository
     {
-        private readonly SqlConnection connection;
-        public MSSQL(string connectionString)
+        public MSSQL(IConfiguration configuration)
         {
-            connection = new SqlConnection(connectionString);
-            userDAO = new MSSQLUserDAO(connection);
-            postDAO = new MSSQLPostDAO(connection);
+            string connectionStr = configuration.GetConnectionString("GruvoMSSQL");
+            userDAO = new MSSQLUserDAO(connectionStr);
+            postDAO = new MSSQLPostDAO(connectionStr);
         }
     }
 }

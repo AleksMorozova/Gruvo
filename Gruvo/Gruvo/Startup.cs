@@ -1,4 +1,5 @@
 using Gruvo.BLL;
+using Gruvo.DAL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -24,6 +25,7 @@ namespace Gruvo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IAuthorizationHandler, GruvoCookieHandler>();
+            services.AddSingleton<IMSSQLRepository, MSSQL>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer();

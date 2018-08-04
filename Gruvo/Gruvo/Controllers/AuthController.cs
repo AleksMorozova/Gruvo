@@ -11,6 +11,13 @@ namespace Gruvo.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
+        private IMSSQLRepository _repository;
+
+        public AuthController(IMSSQLRepository repository)
+        {
+            _repository = repository;
+        }
+
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody]UserLoginModel user)
         {
@@ -21,7 +28,7 @@ namespace Gruvo.Controllers
                     return BadRequest();
                 }
 
-                UserInfo userFromDB = Store.MsSQL().UserDAO.GetUserByEmailAndPwd(user.Email, user.Password);
+                UserInfo userFromDB = _repository.UserDAO.GetUserByEmailAndPwd(user.Email, user.Password);
 
                 if (userFromDB == null)
                 {
@@ -59,7 +66,7 @@ namespace Gruvo.Controllers
                     return BadRequest();
                 }
 
-                Store.MsSQL().UserDAO.AddUser(user.Login, user.Password, user.Email, DateTime.Now);
+                _repository.UserDAO.AddUser(user.Login, user.Password, user.Email, DateTime.Now);
 
                 // TODO: Redirect
 

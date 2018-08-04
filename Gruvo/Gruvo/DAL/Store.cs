@@ -1,31 +1,14 @@
-﻿namespace Gruvo.DAL
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Gruvo.DAL
 {
     public class Store
     {
-        private static Store instance;
-        private static MSSQL db;
+        public static BaseDAO DAO { get; private set; }
 
-        private Store()
+        public Store(IConfiguration configuration)
         {
-
-        }
-
-        public static Store GetInstance()
-        {
-            if (instance == null)
-            {
-                instance = new Store();
-            }
-            return instance;
-        }
-
-        public static MSSQL MsSQL()
-        {
-            if (db == null)
-            {
-                db = new MSSQL("Data Source=INTEL;Initial Catalog=Gruvo;Integrated Security=True");
-            }
-            return db;
+            //DAO = new MSSQL(configuration.GetConnectionString("Gruvo"));
         }
     }
 }
