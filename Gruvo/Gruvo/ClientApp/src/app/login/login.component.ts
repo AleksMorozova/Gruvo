@@ -21,7 +21,7 @@ export class LoginComponent {
     this.loginForm.controls
   }
 
-  LogIn(formData: object): void {
+  LogIn(formData: { email: string, password: string }): void {
     this.loginService.LogIn(formData.email, formData.password).subscribe(object => {
         this.correctCredentials = true;
         console.log('Logged in!!');

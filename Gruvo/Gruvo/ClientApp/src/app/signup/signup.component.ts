@@ -22,16 +22,12 @@ export class SignupComponent {
     });
   }
 
-  SignUp(formData: object): void{
+  SignUp(formData: {login:string, email:string, password:string}): void {
     this.loginService.SignUp(formData.login, formData.email, formData.password).subscribe(object => {
-        console.log('Registration completed!');
-        this.router.navigate(['']);
+      console.log('Registration completed!');
+      this.router.navigate(['']);
     }, error => {
       console.log(error);
-    }
-    );
-
-
-      );
-  }
+    })};
+  
 }
