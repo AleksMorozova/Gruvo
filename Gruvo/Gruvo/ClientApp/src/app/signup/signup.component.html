@@ -4,7 +4,7 @@
       <div class="form-group">
         <label for="Login">
           Login
-          <span class="text-danger" *ngIf="signupForm.controls['login'].hasError('required')">is not valid!</span>
+          <span class="text-danger" *ngIf="!signupForm.controls['login'].valid && signupForm.controls['login'].touched">is not valid!</span>
           </label>
         <input id="Login" [formControl]="signupForm.controls['login']" [ngClass]="{'not-valid':!signupForm.controls['login'].valid && signupForm.controls['login'].touched}" type="text" class="form-control" placeholder="Login">
       </div>
@@ -12,9 +12,9 @@
       <div class="form-group">
         <label for="Email">
           Email
-          <span class="text-danger" *ngIf="!signupForm.controls['email'].valid">is not valid!</span>
+          <span class="text-danger" *ngIf="!signupForm.controls['email'].valid && signupForm.controls['email'].touched">is not valid!</span>
         </label>
-        <input id="Email" [formControl]="signupForm.controls['email']" [ngClass]="{'not-valid':!signupForm.controls['email'].valid && signupForm.controls['email'].touched}" type="text" class="form-control" placeholder="Email">
+        <input id="Email" [formControl]="signupForm.controls['email']" [ngClass]="{'not-valid':!signupForm.controls['email'].valid && signupForm.controls['email'].touched}" type="email" class="form-control" placeholder="Email">
       </div>
 
       <div class="form-group">
