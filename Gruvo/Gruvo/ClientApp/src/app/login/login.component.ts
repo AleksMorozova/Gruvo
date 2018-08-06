@@ -1,5 +1,7 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { LoginService } from './login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'gr-login',
@@ -7,13 +9,28 @@ import { LoginService } from './login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email: string;
-  password: string;
+  loginForm: FormGroup;
+  correctCredentials: boolean = true;
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private router: Router, formBuilder: FormBuilder) {
+    this.loginForm = formBuilder.group({
+      'email': ['', Validators.compose([Validators.required, Validators.email])],
+      'password': ['', Validators.required]
+    });
 
-  LogIn(email: string, password: string): void {
-    console.log(this.loginService.LogIn(email, password));
+    this.loginForm.controls
+  }
+
+  LogIn(formData: { email: string, password: string }): void {
+    this.loginService.LogIn(formData.email, formData.password).subscribe(object => {
+        this.correctCredentials = true;
+        console.log('Logged in!!');
+        //TODO: Redirect to 'stream' page
+    }, error => {
+      console.log(error);
+      this.correctCredentials = false;
+    }
+      );
   }
 
  }

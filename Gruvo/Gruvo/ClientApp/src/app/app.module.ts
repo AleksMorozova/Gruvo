@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { NgModule, Inject } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -25,9 +25,14 @@ import { FooterComponent } from './footer/footer.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   bootstrap: [AppComponent],
-  providers: [LoginService]
+  providers: [
+    { provide: 'LOGIN_URL', useValue: 'api/auth/login' },
+    { provide: 'SIGNUP_URL', useValue: 'api/auth/signup'},    
+     LoginService
+      ]
 })
 export class AppModule { }
