@@ -8,40 +8,39 @@ namespace Gruvo.DAL
 {
     class MSSQLUserDAO : IUserDAO
     {
-        private SqlConnection connection;
+        private string _connectionStr;
 
-        public MSSQLUserDAO(SqlConnection connection) => this.connection = connection;
+        public MSSQLUserDAO(string connectionString) => _connectionStr = connectionString;
 
         public void AddUser(string login, string password, string email, DateTime regDate)
         {
             try
             {
-                connection.Open();
-                SqlCommand command = connection.CreateCommand();
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
 
-                command.CommandText = @"insert into users (Login,Password,Email,RegDate) values (@login,@password ,@email,@regdate)";
-                command.Parameters.Add("@login", SqlDbType.VarChar);
-                command.Parameters["@login"].Value = login;
+                    command.CommandText = @"insert into users (Login,Password,Email,RegDate) values (@login,@password ,@email,@regdate)";
+                    command.Parameters.Add("@login", SqlDbType.VarChar);
+                    command.Parameters["@login"].Value = login;
 
-                command.Parameters.Add("@password", SqlDbType.VarChar);
-                command.Parameters["@password"].Value = password;
+                    command.Parameters.Add("@password", SqlDbType.VarChar);
+                    command.Parameters["@password"].Value = password;
 
-                command.Parameters.Add("@email", SqlDbType.VarChar);
-                command.Parameters["@email"].Value = email;
+                    command.Parameters.Add("@email", SqlDbType.VarChar);
+                    command.Parameters["@email"].Value = email;
 
-                command.Parameters.Add("@regdate", SqlDbType.Date);
-                command.Parameters["@regdate"].Value = regDate;
+                    command.Parameters.Add("@regdate", SqlDbType.Date);
+                    command.Parameters["@regdate"].Value = regDate;
 
-                command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+                }
             }
             catch (SqlException ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
-            }
-            finally
-            {
-                connection.Close();
             }
         }
 
@@ -49,24 +48,23 @@ namespace Gruvo.DAL
         {
             try
             {
-                connection.Open();
-                SqlCommand command = connection.CreateCommand();
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
 
-                command.CommandText = @"delete from users where Userid = @id ";
-                command.Parameters.Add("@id", SqlDbType.BigInt);
-                command.Parameters["@id"].Value = id;
+                    command.CommandText = @"delete from users where Userid = @id ";
+                    command.Parameters.Add("@id", SqlDbType.BigInt);
+                    command.Parameters["@id"].Value = id;
 
-                command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+                }
             }
 
             catch (SqlException ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
-            }
-            finally
-            {
-                connection.Close();
             }
         }
 
@@ -74,23 +72,22 @@ namespace Gruvo.DAL
         {
             try
             {
-                connection.Open();
-                SqlCommand command = connection.CreateCommand();
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
 
-                command.CommandText = @"delete from users where Login = @login ";
-                command.Parameters.Add("@login", SqlDbType.VarChar);
-                command.Parameters["@login"].Value = login;
+                    command.CommandText = @"delete from users where Login = @login ";
+                    command.Parameters.Add("@login", SqlDbType.VarChar);
+                    command.Parameters["@login"].Value = login;
 
-                command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+                }
             }            
             catch (SqlException ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
-            }
-            finally
-            {
-                connection.Close();
             }
         }
 
@@ -99,18 +96,21 @@ namespace Gruvo.DAL
             UserInfo user = null;
             try
             {
-                connection.Open();
-                SqlCommand command = connection.CreateCommand();
-
-                command.CommandText = @"select UserId,Login,Email,RegDate from users where Userid = @id ";
-                command.Parameters.Add("@id", SqlDbType.BigInt);
-                command.Parameters["@id"].Value = id;
-
-                using (SqlDataReader dataReader = command.ExecuteReader())
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
                 {
-                    while (dataReader.Read())
+                    connection.Open();
+
+                    command.CommandText = @"select UserId,Login,Email,RegDate from users where Userid = @id ";
+                    command.Parameters.Add("@id", SqlDbType.BigInt);
+                    command.Parameters["@id"].Value = id;
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
                     {
-                        user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]);
+                        while (dataReader.Read())
+                        {
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]);
+                        }
                     }
                 }
             }
@@ -118,10 +118,6 @@ namespace Gruvo.DAL
             {
                 Console.WriteLine(ex.Message);
                 throw;
-            }
-            finally
-            {
-                connection.Close();
             }
             return user;
         }
@@ -131,9 +127,11 @@ namespace Gruvo.DAL
             UserInfo user = null;
             try
             {
-                connection.Open();
-                using (SqlCommand command = connection.CreateCommand())
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
                 {
+                    connection.Open();
+
                     command.CommandText = @"select UserId,Login,Email,RegDate from users where Login = @login ";
                     command.Parameters.Add("@login", SqlDbType.VarChar);
                     command.Parameters["@login"].Value = login;
@@ -146,7 +144,6 @@ namespace Gruvo.DAL
                         }
                     }
                 }
-                connection.Close();
             }
 
             catch (Exception)
@@ -161,9 +158,11 @@ namespace Gruvo.DAL
             UserInfo user = null;
             try
             {
-                connection.Open();
-                using (SqlCommand command = connection.CreateCommand())
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
                 {
+                    connection.Open();
+
                     command.CommandText = @"select UserId,Login,Email,RegDate from users where Email = @email and Password = @pwd";
                     command.Parameters.Add("@email", SqlDbType.VarChar);
                     command.Parameters["@email"].Value = email;
@@ -178,7 +177,6 @@ namespace Gruvo.DAL
                         }
                     }
                 }
-                connection.Close();
             }
 
             catch (Exception)
@@ -193,9 +191,11 @@ namespace Gruvo.DAL
             List<UserInfo> list = new List<UserInfo>();
             try
             {
-                connection.Open();
-                using (SqlCommand command = connection.CreateCommand())
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
                 {
+                    connection.Open();
+
                     command.CommandText = "select userId,login,email,regDate from users";
                     using (SqlDataReader dataReader = command.ExecuteReader())
                     {
@@ -205,7 +205,6 @@ namespace Gruvo.DAL
                         }
                     }
                 }
-                connection.Close();
             }
             catch (Exception)
             {
@@ -218,9 +217,11 @@ namespace Gruvo.DAL
         {
             try
             {
-                connection.Open();
-                using (SqlCommand command = connection.CreateCommand())
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
                 {
+                    connection.Open();
+
                     command.CommandText = @"update users set Login=@login, Password = @password, Email=@email where userid = @userid";
 
                     command.Parameters.Add("@login", SqlDbType.VarChar);
@@ -238,7 +239,6 @@ namespace Gruvo.DAL
 
                     command.ExecuteNonQuery();
                 }
-                connection.Close();
             }
             catch (Exception)
             {
@@ -250,9 +250,11 @@ namespace Gruvo.DAL
         {
             try
             {
-                connection.Open();
-                using (SqlCommand command = connection.CreateCommand())
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
                 {
+                    connection.Open();
+
                     command.CommandText = @"update users set DateOfBirth=@bday, about = @about where userid = @userid";
 
                     command.Parameters.Add("@bday", SqlDbType.Date);
@@ -266,7 +268,6 @@ namespace Gruvo.DAL
 
                     command.ExecuteNonQuery();
                 }
-                connection.Close();
             }
             catch (Exception)
             {
@@ -278,9 +279,11 @@ namespace Gruvo.DAL
         {
             try
             {
-                connection.Open();
-                using (SqlCommand command = connection.CreateCommand())
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
                 {
+                    connection.Open();
+
                     command.CommandText = @"insert into subscriptions values (@userid1, @userid2,@subdate)";
                     command.Parameters.Add("@userid1", SqlDbType.BigInt);
                     command.Parameters["@userid1"].Value = userId1;
@@ -293,7 +296,6 @@ namespace Gruvo.DAL
 
                     command.ExecuteNonQuery();
                 }
-                connection.Close();
             }
             catch (Exception)
             {
@@ -306,9 +308,11 @@ namespace Gruvo.DAL
             List<UserInfo> list = new List<UserInfo>();
             try
             {
-                connection.Open();
-                using (SqlCommand command = connection.CreateCommand())
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
                 {
+                    connection.Open();
+
                     command.CommandText = @"select userid, login, email, Regdate from users join subscriptions on userid = subscribedid where subscriberid = @userid";
                     command.Parameters.Add("@userid", SqlDbType.BigInt);
                     command.Parameters["@userid"].Value = id;
@@ -321,7 +325,6 @@ namespace Gruvo.DAL
                         }
                     }
                 }
-                connection.Close();
             }
             catch (Exception)
             {
@@ -335,8 +338,8 @@ namespace Gruvo.DAL
             List<UserInfo> list = new List<UserInfo>();
             try
             {
-                connection.Open();
-                using (SqlCommand command = connection.CreateCommand())
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
                 {
                     command.CommandText = @"select userid, login, users.email, Regdate from users join subscriptions on userid = subscriberid where subscribedid = @userid";
                     command.Parameters.Add("@userid", SqlDbType.BigInt);
@@ -350,7 +353,6 @@ namespace Gruvo.DAL
                         }
                     }
                 }
-                connection.Close();
             }
             catch (Exception)
             {
@@ -363,9 +365,11 @@ namespace Gruvo.DAL
         {
             try
             {
-                connection.Open();
-                using (SqlCommand command = connection.CreateCommand())
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
                 {
+                    connection.Open();
+
                     command.CommandText = @"delete from subscriptions where subscriberid = @userid1 and subscribedid = @userid2";
                     command.Parameters.Add("@userid1", SqlDbType.BigInt);
                     command.Parameters["@userid1"].Value = userId1;
@@ -375,7 +379,6 @@ namespace Gruvo.DAL
 
                     command.ExecuteNonQuery();
                 }
-                connection.Close();
             }
             catch (Exception)
             {

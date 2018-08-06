@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Data;
-using Gruvo.Models;
-
-namespace Gruvo.DAL
+﻿namespace Gruvo.DAL.Repository
 {
-    public abstract class DAO
+    public abstract class BaseRepository
     {
         protected IUserDAO userDAO;
         protected IPostDAO postDAO;
