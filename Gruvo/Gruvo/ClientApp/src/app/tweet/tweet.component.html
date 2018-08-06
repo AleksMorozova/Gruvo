@@ -1,10 +1,10 @@
-<div class="post" id="{{ tweet.id }}">
+<div class="post" id="{{ data.id }}">
   <h4>
-    <a href="users/{{tweet.userLogin}}">{{tweet.userLogin }}</a>
+    <a href="users/{{data.userLogin}}">{{data.userLogin }}</a>
   </h4>
   <blockquote>
-    <p>{{tweet.message}}</p>
-    <footer>{{ tweet.date.toLocaleString()}}</footer>
+    <p>{{data.message}}</p>
+    <footer>{{ data.date.toLocaleString()}}</footer>
 </blockquote>
       <hr>
 </div>

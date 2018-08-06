@@ -32,11 +32,11 @@
 .photo{
     display: flex;
     flex-flow: column;
-    background-image: url("profilepic.gif");
-    background-origin: content-box;
-    background-position:center;
+    justify-content:center;
+    background-color:white;
     min-width:var(--picturew);
     height:var(--pictureh);
+    border-bottom: 1px solid lightgrey;
 }
 
 .makepost{
@@ -44,11 +44,15 @@
     flex-direction: column;
 }
 
-.makepost input{
+  .makepost textarea {
+    resize: none;
+  }
+
+  .makepost input {
     width: 75px;
-    margin-top:10px;
-    margin-left:auto;
-}
+    margin-top: 10px;
+    margin-left: auto;
+  }
 
 .info{
     padding: 10px;
@@ -57,21 +61,21 @@
     background-color: white;
 }
 
-.left, .righttop, .rightbottom{
+.left, .right-top, .right-bottom{
     margin-top: 20px;
     margin-bottom: 20px;
     margin-left: 10px;
     margin-right: 10px;
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
 }
 
 .left{
     width:var(--picturew);
 }
 
-.righttop, .rightbottom{
-    padding: 20px;
-    width:var(--blockw);
+.right-top, .right-bottom {
+  padding: 20px;
+  width: var(--blockw);
 }
 
 .info a{

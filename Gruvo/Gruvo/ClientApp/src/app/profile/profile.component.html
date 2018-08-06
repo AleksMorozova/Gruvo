@@ -2,8 +2,7 @@
   <gr-menu></gr-menu>
   <div class="left">
     <div class="photo">
-      <img src="{{userimg}}">
-
+      <img class="img-responsive" src="https://media.alienwarearena.com/media/tux-r.jpg">
     </div>
     <div class="info">
       <h2>{{user.login}}</h2>
@@ -33,14 +32,14 @@
     </div>
   </div>
   <div class="right">
-    <div class="righttop">
+    <div class="right-top">
       <div class="makepost">
-        <textarea style=" resize: none;" class="form-control" rows="2" maxlength="256" placeholder="Something something"></textarea>
+        <textarea class="form-control message" rows="2" maxlength="256" placeholder="What are you up to?"></textarea>
         <input type="button" class="btn btn-success" value="Post">
       </div>
     </div>
-    <div class="rightbottom">
-      <gr-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></gr-tweet>
+    <div class="right-bottom">
+      <gr-tweet *ngFor="let tweet of tweets" [data]="tweet"></gr-tweet>
     </div>
   </div>
 

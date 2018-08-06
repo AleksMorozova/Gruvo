@@ -7,5 +7,5 @@ import { ITweet } from './tweet.model';
   styleUrls: ['./tweet.component.css']
 })
 export class TweetComponent  {
-  @Input() tweet: ITweet;
+  @Input() data: ITweet;
 }
