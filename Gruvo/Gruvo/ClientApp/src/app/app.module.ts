@@ -15,6 +15,8 @@ import { TweetComponent } from './tweet/tweet.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileService } from './profile/profile.service';
 import { MenuComponent } from './menu/menu.component';
+import { AuthGuard } from './auth-guard';
+import { LoginGuard } from './login-guard';
 
 
 @NgModule({
@@ -38,9 +40,12 @@ import { MenuComponent } from './menu/menu.component';
   bootstrap: [AppComponent],
   providers: [
     { provide: 'LOGIN_URL', useValue: 'api/auth/login' },
-    { provide: 'SIGNUP_URL', useValue: 'api/auth/signup'},    
+    { provide: 'SIGNUP_URL', useValue: 'api/auth/signup' },
+    { provide: 'TEST_URL', useValue: 'api/auth/test' }, 
      LoginService,
-     ProfileService
+     ProfileService,
+    AuthGuard,
+    LoginGuard
       ]
 })
 export class AppModule { }

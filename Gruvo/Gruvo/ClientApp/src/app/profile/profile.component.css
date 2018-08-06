@@ -9,24 +9,6 @@
   --blockw: 600px;
   --picturew: 280px;
   --pictureh: 370px;
-  --btnw: 200px;
-  --maincolor: rgb(51, 51, 102);
-  --maincolora: rgb(51, 51, 102,0.5);
-}
-
-.subbtn{
-    margin: auto;
-    margin-bottom: 20px;    
-    min-width:  var(--btnw);
-    padding: 9px;
-    background-color: white;
-    border: none;
-    border-radius: 100px 100px 100px 100px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    color: darkred;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 18px;
-    font-weight: bold;
 }
 
 .photo{
@@ -39,16 +21,16 @@
     border-bottom: 1px solid lightgrey;
 }
 
-.makepost{
+.make-post{
     display: flex;
     flex-direction: column;
 }
 
-  .makepost textarea {
+  .make-post textarea {
     resize: none;
   }
 
-  .makepost input {
+  .make-post input {
     width: 75px;
     margin-top: 10px;
     margin-left: auto;
