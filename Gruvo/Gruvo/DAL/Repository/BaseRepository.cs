@@ -3,9 +3,9 @@
     public abstract class BaseRepository
     {
         protected IUserDAO userDAO;
-        protected IPostDAO postDAO;
+        protected ITweetDAO tweetDAO;
 
         public IUserDAO UserDAO { get { return userDAO; } }
-        public IPostDAO PostDAO { get { return postDAO; } }
+        public ITweetDAO TweetDAO { get { return tweetDAO; } }
     }
 }
