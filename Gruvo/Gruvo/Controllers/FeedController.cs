@@ -30,5 +30,18 @@ namespace Gruvo.Controllers
             }
         }
 
+        [Route("recommendations")]
+        public IActionResult GetRecommendations()
+        {
+            try
+            {
+                return Ok(_repository.UserDAO.GetRandomUsers(3));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
     }
 }

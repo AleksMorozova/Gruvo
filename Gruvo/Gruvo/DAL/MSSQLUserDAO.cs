@@ -385,5 +385,35 @@ namespace Gruvo.DAL
                 throw;
             }
         }
+
+        public IEnumerable<UserInfo> GetRandomUsers(int count)
+        {
+            List<UserInfo> list = new List<UserInfo>();
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = "select top @count * from users order by newid()";
+                    command.Parameters.Add("@count", SqlDbType.Int);
+                    command.Parameters["@count"].Value = count;
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            list.Add(new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]));
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return list;
+        }
     }
 }
