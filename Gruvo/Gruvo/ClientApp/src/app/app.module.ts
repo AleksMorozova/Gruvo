@@ -15,7 +15,6 @@ import { TweetComponent } from './tweet/tweet.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileService } from './profile/profile.service';
 import { MenuComponent } from './menu/menu.component';
-import { AuthGuard } from './auth-guard';
 import { LoginGuard } from './login-guard';
 
 
@@ -43,8 +42,7 @@ import { LoginGuard } from './login-guard';
     { provide: 'SIGNUP_URL', useValue: 'api/auth/signup' },
     { provide: 'TEST_URL', useValue: 'api/auth/test' }, 
      LoginService,
-     ProfileService,
-    AuthGuard,
+     ProfileService,    
     LoginGuard
       ]
 })

@@ -4,7 +4,6 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { LoginComponent } from './login/login.component'
 import { SignupComponent } from './signup/signup.component'
 import { ProfileComponent } from './profile/profile.component';
-import { AuthGuard } from './auth-guard';
 import { LoginGuard } from './login-guard';
 
 
@@ -12,7 +11,7 @@ const appRoutes: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full', canActivate: [LoginGuard] },
   { path: 'login', component: LoginComponent, pathMatch: 'full', canActivate: [LoginGuard]},
   { path: 'signup', component: SignupComponent, pathMatch: 'full', canActivate: [LoginGuard] },
-  { path: 'profile', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, pathMatch: 'full'},
   { path: '**', redirectTo: '/page404' },
 
   /* TODO:
