@@ -396,7 +396,7 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = "select top @count * from users order by newid()";
+                    command.CommandText = @"select top (@count) * from users order by newid()";
                     command.Parameters.Add("@count", SqlDbType.Int);
                     command.Parameters["@count"].Value = count;
 
@@ -409,7 +409,7 @@ namespace Gruvo.DAL
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

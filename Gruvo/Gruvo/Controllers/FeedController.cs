@@ -1,10 +1,12 @@
 ﻿using System;
 using Gruvo.BLL;
 using Gruvo.DAL.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gruvo.Controllers
 {
+    [Authorize(Policy = "GruvoCookie")]
     [Route("api/[controller]")]
     public class FeedController : ControllerBase
     {
@@ -15,7 +17,7 @@ namespace Gruvo.Controllers
             _repository = repository;
         }
 
-        [Route("")]
+        [HttpGet]
         public IActionResult GetTweets()
         {
             try
