@@ -1,6 +1,6 @@
 <div class="content ">
   <div class="inner">
-    <div class="intro ">
+    <div class="intro hidden-xs col-sm-4">
       <p>
         Share your thoughts all around the world
       </p>
@@ -8,18 +8,18 @@
         Be the first to find out what is happening in the life of your friends
       </p>
     </div>
-    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="LogIn(loginForm.value)" novalidate>
+    <form class="login-form col-xs-10 col-sm-offset-1  col-sm-4 " [formGroup]="loginForm" (ngSubmit)="LogIn(loginForm.value)" novalidate>
       <h1>Log In</h1>
-      <div class="form-group">
+      <div class="form-group" [ngClass]="{'has-error':!loginForm.controls['email'].valid && loginForm.controls['email'].touched}">
         <label for="inputEmail">Email address <span class="text-danger" *ngIf="!loginForm.controls['email'].valid && loginForm.controls['email'].touched">is not valid!</span></label>
-        <input [formControl]="loginForm.controls['email']" [ngClass]="{'not-valid':!loginForm.controls['email'].valid && loginForm.controls['email'].touched}" type="email" class="form-control" id="inputEmail" placeholder="Email">
+        <input [formControl]="loginForm.controls['email']" type="email" class="form-control" id="inputEmail" placeholder="Email">
       </div>
-      <div class="form-group">
+      <div class="form-group" [ngClass]="{'has-error':!loginForm.controls['password'].valid && loginForm.controls['password'].touched}">
         <label for="inputPassword">Password <span class="text-danger" *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched">is not valid!</span></label>
-        <input [formControl]="loginForm.controls['password']" [ngClass]="{'not-valid':!loginForm.controls['password'].valid && loginForm.controls['password'].touched}" type="password" class="form-control" id="inputPassword" placeholder="Password">
+        <input [formControl]="loginForm.controls['password']" type="password" class="form-control" id="inputPassword" placeholder="Password">
 
       </div>
-      <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid && loginForm.touched">Submit</button>
+      <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid && loginForm.touched">Log In</button>
       <br />
       <a href="signup"><h5>Don't have an account yet?</h5></a>
     </form>
