@@ -11,6 +11,11 @@ import { LoginService } from './login/login.service';
 import { SignupComponent } from './signup/signup.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { TweetComponent } from './tweet/tweet.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileService } from './profile/profile.service';
+import { MenuComponent } from './menu/menu.component';
+import { LoginGuard } from './login-guard';
 
 
 @NgModule({
@@ -19,7 +24,10 @@ import { FooterComponent } from './footer/footer.component';
     HeaderComponent,
     FooterComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ProfileComponent,
+    MenuComponent,
+    TweetComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -31,8 +39,11 @@ import { FooterComponent } from './footer/footer.component';
   bootstrap: [AppComponent],
   providers: [
     { provide: 'LOGIN_URL', useValue: 'api/auth/login' },
-    { provide: 'SIGNUP_URL', useValue: 'api/auth/signup'},    
-     LoginService
+    { provide: 'SIGNUP_URL', useValue: 'api/auth/signup' },
+    { provide: 'TEST_URL', useValue: 'api/auth/test' }, 
+     LoginService,
+     ProfileService,    
+    LoginGuard
       ]
 })
 export class AppModule { }
