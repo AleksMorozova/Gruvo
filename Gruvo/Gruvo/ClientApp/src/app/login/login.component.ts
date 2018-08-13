@@ -26,7 +26,7 @@ export class LoginComponent {
     this.loginService.LogIn(formData.email, crypto.MD5(formData.password).toString()).subscribe(object => {
       this.correctCredentials = true;
       console.log('Logged in!!');
-      this.router.navigate(['/profile']);
+      this.router.navigate(['/feed']);
     }, error => {
       console.log(error);
       this.correctCredentials = false;
