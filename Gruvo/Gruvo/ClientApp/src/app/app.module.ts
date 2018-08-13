@@ -16,6 +16,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProfileService } from './profile/profile.service';
 import { MenuComponent } from './menu/menu.component';
 import { LoginGuard } from './login-guard';
+import { FeedComponent } from './feed/feed.component';
+import { FeedService } from './feed/feed.service';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { LoginGuard } from './login-guard';
     SignupComponent,
     ProfileComponent,
     MenuComponent,
-    TweetComponent
+    TweetComponent,
+    FeedComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -40,10 +43,13 @@ import { LoginGuard } from './login-guard';
   providers: [
     { provide: 'LOGIN_URL', useValue: 'api/auth/login' },
     { provide: 'SIGNUP_URL', useValue: 'api/auth/signup' },
-    { provide: 'TEST_URL', useValue: 'api/auth/test' }, 
+    { provide: 'TEST_URL', useValue: 'api/auth/test' },
+    { provide: 'FEED_TWEETS_URL', useValue: 'api/feed' },
+    { provide: 'FEED_RECOMMENDATIONS_URL', useValue: 'api/feed/getrecommendations'},
      LoginService,
-     ProfileService,    
-    LoginGuard
+     ProfileService,
+     FeedService,
+     LoginGuard
       ]
 })
 export class AppModule { }
