@@ -2,7 +2,7 @@
   <gr-menu></gr-menu>
 
   <div class="tweets-list">
-    <gr-tweet *ngFor="let tweet of tweets">{{tweet}}</gr-tweet>
+    <gr-tweet *ngFor="let tweet of tweets" [data]="tweet"></gr-tweet>
   </div>
 
   <div class="recommendations">
