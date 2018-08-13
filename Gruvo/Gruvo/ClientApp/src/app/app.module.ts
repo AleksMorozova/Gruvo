@@ -43,6 +43,8 @@ import { LoginGuard } from './login-guard';
     { provide: 'TEST_URL', useValue: 'api/auth/test' },
     { provide: 'PROFILE_INFO_URL', useValue: 'api/profile/userInfo' },
     { provide: 'PROFILE_TWEETS_URL', useValue: 'api/profile/userTweets'},
+    { provide: 'PROFILE_SUBSCRIPTIONS_URL', useValue: 'api/profile/subscriptions' },
+    { provide: 'PROFILE_SUBSRIBERS_URL', useValue: 'api/profile/subscribers' },
 
     LoginService,
     ProfileService,    

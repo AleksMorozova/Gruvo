@@ -32,6 +32,7 @@ namespace Gruvo.Controllers
                 return BadRequest("Something went wrong");
             }
         }
+        [Route("subscribers")]
         [HttpGet]
         public IActionResult GetSubscribers()
         {
@@ -46,6 +47,7 @@ namespace Gruvo.Controllers
                 return BadRequest("Something went wrong");
             }
         }
+        [Route("subscriptions")]
         [HttpGet]
         public IActionResult GetSubscriptions()
         {
