@@ -10,12 +10,12 @@ import { Observable } from 'rxjs/Rx';
 })
 
 export class FeedComponent {
-  tweets: ITweet[] = new Array(100);
+  tweets: ITweet[] = [];
 
   constructor(private feedService: FeedService) {
     this.feedService.getTweets()
       .subscribe((tweets) => {
-        this.tweets.concat(tweets);
+        this.tweets = tweets;
         console.log(this.tweets);
       });
   }
