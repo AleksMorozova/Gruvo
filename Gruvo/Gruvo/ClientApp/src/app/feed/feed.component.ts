@@ -16,7 +16,6 @@ export class FeedComponent {
     this.feedService.getTweets()
       .subscribe((tweets) => {
         this.tweets = tweets;
-        console.log(this.tweets);
       });
   }
 }
