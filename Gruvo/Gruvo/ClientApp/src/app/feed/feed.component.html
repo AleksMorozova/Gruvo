@@ -7,6 +7,6 @@
 
   <div class="recommendations">
     <h4>Recommendations</h4>
-    Hello from recommendations!
+    <gr-recommendation *ngFor="let user of recommendations" [data]="user"></gr-recommendation>
   </div>
 </div>

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 import { HttpResponse } from 'selenium-webdriver/http';
 import { ITweet } from '../tweet/tweet.model';
+import { IUser } from '../profile/user.model';
 
 @Injectable()
 export class FeedService {
@@ -14,5 +15,9 @@ export class FeedService {
 
   getTweets(): Observable<ITweet[]> {
     return this.http.get<ITweet[]>(this.feedTweetsApiURL);
+  }
+
+  getRecommendations(): Observable<IUser[]> {
+    return this.http.get<IUser[]>(this.feedRecommendApiUrl);
   }
 }

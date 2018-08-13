@@ -18,6 +18,7 @@ namespace Gruvo.Controllers
         }
 
         [HttpGet]
+        [Route("tweets")]
         public IActionResult GetTweets()
         {
             try
@@ -32,6 +33,7 @@ namespace Gruvo.Controllers
             }
         }
 
+        [HttpGet]
         [Route("recommendations")]
         public IActionResult GetRecommendations()
         {
