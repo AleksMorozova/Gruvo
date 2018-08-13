@@ -9,13 +9,13 @@ namespace Gruvo.DAL
         void AddUser(string login, string password, string email, DateTime regDateTime);
 
         IEnumerable<UserInfo> GetUsers();
-        UserInfo GetUser(int id);
+        UserInfo GetUser(long id);
         UserInfo GetUser(string login);
         UserInfo GetUserByEmailAndPwd(string email, string password);
 
-        void UpdateCredentianals(int id, string login, string password, string email);
-        void UpdateUserInfo(int id, string about, DateTime bday);
-        void DeleteUser(int id);
+        void UpdateCredentianals(long id, string login, string password, string email);
+        void UpdateUserInfo(long id, string about, DateTime bday);
+        void DeleteUser(long id);
         void DeleteUser(string login);
 
         void Subscribe(long userId1, long userId2, DateTime subdate);
