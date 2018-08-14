@@ -11,6 +11,7 @@ import * as crypto from "crypto-js";
 })
 export class SignupComponent {
   signupForm: FormGroup;
+  correctCredentials: boolean = true;
 
   constructor(private loginService: LoginService, private router: Router, formBuilder: FormBuilder) {
     this.signupForm = formBuilder.group({
@@ -25,10 +26,15 @@ export class SignupComponent {
 
   SignUp(formData: any): void {
     this.loginService.SignUp(formData.login, formData.email, crypto.MD5(formData.password).toString()).subscribe(object => {
+        this.correctCredentials = true;
       console.log('Registration completed!');
       this.router.navigate(['']);
     }, error => {
+      this.correctCredentials = false;
       console.log(error);
     })};
-  
+
+  isValidControl(controlName): boolean {
+    return !this.signupForm.controls[controlName].valid && this.signupForm.controls[controlName].touched;
+  }
 }
