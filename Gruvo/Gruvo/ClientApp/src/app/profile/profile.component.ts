@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IUser } from './user.model';
 import { ProfileService } from './profile.service';
 import { ITweet } from '../tweet/tweet.model';
@@ -8,13 +8,15 @@ import { ITweet } from '../tweet/tweet.model';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent  {
-  user: IUser;
-  userTweets: ITweet[];
+export class ProfileComponent implements OnInit {
+
+
+  user: IUser = { login: '', posts: 0, followers: 0, followings: 0, id: 0, regDate: new Date() };
+  userTweets: Array<ITweet>;
   subscriptions: IUser[];
   subscribers: IUser[];
 
-  constructor(private profileService: ProfileService) {
+  ngOnInit(): void {
     this.profileService.getUserData()
       .subscribe((user) => {
         this.user = user;
@@ -31,6 +33,10 @@ export class ProfileComponent  {
       .subscribe((subscribers) => {
         this.subscribers = subscribers;
       });
+  }
+
+  constructor(private profileService: ProfileService) {
+   
 
   }
 }

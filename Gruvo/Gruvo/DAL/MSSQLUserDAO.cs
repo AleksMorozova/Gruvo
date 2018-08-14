@@ -321,7 +321,7 @@ namespace Gruvo.DAL
                     {
                         while (dr.Read())
                         {
-                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr[".Regdate"]));
+                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr["Regdate"]));
                         }
                     }
                 }
@@ -356,7 +356,7 @@ namespace Gruvo.DAL
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

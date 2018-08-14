@@ -139,7 +139,7 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select postid,posts.userid,login,message,postdate from posts join users on users.userid = posts.userid where posts.userid = @id by postdate desc";
+                    command.CommandText = @"select postid,posts.userid,login,message,postdate from posts join users on users.userid = posts.userid where posts.userid = @id order by postdate desc";
                     command.Parameters.Add("@id", SqlDbType.BigInt);
                     command.Parameters["@id"].Value = id;
 
