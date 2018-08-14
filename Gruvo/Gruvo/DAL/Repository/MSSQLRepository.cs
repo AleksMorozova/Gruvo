@@ -8,7 +8,7 @@ namespace Gruvo.DAL.Repository
         {
             string connectionStr = configuration.GetConnectionString("GruvoMSSQL");
             userDAO = new MSSQLUserDAO(connectionStr);
-            postDAO = new MSSQLPostDAO(connectionStr);
+            tweetDAO = new MSSQLTweetDAO(connectionStr);
         }
     }
 }

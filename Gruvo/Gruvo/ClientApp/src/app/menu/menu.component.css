@@ -1,0 +1,30 @@
+.menu span {
+  color: var(--maincolor);
+  margin: auto;
+}
+
+.menu li {
+  display: flex;
+  margin-bottom: 10px;
+  width: 50px;
+  height: 50px;
+  background: whitesmoke;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+}
+
+  .menu li:hover {
+    box-shadow: 0px 0px 10px var(--maincolora)
+  }
+
+.menu {
+  position: fixed;
+  margin-top: 20px;
+  left: 10px;
+}
+
+  .menu ul {
+    list-style: none;
+  }

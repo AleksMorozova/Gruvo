@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { LoginService } from '../login/login.service';
 import { Router } from '@angular/router';
+import * as crypto from "crypto-js";
 
 @Component({
   selector: 'gr-signup',
@@ -23,9 +24,9 @@ export class SignupComponent {
     });
   }
 
-  SignUp(formData: {login:string, email:string, password:string}): void {
-    this.loginService.SignUp(formData.login, formData.email, formData.password).subscribe(object => {
-      this.correctCredentials = true;
+  SignUp(formData: any): void {
+    this.loginService.SignUp(formData.login, formData.email, crypto.MD5(formData.password).toString()).subscribe(object => {
+        this.correctCredentials = true;
       console.log('Registration completed!');
       this.router.navigate(['']);
     }, error => {

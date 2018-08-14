@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using Gruvo.Models;
+using Gruvo.DTL;
 
 namespace Gruvo.DAL
 {
-    class MSSQLPostDAO : IPostDAO
+    class MSSQLTweetDAO : ITweetDAO
     {
         private string _connectionStr;
 
-        public MSSQLPostDAO(string connectionString) => this._connectionStr = connectionString;
+        public MSSQLTweetDAO(string connectionString) => this._connectionStr = connectionString;
 
         public void AddPost(long userId, string message, DateTime postDateTime)
         {
@@ -64,9 +65,9 @@ namespace Gruvo.DAL
             }
         }
 
-        public Post GetPost(long id)
+        public ReadableTweet GetPost(long id)
         {
-            Post post = null;
+            ReadableTweet tweet = null;
             try
             {
                 using (var connection = new SqlConnection(_connectionStr))
@@ -74,7 +75,7 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select * from posts where postid = @id ";
+                    command.CommandText = @"select postid,posts.userid,login,message,postdate from posts join users on users.userid = posts.userid where postid = @id ";
                     command.Parameters.Add("@id", SqlDbType.BigInt);
                     command.Parameters["@id"].Value = id;
 
@@ -82,7 +83,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            post = new Post((long)dataReader["Postid"], (long)dataReader["userid"], (string)dataReader["message"], (DateTime)dataReader["postdate"]);
+                            tweet = new ReadableTweet((long)dataReader["Postid"], (long)dataReader["userid"], (string)dataReader["login"], (string)dataReader["message"], (DateTimeOffset)dataReader["postdate"]);
                         }
                     }
                 }
@@ -93,12 +94,12 @@ namespace Gruvo.DAL
                 throw;
             }
 
-            return post;
+            return tweet;
         }
 
-        public IEnumerable<Post> GetPostsForUser(long id)
+        public IEnumerable<ReadableTweet> GetPostsForUser(long id)
         {
-            List<Post> list = new List<Post>();
+            List<ReadableTweet> list = new List<ReadableTweet>();
             try
             {
                 using (var connection = new SqlConnection(_connectionStr))
@@ -106,7 +107,7 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select * from posts where userid in (select SubscribedId from subscriptions where SubscriberId = @id)  ";
+                    command.CommandText = @"select postid,posts.userid,login,message,postdate from posts join users on users.userid = posts.userid  where posts.userid in (select SubscribedId from subscriptions where SubscriberId = @id) or posts.userid = @id order by postdate desc";
                     command.Parameters.Add("@id", SqlDbType.BigInt);
                     command.Parameters["@id"].Value = id;
 
@@ -114,7 +115,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            list.Add(new Post((long)dataReader["Postid"], (long)dataReader["userid"], (string)dataReader["message"], (DateTime)dataReader["postdate"]));
+                            list.Add(new ReadableTweet((long)dataReader["Postid"], (long)dataReader["userid"], (string)dataReader["login"], (string)dataReader["message"], (DateTimeOffset)dataReader["postdate"]));
                         }
                     }
                 }
@@ -128,9 +129,9 @@ namespace Gruvo.DAL
             return list;
         }
 
-        public IEnumerable<Post> GetUserPosts(long id)
+        public IEnumerable<ReadableTweet> GetUserPosts(long id)
         {
-            List<Post> list = new List<Post>();
+            List<ReadableTweet> list = new List<ReadableTweet>();
             try
             {
                 using (var connection = new SqlConnection(_connectionStr))
@@ -138,7 +139,7 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select * from posts where userid = @id";
+                    command.CommandText = @"select postid,posts.userid,login,message,postdate from posts join users on users.userid = posts.userid where posts.userid = @id by postdate desc";
                     command.Parameters.Add("@id", SqlDbType.BigInt);
                     command.Parameters["@id"].Value = id;
 
@@ -146,7 +147,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            list.Add(new Post((long)dataReader["Postid"], (long)dataReader["userid"], (string)dataReader["message"], (DateTime)dataReader["postdate"]));
+                            list.Add(new ReadableTweet((long)dataReader["Postid"], (long)dataReader["userid"], (string)dataReader["login"], (string)dataReader["message"], (DateTimeOffset)dataReader["postdate"]));
                         }
                     }
                 }
