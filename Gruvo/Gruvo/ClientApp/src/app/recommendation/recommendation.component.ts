@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IUser } from '../profile/user.model';
+import { IUser } from '@app/profile/user.model';
 
 @Component({
   selector: 'gr-recommendation',

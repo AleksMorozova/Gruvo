@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { LoginService } from './login.service';
+import { LoginService } from '@app/login/login.service';
 import { Router } from '@angular/router';
 import * as crypto from "crypto-js";
 

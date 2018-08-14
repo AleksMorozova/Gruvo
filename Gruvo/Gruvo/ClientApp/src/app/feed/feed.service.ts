@@ -3,8 +3,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 import { HttpResponse } from 'selenium-webdriver/http';
-import { ITweet } from '../tweet/tweet.model';
-import { IUser } from '../profile/user.model';
+import { ITweet } from '@app/tweet/tweet.model';
+import { IUser } from '@app/profile/user.model';
 
 @Injectable()
 export class FeedService {

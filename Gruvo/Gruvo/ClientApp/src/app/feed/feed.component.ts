@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { ITweet } from '../tweet/tweet.model';
-import { IUser } from '../profile/user.model';
-import { FeedService } from './feed.service';
+import { ITweet } from '@app/tweet/tweet.model';
+import { IUser } from '@app/profile/user.model';
+import { FeedService } from '@app/feed/feed.service';
 import { Observable } from 'rxjs/Rx';
 
 @Component({
