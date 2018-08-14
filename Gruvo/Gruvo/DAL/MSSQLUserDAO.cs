@@ -341,6 +341,8 @@ namespace Gruvo.DAL
                 using (var connection = new SqlConnection(_connectionStr))
                 using (var command = connection.CreateCommand())
                 {
+                    connection.Open();
+
                     command.CommandText = @"select userid, login, users.email, Regdate from users join subscriptions on userid = subscriberid where subscribedid = @userid";
                     command.Parameters.Add("@userid", SqlDbType.BigInt);
                     command.Parameters["@userid"].Value = id;
