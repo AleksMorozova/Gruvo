@@ -28,6 +28,6 @@ export class ProfileService {
     return this.http.get<IUser[]>(this.profileSubscriptionsApiURL);
   }
   getSubscribers(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.profileSubscкшиукыApiURL);
+    return this.http.get<IUser[]>(this.profileSubscribersApiURL);
   }
 }
