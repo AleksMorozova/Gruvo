@@ -10,8 +10,7 @@ import { ITweet } from '../tweet/tweet.model';
 })
 export class ProfileComponent implements OnInit {
 
-
-  user: IUser = { login: '', posts: 0, followers: 0, followings: 0, id: 0, regDate: new Date() };
+  user: IUser;
   userTweets: Array<ITweet>;
   subscriptions: IUser[];
   subscribers: IUser[];
