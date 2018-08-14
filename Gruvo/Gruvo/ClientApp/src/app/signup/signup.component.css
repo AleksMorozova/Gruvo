@@ -3,14 +3,11 @@
   min-height: 100vh;
   display: flex;
   flex-flow: column;
-  align-content: stretch;
-  background-color: #FFFFFF;
-  padding-top: 100px;
-  padding-bottom: 100px;
+  align-content: center;
+  padding: 100px 0;
 }
 
 .signup {
-  max-width:400px;
   justify-content: center;
   align-items: center;
 }

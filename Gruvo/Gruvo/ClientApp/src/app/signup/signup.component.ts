@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent {
   signupForm: FormGroup;
+  correctCredentials: boolean = true;
 
   constructor(private loginService: LoginService, private router: Router, formBuilder: FormBuilder) {
     this.signupForm = formBuilder.group({
@@ -24,10 +25,15 @@ export class SignupComponent {
 
   SignUp(formData: {login:string, email:string, password:string}): void {
     this.loginService.SignUp(formData.login, formData.email, formData.password).subscribe(object => {
+      this.correctCredentials = true;
       console.log('Registration completed!');
       this.router.navigate(['']);
     }, error => {
+      this.correctCredentials = false;
       console.log(error);
     })};
-  
+
+  isValidControl(controlName): boolean {
+    return !this.signupForm.controls[controlName].valid && this.signupForm.controls[controlName].touched;
+  }
 }

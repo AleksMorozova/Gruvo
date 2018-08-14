@@ -33,4 +33,8 @@ export class LoginComponent {
       );
   }
 
+  isValidControl(controlName): boolean {
+    return !this.loginForm.controls[controlName].valid && this.loginForm.controls[controlName].touched;
+  }
+
  }

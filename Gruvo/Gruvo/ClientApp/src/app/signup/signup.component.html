@@ -1,32 +1,37 @@
 <div class="content">
-    <form class="signup container" [formGroup]="signupForm" (ngSubmit)="SignUp(signupForm.value)">
-      <h2>Become a part of Gruvo right now!</h2>
-      <div class="form-group" [ngClass]="{'has-error':!signupForm.controls['login'].valid && signupForm.controls['login'].touched}">
-        <label for="Login">
-          Login
-          <span class="text-danger" *ngIf="!signupForm.controls['login'].valid && signupForm.controls['login'].touched">is not valid!</span>
-          </label>
-        <input id="Login" [formControl]="signupForm.controls['login']"  type="text" class="form-control" placeholder="Login">
-      </div>
+  <form class="signup container col-md-5" [formGroup]="signupForm" (ngSubmit)="SignUp(signupForm.value)">
+    <h2>Become a part of Gruvo right now!</h2>
+    <div class="form-group" [ngClass]="{'has-error':isValidControl('login')}">
+      <label for="Login">
+        Login
+        <span class="text-danger" *ngIf="isValidControl('login')">is not valid!</span>
+      </label>
+      <input id="Login" [formControl]="signupForm.controls['login']" type="text" class="form-control" placeholder="Login">
+    </div>
 
-      <div class="form-group" [ngClass]="{'has-error':!signupForm.controls['email'].valid && signupForm.controls['email'].touched}">
-        <label for="Email">
-          Email
-          <span class="text-danger" *ngIf="!signupForm.controls['email'].valid && signupForm.controls['email'].touched">is not valid!</span>
-        </label>
-        <input id="Email" [formControl]="signupForm.controls['email']"  type="email" class="form-control" placeholder="Email">
-      </div>
+    <div class="form-group" [ngClass]="{'has-error':isValidControl('email')}">
+      <label for="Email">
+        Email
+        <span class="text-danger" *ngIf="isValidControl('email')">is not valid!</span>
+      </label>
+      <input id="Email" [formControl]="signupForm.controls['email']" type="email" class="form-control" placeholder="Email">
+    </div>
 
-      <div class="form-group" [ngClass]="{'has-error':!signupForm.controls['password'].valid && signupForm.controls['password'].touched}">
-        <label for="Password">
-          Password
-          <span class="text-danger" *ngIf="!signupForm.controls['password'].valid && signupForm.controls['password'].touched">is not valid!</span>
-        </label>
-        <input id="Password" [formControl]="signupForm.controls['password']"  type="password" class="form-control" placeholder="Password">
-      </div>
+    <div class="form-group" [ngClass]="{'has-error':isValidControl('password')}">
+      <label for="Password">
+        Password
+        <span class="text-danger" *ngIf="isValidControl('password')">is not valid!</span>
+      </label>
+      <input id="Password" [formControl]="signupForm.controls['password']" type="password" class="form-control" placeholder="Password">
+    </div>
 
-      <button type="submit" class="btn btn-success btn-md" [disabled]="!signupForm.valid" >Sign Up</button>
-    </form>
+    <button type="submit" class="btn btn-success btn-md" [disabled]="!signupForm.valid">Sign Up</button>
+    
+    <div class="wrong-credentials" *ngIf="!correctCredentials">
+      Something gone wrong.
+    </div>
+  </form>
+
 </div>
 
 
