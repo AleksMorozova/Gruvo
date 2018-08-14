@@ -321,7 +321,7 @@ namespace Gruvo.DAL
                     {
                         while (dr.Read())
                         {
-                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr[".Regdate"]));
+                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr["Regdate"]));
                         }
                     }
                 }
@@ -341,6 +341,8 @@ namespace Gruvo.DAL
                 using (var connection = new SqlConnection(_connectionStr))
                 using (var command = connection.CreateCommand())
                 {
+                    connection.Open();
+
                     command.CommandText = @"select userid, login, users.email, Regdate from users join subscriptions on userid = subscriberid where subscribedid = @userid";
                     command.Parameters.Add("@userid", SqlDbType.BigInt);
                     command.Parameters["@userid"].Value = id;
@@ -354,7 +356,7 @@ namespace Gruvo.DAL
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
