@@ -5,9 +5,8 @@ import { HttpResponse } from 'selenium-webdriver/http';
 
 import { map } from 'rxjs/operators';
 
-import { IUser } from "./user.model";
-import { ITweet } from "../tweet/tweet.model";
-
+import { IUser } from "@app/profile/user.model";
+import { ITweet } from "@app/tweet/tweet.model";
 
 @Injectable()
 export class ProfileService {
