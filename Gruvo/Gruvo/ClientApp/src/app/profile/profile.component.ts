@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { IUser } from './user.model';
-import { ProfileService } from './profile.service';
-import { ITweet } from '../tweet/tweet.model';
+import { IUser } from '@app/profile/user.model';
+import { ProfileService } from '@app/profile/profile.service';
+import { ITweet } from '@app/tweet/tweet.model';
 
 @Component({
   selector: 'gr-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
+
 export class ProfileComponent implements OnInit {
 
   user: IUser;

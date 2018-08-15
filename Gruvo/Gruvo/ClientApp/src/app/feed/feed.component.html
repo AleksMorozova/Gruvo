@@ -1,0 +1,12 @@
+<div class="content">
+  <gr-menu></gr-menu>
+
+  <div class="tweets-list">
+    <gr-tweet *ngFor="let tweet of tweets" [data]="tweet"></gr-tweet>
+  </div>
+
+  <div class="recommendations">
+    <h4>Recommendations</h4>
+    <gr-recommendation *ngFor="let user of recommendations" [data]="user"></gr-recommendation>
+  </div>
+</div>

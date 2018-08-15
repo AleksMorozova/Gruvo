@@ -26,6 +26,11 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
+    <None Remove="ClientApp\src\app\feed\feed.component.ts" />
+    <None Remove="ClientApp\src\app\feed\feed.service.ts" />
+    <None Remove="ClientApp\src\app\recommendation.component.html" />
+    <None Remove="ClientApp\src\app\recommendation.component.html" />
+    <None Remove="ClientApp\src\app\recommendation\recommendation.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +39,9 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\feed\feed.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\feed\feed.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\recommendation\recommendation.component.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
