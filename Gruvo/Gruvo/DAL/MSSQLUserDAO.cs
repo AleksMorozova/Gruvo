@@ -44,7 +44,7 @@ namespace Gruvo.DAL
             }
         }
 
-        public void DeleteUser(int id)
+        public void DeleteUser(long id)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace Gruvo.DAL
             }
         }
 
-        public UserInfo GetUser(int id)
+        public UserInfo GetUser(long id)
         {
             UserInfo user = null;
             try
@@ -213,7 +213,7 @@ namespace Gruvo.DAL
             return list;
         }
 
-        public void UpdateCredentianals(int id, string login, string password, string email)
+        public void UpdateCredentianals(long id, string login, string password, string email)
         {
             try
             {
@@ -246,7 +246,7 @@ namespace Gruvo.DAL
             }
         }
 
-        public void UpdateUserInfo(int id, string about, DateTime bday)
+        public void UpdateUserInfo(long id, string about, DateTime bday)
         {
             try
             {
@@ -321,7 +321,7 @@ namespace Gruvo.DAL
                     {
                         while (dr.Read())
                         {
-                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr[".Regdate"]));
+                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr["Regdate"]));
                         }
                     }
                 }
@@ -356,7 +356,7 @@ namespace Gruvo.DAL
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
