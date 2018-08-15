@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { LoginService } from './login.service';
+import { LoginService } from '@app/login/login.service';
 import { Router } from '@angular/router';
 import * as crypto from "crypto-js";
 
@@ -26,7 +26,7 @@ export class LoginComponent {
     this.loginService.LogIn(formData.email, crypto.MD5(formData.password).toString()).subscribe(object => {
       this.correctCredentials = true;
       console.log('Logged in!!');
-      this.router.navigate(['/profile']);
+      this.router.navigate(['/feed']);
     }, error => {
       console.log(error);
       this.correctCredentials = false;

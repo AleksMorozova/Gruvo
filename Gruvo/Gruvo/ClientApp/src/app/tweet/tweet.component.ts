@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ITweet } from './tweet.model';
+import { ITweet } from '@app/tweet/tweet.model';
 
 @Component({
   selector: 'gr-tweet',

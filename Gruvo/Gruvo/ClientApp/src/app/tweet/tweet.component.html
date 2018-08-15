@@ -1,10 +1,10 @@
 <div class="post" id="{{ data.id }}">
   <h4>
-    <a href="users/{{data.userLogin}}">{{data.userLogin }}</a>
+    <a href="users/{{data.userLogin}}">{{data.userLogin}}</a>
   </h4>
   <blockquote>
     <p>{{data.message}}</p>
-    <footer>{{ data.date.toLocaleString()}}</footer>
+    <footer>{{ data.sendingDateTime | date:'MMM d, y, h:mm a' }}</footer>
 </blockquote>
       <hr>
 </div>

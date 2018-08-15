@@ -1,0 +1,37 @@
+.content {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-flow: row;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  align-items: flex-start;
+}
+
+.tweets-list {
+  display: flex;
+  flex-flow: column;
+  width: 60%;
+}
+
+.recommendations {
+  display: flex;
+  flex-flow: column;
+  width: 25%;
+  border-radius: 10px
+  /*background-color: #e1e1d0;*/
+}
+
+.tweets-list, .recommendations {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 150px;
+  right: 20px;
+  position: relative;
+  box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+}
+
+h4 {
+  text-align: center;
+  margin-bottom: 5px;
+}

@@ -5,13 +5,15 @@ import { LoginComponent } from './login/login.component'
 import { SignupComponent } from './signup/signup.component'
 import { ProfileComponent } from './profile/profile.component';
 import { LoginGuard } from './login-guard';
+import { FeedComponent } from './feed/feed.component';
 
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full', canActivate: [LoginGuard] },
   { path: 'login', component: LoginComponent, pathMatch: 'full', canActivate: [LoginGuard]},
   { path: 'signup', component: SignupComponent, pathMatch: 'full', canActivate: [LoginGuard] },
-  { path: 'profile', component: ProfileComponent, pathMatch: 'full'},
+  { path: 'profile', component: ProfileComponent, pathMatch: 'full' },
+  { path: 'feed', component: FeedComponent, pathMatch: 'full'},
   { path: '**', redirectTo: '/page404' },
 
   /* TODO:

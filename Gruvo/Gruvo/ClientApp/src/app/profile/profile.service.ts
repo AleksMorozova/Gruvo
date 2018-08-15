@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { IUser } from "./user.model";
+import { IUser } from "@app/profile/user.model";
 
 @Injectable()
 export class ProfileService {
