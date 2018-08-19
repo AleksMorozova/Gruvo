@@ -1,37 +1,75 @@
+@media screen and (max-width: 768px) {
+  .left {
+    position: fixed;
+    top: 60px;
+    left: -300px;
+    z-index: 11;
+    margin: 0 0;
+  }
+}
+
 .content {
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-flow: row;
-  margin-top: 100px;
-  margin-bottom: 100px;
+  padding: 80px 0;
   align-items: flex-start;
+  justify-content:center;
 }
 
-.tweets-list {
+.tweets-list {  
+  width: 600px;
   display: flex;
   flex-flow: column;
-  width: 60%;
 }
 
-.recommendations {
+.make-post {
+  display: flex;
+  justify-content:space-between;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.make-post input {
+    width: 75px;
+    margin-top: 10px;
+    margin-left: auto;
+  }
+
+.make-post textarea {
+  resize: none;
+}
+
+.photo {
+  overflow: hidden;
+  max-width: 128px;
+  max-height: 128px;
   display: flex;
   flex-flow: column;
-  width: 25%;
-  border-radius: 10px
-  /*background-color: #e1e1d0;*/
+  justify-content: center;
+  background-color: white;
+  border-bottom: 1px solid lightgrey;
 }
 
-.tweets-list, .recommendations {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 150px;
-  right: 20px;
-  position: relative;
-  box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+.left {
+  width:250px;
+  display: flex;
+  flex-flow: column;
+  background-color:white;
 }
 
-h4 {
-  text-align: center;
-  margin-bottom: 5px;
+.tweets-list, .left {
+  margin: 0 25px;
 }
+
+.mobile-menu{
+  font-size:24px;
+  color:white;
+  position:fixed;
+  z-index:10;
+  top:15px;
+  left:15px;
+
+}
+

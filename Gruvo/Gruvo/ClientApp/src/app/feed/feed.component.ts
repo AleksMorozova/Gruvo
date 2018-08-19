@@ -26,4 +26,18 @@ export class FeedComponent {
         this.recommendations = recommendations;
       });
   }
+
+  openNav() {
+    console.log("Openning sidenav");
+    var elem = document.getElementById("sidenav")
+    x.style.width = "100%";
+    x.style.margin = "0px";
+    x.style.left = "0px";
+    x.style.borderRadius = "0px";
+  } 
+
+  closeNav() {
+    var elem = document.getElementById("sidenav")
+    x.style.width = "0px";
+  }
 }
