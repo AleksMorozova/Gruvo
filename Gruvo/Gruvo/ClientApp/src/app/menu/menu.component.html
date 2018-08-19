@@ -1,24 +1,14 @@
-<div class="menu">
-  <ul class="nav">
-    <a href="#">
-      <li>
-        <span class="glyphicon glyphicon-home"> Home</span>
-      </li>
-    </a>
-    <a href="#">
-      <li>
-        <span class="glyphicon glyphicon-user"> Profile</span>
-      </li>
-    </a>
-    <a href="#">
-      <li>
-        <span class="glyphicon glyphicon-cog"> Settings</span>
-      </li>
-    </a>
-    <a href="api/auth/logout">
-      <li>
-        <span class="glyphicon glyphicon-log-out"> Log out</span>
-      </li>
-    </a>
-  </ul>
+<a class="mobile-menu-icon visible-xs-block" (click)="moveSidebar()"><span id="mobile-menu-icon" class="glyphicon glyphicon-align-justify"></span></a>
+<div class="background" id="bg">
+</div>
+<div class="gruvo-block menu" id="sidenav">
+  <div class="photo  img-circle center-block">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCQTDXAX0S-RLwVQY82kLEyKsyKV8Lxh5ecAKP6hLGA38Voims-w" class="img-responsive">
+  </div>
+  <h2 class="center-block">{{'NAME'}}</h2>
+    <gr-menu-items></gr-menu-items>
+  <div class="recommendation">
+    <h4>Recommendations</h4>
+    <gr-recommendation *ngFor="let user of recommendations" [data]="user"></gr-recommendation>
+  </div>
 </div>

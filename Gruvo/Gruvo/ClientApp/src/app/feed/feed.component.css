@@ -1,24 +1,14 @@
-@media screen and (max-width: 768px) {
-  .left {
-    position: fixed;
-    top: 60px;
-    left: -300px;
-    z-index: 11;
-    margin: 0 0;
-  }
-}
-
 .content {
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-flow: row;
-  padding: 80px 0;
+  padding: 80px 12px;
   align-items: flex-start;
   justify-content:center;
 }
 
-.tweets-list {  
+.tweets-list {
   width: 600px;
   display: flex;
   flex-flow: column;
@@ -41,35 +31,4 @@
   resize: none;
 }
 
-.photo {
-  overflow: hidden;
-  max-width: 128px;
-  max-height: 128px;
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  background-color: white;
-  border-bottom: 1px solid lightgrey;
-}
-
-.left {
-  width:250px;
-  display: flex;
-  flex-flow: column;
-  background-color:white;
-}
-
-.tweets-list, .left {
-  margin: 0 25px;
-}
-
-.mobile-menu{
-  font-size:24px;
-  color:white;
-  position:fixed;
-  z-index:10;
-  top:15px;
-  left:15px;
-
-}
 

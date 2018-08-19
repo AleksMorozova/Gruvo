@@ -1,18 +1,5 @@
 <div class="content">
-  <a class="mobile-menu visible-xs-block" (click)="openNav()"><span id="open-icon" class="glyphicon glyphicon-align-justify"></span></a>
-  <a class="mobile-menu visible-xs-block" (click)="closeNav()"><span id="close-icon" class="glyphicon glyphicon-chevron-left"></span></a>
-  <div class="gruvo-block left" id="sidenav">
-    <div class="photo  img-circle center-block">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCQTDXAX0S-RLwVQY82kLEyKsyKV8Lxh5ecAKP6hLGA38Voims-w" class="img-responsive">
-    </div>
-    <h2 class="center-block">{{'NAME'}}</h2>
     <gr-menu></gr-menu>
-    <div class="recommendation">
-      <h4>Recommendations</h4>
-      <gr-recommendation *ngFor="let user of recommendations" [data]="user"></gr-recommendation>
-    </div>
-  </div>
-
   <div class="gruvo-block tweets-list col-xs-11" id="tweets">
     <div class="right-top">
       <div class="make-post">
@@ -23,5 +10,4 @@
     <br />
     <gr-tweet *ngFor="let tweet of tweets" [data]="tweet"></gr-tweet>
   </div>
-
 </div>
