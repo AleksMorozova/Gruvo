@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, bind, HostListener } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { FeedService } from '@app/feed/feed.service';
 import { IUser } from '@app/profile/user.model';
 
@@ -47,9 +47,7 @@ export class MenuComponent implements OnInit {
 
   @HostListener("window:scroll", [])
   onWindowScroll() {
-
     if (window.pageYOffset > this.sticky) {
-      console.log(window.pageYOffset, this.sticky)
       this.sidenav.classList.add("sticky");
     } else {
       this.sidenav.classList.remove("sticky");
