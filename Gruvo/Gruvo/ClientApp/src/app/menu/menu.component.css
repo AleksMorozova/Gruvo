@@ -1,4 +1,4 @@
-@media screen and (max-width: 768px) and (orientation: portrait) {
+@media screen and (max-width: 768px) {
   .menu {
     position: fixed;
     display: block;
@@ -23,14 +23,6 @@
   }
 }
 
-.photo {
-  overflow: hidden;
-  width: 128px;
-  height: 128px;
-  display: block;
-  background-color: white;
-  border-bottom: 1px solid lightgrey;
-}
 
 .menu {
   width: 225px;
@@ -38,6 +30,14 @@
   flex-flow: column;
   background-color: white;
   margin-right:12px;
+}
+
+.photo {
+  overflow: hidden;
+  width: 128px;
+  height: 128px;
+  display: block;
+  background-color: white;
 }
 
 .mobile-menu-icon {
@@ -59,4 +59,9 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.sticky {
+  position: fixed;
+  top: 80px;
 }

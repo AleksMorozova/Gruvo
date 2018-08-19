@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, bind, HostListener } from '@angular/core';
 import { FeedService } from '@app/feed/feed.service';
 import { IUser } from '@app/profile/user.model';
 
@@ -9,10 +9,11 @@ import { IUser } from '@app/profile/user.model';
 })
 export class MenuComponent implements OnInit {
   recommendations: IUser[] = [];
-  mobileIcon: HTMLElement;
-  sidenav: HTMLElement;
-  background: HTMLElement;
+  mobileIcon: any;
+  sidenav: any;
+  background: any;
   isOpened: boolean = false;
+  sticky: number;
 
   constructor(private feedService: FeedService) {
     this.feedService.getRecommendations()
@@ -28,6 +29,7 @@ export class MenuComponent implements OnInit {
 
     this.mobileIcon.classList.add("show");
     this.background.classList.add("hidden");
+    this.sticky = this.sidenav.offsetTop;
   }
 
   moveSidebar() {
@@ -41,6 +43,17 @@ export class MenuComponent implements OnInit {
       this.background.classList.replace("hidden", "show");
     }
     this.isOpened = !this.isOpened;
+  }
+
+  @HostListener("window:scroll", [])
+  onWindowScroll() {
+
+    if (window.pageYOffset > this.sticky) {
+      console.log(window.pageYOffset, this.sticky)
+      this.sidenav.classList.add("sticky");
+    } else {
+      this.sidenav.classList.remove("sticky");
+    }
   }
 }
 
