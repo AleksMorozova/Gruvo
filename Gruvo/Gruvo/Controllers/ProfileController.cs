@@ -1,7 +1,7 @@
 ﻿using System;
 using Gruvo.BLL;
 using Gruvo.DAL.Repository;
-using Gruvo.DTL;
+using Gruvo.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,40 +18,26 @@ namespace Gruvo.Controllers
             _repository = repository;
         }
 
-        [Route("userInfo")]
+        [Route("userInfo/{id?}")]
         [HttpGet]
-        public IActionResult GetUserInfo()
+        public IActionResult GetUserInfo(long? id)
         {
+            UserInfo user = null;
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
                 long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
-                return Ok(_repository.UserDAO.GetUser(userid));
-            }
-            catch (Exception)
-            {
-                return BadRequest("Something went wrong");
-            }
-        }
 
-        [Route("userInfo/{id}")]
-        [HttpGet]
-        public IActionResult GetUserInfo(long id)
-        {
-            try
-            {
-                string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
-                Models.UserInfo userInfo = _repository.UserDAO.GetUser(id);
-                AnotherUser anotherUser = new AnotherUser()
-                { Login = userInfo.Login,
-                    Id = userInfo.Id,
-                    About = userInfo.About,
-                    Bday = userInfo.Bday,
-                    RegDateTime = userInfo.RegDateTime,
-                    IsSubscribed = _repository.UserDAO.IsSubscribed(userid, id)
-                };
-                return Ok(anotherUser);
+                if (id.HasValue)
+                {
+                    user = _repository.UserDAO.GetUser(id.Value);
+                    user.IsSubscribed = _repository.UserDAO.IsSubscribed(userid, id.Value);
+                }
+                else
+                {
+                    user = _repository.UserDAO.GetUser(userid);
+                }
+                return Ok(user);
             }
             catch (Exception)
             {

@@ -109,7 +109,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]);
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]);
                         }
                     }
                 }
@@ -140,7 +140,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]);
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]);
                         }
                     }
                 }
@@ -173,7 +173,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]);
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]);
                         }
                     }
                 }
@@ -201,7 +201,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            list.Add(new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]));
+                            list.Add(new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]));
                         }
                     }
                 }
@@ -321,7 +321,7 @@ namespace Gruvo.DAL
                     {
                         while (dr.Read())
                         {
-                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr["Regdate"]));
+                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], null, (DateTime)dr["Regdate"]));
                         }
                     }
                 }
@@ -351,7 +351,7 @@ namespace Gruvo.DAL
                     {
                         while (dr.Read())
                         {
-                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr["Regdate"]));
+                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], null, (DateTime)dr["Regdate"]));
                         }
                     }
                 }
@@ -406,7 +406,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            list.Add(new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]));
+                            list.Add(new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]));
                         }
                     }
                 }
