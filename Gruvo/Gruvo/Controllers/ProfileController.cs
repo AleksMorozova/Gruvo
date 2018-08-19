@@ -1,6 +1,7 @@
 ﻿using System;
 using Gruvo.BLL;
 using Gruvo.DAL.Repository;
+using Gruvo.DTL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,32 @@ namespace Gruvo.Controllers
                 return BadRequest("Something went wrong");
             }
         }
+
+        [Route("userInfo/{id}")]
+        [HttpGet]
+        public IActionResult GetUserInfo(long id)
+        {
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                Models.UserInfo userInfo = _repository.UserDAO.GetUser(id);
+                AnotherUser anotherUser = new AnotherUser()
+                { Login = userInfo.Login,
+                    Id = userInfo.Id,
+                    About = userInfo.About,
+                    Bday = userInfo.Bday,
+                    RegDateTime = userInfo.RegDateTime,
+                    IsSubscribed = _repository.UserDAO.IsSubscribed(userid, id)
+                };
+                return Ok(anotherUser);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
         [Route("subscribers")]
         [HttpGet]
         public IActionResult GetSubscribers()
