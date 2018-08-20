@@ -24,6 +24,9 @@ namespace Gruvo.DAL
         IEnumerable<UserInfo> GetSubscriptions(long id);
         IEnumerable<UserInfo> GetRandomUsers(int count);
 
+        Int32 GetSubscribersQuality(long id);
+        Int32 GetSubscriptionsQuality(long id);
+
         void Unsubscribe(long userid1, long userid2);
 
     }

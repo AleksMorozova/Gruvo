@@ -13,8 +13,9 @@ export class ProfileService {
   constructor(
     @Inject('PROFILE_INFO_URL') private profileInfoApiURL: string,
     @Inject('PROFILE_TWEETS_URL') private profileTweetsApiURL: string,
-    @Inject('PROFILE_SUBSCRIPTIONS_URL') private profileSubscriptionsApiURL: string,
-    @Inject('PROFILE_SUBSRIBERS_URL') private profileSubscribersApiURL: string,
+    @Inject('PROFILE_SUBSCRIPTIONS_QLT_URL') private profileSubscriptionsQltApiURL: string,
+    @Inject('PROFILE_SUBSRIBERS_QLT_URL') private profileSubscribersQltApiURL: string,
+    @Inject('PROFILE_USER_POSTS_QLT_URL') private profilePostsQltApiURL: string,
     private http: HttpClient) { }
 
   getUserData(): Observable<IUser> {
@@ -23,10 +24,13 @@ export class ProfileService {
   getUserTweets(): Observable<ITweet[]> {
     return this.http.get<ITweet[]>(this.profileTweetsApiURL);
   }
-  getSubscriptions(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.profileSubscriptionsApiURL);
+  getSubscriptionsQuality(): Observable<number> {
+    return this.http.get<number>(this.profileSubscriptionsQltApiURL);
   }
-  getSubscribers(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.profileSubscribersApiURL);
+  getSubscribersQuality(): Observable<number> {
+    return this.http.get<number>(this.profileSubscribersQltApiURL);
+  }
+  getUserPostsQuality(): Observable<number> {
+    return this.http.get<number>(this.profilePostsQltApiURL);
   }
 }

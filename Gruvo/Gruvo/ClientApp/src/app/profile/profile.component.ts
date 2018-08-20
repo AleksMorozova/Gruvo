@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IUser } from '@app/profile/user.model';
-import { ProfileService } from '@app/profile/profile.service';
-import { ITweet } from '@app/tweet/tweet.model';
+import { IUser } from './user.model';
+import { ProfileService } from './profile.service';
+import { ITweet } from '../tweet/tweet.model';
 
 @Component({
   selector: 'gr-profile',
@@ -12,26 +12,26 @@ import { ITweet } from '@app/tweet/tweet.model';
 export class ProfileComponent implements OnInit {
 
   user: IUser;
-  userTweets: Array<ITweet>;
-  subscriptions: IUser[];
-  subscribers: IUser[];
+  userPostsQlt: number;
+  subscriptionsQlt: number;
+  subscribersQlt: number;
 
   ngOnInit(): void {
     this.profileService.getUserData()
       .subscribe((user) => {
         this.user = user;
       });
-    this.profileService.getUserTweets()
-      .subscribe((tweets) => {
-        this.userTweets = tweets;
+    this.profileService.getSubscriptionsQuality()
+      .subscribe((subscriptionsQlt) => {
+        this.subscriptionsQlt = subscriptionsQlt;
       });
-    this.profileService.getSubscriptions()
-      .subscribe((subscriptions) => {
-        this.subscriptions = subscriptions;
+    this.profileService.getSubscribersQuality()
+      .subscribe((subscribersQlt) => {
+        this.subscribersQlt = subscribersQlt;
       });
-    this.profileService.getSubscribers()
-      .subscribe((subscribers) => {
-        this.subscribers = subscribers;
+    this.profileService.getUserPostsQuality()
+      .subscribe((postsQlt) => {
+        this.userPostsQlt = postsQlt;
       });
   }
 

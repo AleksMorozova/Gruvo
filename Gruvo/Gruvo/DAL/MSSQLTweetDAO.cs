@@ -41,7 +41,7 @@ namespace Gruvo.DAL
                 throw;
             }
         }
-        
+
         public void DeletePost(long id)
         {
             try
@@ -127,6 +127,29 @@ namespace Gruvo.DAL
             }
 
             return list;
+        }
+        public Int32 GetUserPostsQuality(long id)
+        {
+            Int32 qlt;
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"select count(*) from posts join users on users.userid = posts.userid where posts.userid = @id";
+                    command.Parameters.Add("@id", SqlDbType.BigInt);
+                    command.Parameters["@id"].Value = id;
+
+                    qlt = (Int32)command.ExecuteScalar();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return qlt;
         }
 
         public IEnumerable<ReadableTweet> GetUserPosts(long id)

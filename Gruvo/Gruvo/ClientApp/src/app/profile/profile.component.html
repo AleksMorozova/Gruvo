@@ -5,28 +5,28 @@
       <img class="img-responsive" src="https://media.alienwarearena.com/media/tux-r.jpg">
     </div>
     <div class="info"  >
-      <h2 >{{user.login}}</h2>
+      <h2 >{{user?.login}}</h2>
       <br>
-      <p class="">{{user.about}}</p>
+      <p class="">{{user?.about}}</p>
       <br>
       <table class="table">
         <tr>
           <td>
             <a href="#">Followers</a>
           </td>
-          <td>{{subscribers.length}}</td>
+          <td>{{subscribersQlt}}</td>
         </tr>
         <tr>
           <td>
             <a href="#">Followings</a>
           </td>
-          <td>{{subscriptions.length}}</td>
+          <td>{{subscriptionsQlt}}</td>
         </tr>
         <tr>
           <td>
             <a href="#">Posts</a>
           </td>
-          <td>{{userTweets.length}}</td>
+          <td>{{userPostsQlt}}</td>
         </tr>
       </table>
     </div>

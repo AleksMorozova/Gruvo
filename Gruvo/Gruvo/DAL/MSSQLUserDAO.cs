@@ -333,6 +333,30 @@ namespace Gruvo.DAL
             return list;
         }
 
+        public Int32 GetSubscriptionsQuality(long id)
+        {
+            Int32 qlt;
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"select count(*) from users join subscriptions on userid = subscribedid where subscriberid = @userid";
+                    command.Parameters.Add("@userid", SqlDbType.BigInt);
+                    command.Parameters["@userid"].Value = id;
+
+                    qlt = (Int32) command.ExecuteScalar();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return qlt;
+        }
+
         public IEnumerable<UserInfo> GetSubscribers(long id)
         {
             List<UserInfo> list = new List<UserInfo>();
@@ -361,6 +385,30 @@ namespace Gruvo.DAL
                 throw;
             }
             return list;
+        }
+
+        public Int32 GetSubscribersQuality(long id)
+        {
+            Int32 qlt;
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"select count(*) from users join subscriptions on userid = subscriberid where subscribedid = @userid"; ;
+                    command.Parameters.Add("@userid", SqlDbType.BigInt);
+                    command.Parameters["@userid"].Value = id;
+
+                    qlt = (Int32)command.ExecuteScalar();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return qlt;
         }
 
         public void Unsubscribe(long userId1, long userId2)

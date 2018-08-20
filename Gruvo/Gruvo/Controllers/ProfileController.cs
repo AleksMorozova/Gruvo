@@ -62,6 +62,36 @@ namespace Gruvo.Controllers
                 return BadRequest("Something went wrong");
             }
         }
+        [Route("subscribersQuality")]
+        [HttpGet]
+        public IActionResult GetSubscribersQuality()
+        {
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                return Ok(_repository.UserDAO.GetSubscribersQuality(userid));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+        [Route("subscriptionsQuality")]
+        [HttpGet]
+        public IActionResult GetSubscriptionsQuality()
+        {
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                return Ok(_repository.UserDAO.GetSubscriptionsQuality(userid));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
         [Route("userTweets")]
         [HttpGet]
         public IActionResult GetUserTweets()
@@ -75,6 +105,21 @@ namespace Gruvo.Controllers
             catch (Exception ex)
             {
                 return BadRequest("Something went wrong");
+            }
+        }
+        [Route("userPostsQuality")]
+        [HttpGet]
+        public IActionResult GetUserPostsQuality()
+        {
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                return Ok(_repository.TweetDAO.GetUserPostsQuality(userid));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
             }
         }
 
