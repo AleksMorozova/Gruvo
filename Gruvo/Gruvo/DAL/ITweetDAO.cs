@@ -17,17 +17,24 @@ namespace Gruvo.DAL
         /// <summary>
         /// Returns number of affected rows
         /// </summary>
-        /// <param name="postId"></param>
-        /// <param name="userId"></param>
+        /// <param name="postId">Tweet id</param>
+        /// <param name="userId">User id</param>
         /// <returns></returns>
         int Like(long postId, long userId);
 
         /// <summary>
         /// Returns number of affected rows
         /// </summary>
-        /// <param name="postId"></param>
-        /// <param name="userId"></param>
+        /// <param name="postId">Tweet id</param>
+        /// <param name="userId">User id</param>
         /// <returns></returns>
         int Dislike(long postId, long userId);
+
+        /// <summary>
+        /// Returns number of likes
+        /// </summary>
+        /// <param name="id">Tweet id</param>
+        /// <returns></returns>
+        int GetNumOfLikes(long id);
     }
 }

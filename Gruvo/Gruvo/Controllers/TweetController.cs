@@ -17,7 +17,7 @@ namespace Gruvo.Controllers
             _repository = repository;
         }
 
-        [Route("Like")]
+        [Route("like")]
         [HttpPost]
         public IActionResult Like([FromBody] LikeModel like)
         {
@@ -39,6 +39,14 @@ namespace Gruvo.Controllers
             {
                 return BadRequest("Something went wrong");
             }
+        }
+
+        [Route("tweetLikes")]
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult GetLikes()
+        {
+            return Ok();
         }
     }
 }

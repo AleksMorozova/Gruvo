@@ -216,5 +216,29 @@ namespace Gruvo.DAL
                 throw;
             }
         }
+
+        public int GetNumOfLikes(long postId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"SELECT * FROM likes WHERE PostId = @post_id";
+
+                    command.Parameters.Add("@post_id", SqlDbType.BigInt);
+                    command.Parameters["@post_id"].Value = postId;
+
+                    return command.ExecuteNonQuery();
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
     }
 }
