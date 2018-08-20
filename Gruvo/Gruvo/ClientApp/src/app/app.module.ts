@@ -17,6 +17,7 @@ import { ProfileService } from '@app/profile/profile.service';
 import { MenuComponent } from '@app/menu/menu.component';
 import { MenuItemsComponent } from '@app/menu-items/menu-items.component';
 import { LoginGuard } from '@app/login-guard';
+import { AuthGuard } from '@app/auth.guard';
 import { FeedComponent } from '@app/feed/feed.component';
 import { FeedService } from '@app/feed/feed.service';
 import { RecommendationComponent } from '@app/recommendation/recommendation.component';
@@ -57,7 +58,8 @@ import { RecommendationComponent } from '@app/recommendation/recommendation.comp
      LoginService,
      ProfileService,
      FeedService,
-     LoginGuard
+     LoginGuard,
+     AuthGuard
       ]
 })
 export class AppModule { }
