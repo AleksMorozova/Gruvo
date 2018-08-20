@@ -13,5 +13,21 @@ namespace Gruvo.DAL
         ReadableTweet GetPost(long id);
 
         void DeletePost(long id);
+
+        /// <summary>
+        /// Returns number of affected rows
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        int Like(long postId, long userId);
+
+        /// <summary>
+        /// Returns number of affected rows
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        int Dislike(long postId, long userId);
     }
 }
