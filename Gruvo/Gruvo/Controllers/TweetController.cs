@@ -42,11 +42,23 @@ namespace Gruvo.Controllers
         }
 
         [Route("tweetLikes")]
-        [HttpGet]
+        [HttpPost]
         [AllowAnonymous]
-        public IActionResult GetLikes()
+        public IActionResult GetLikes([FromBody] long tweetId)
         {
-            return Ok();
+            try
+            {
+                if(tweetId < 1)
+                {
+                    return BadRequest();
+                }
+
+                return Ok(_repository.TweetDAO.GetNumOfLikes(tweetId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something went wrong");
+            }
         }
     }
 }
