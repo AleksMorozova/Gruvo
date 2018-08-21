@@ -1,6 +1,6 @@
 ﻿using System;
+using Gruvo.BLL;
 using Gruvo.DAL.Repository;
-using Gruvo.DTL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,26 +11,32 @@ namespace Gruvo.Controllers
     public class TweetController : ControllerBase
     {
         private BaseRepository _repository;
+        private ITokenUserPairs _tokenUserPairs;
 
-        public TweetController(BaseRepository repository)
+        public TweetController(BaseRepository repository, ITokenUserPairs tokenUserPairs)
         {
             _repository = repository;
+            _tokenUserPairs = tokenUserPairs;
         }
 
         [Route("like")]
         [HttpPost]
-        public IActionResult Like([FromBody] LikeModel like)
+        public IActionResult Like()
         {
             try
             {
-                if(like == null)
+                long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
+
+                if (tweetId < 1)
                 {
                     return BadRequest();
                 }
 
-                if(_repository.TweetDAO.Dislike(like.PostId, like.UserId) == 0)
+                long userId = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
+
+                if (_repository.TweetDAO.Dislike(tweetId, userId) == 0)
                 {
-                    _repository.TweetDAO.Like(like.PostId, like.UserId);
+                    _repository.TweetDAO.Like(tweetId, userId);
                 }
 
                 return Ok();
@@ -43,12 +49,14 @@ namespace Gruvo.Controllers
 
         [Route("tweetLikes")]
         [HttpPost]
-        [AllowAnonymous]
-        public IActionResult GetLikes([FromBody] long tweetId)
+        [AllowAnonymous]// If we can see profile without logging in
+        public IActionResult GetLikes()
         {
             try
             {
-                if(tweetId < 1)
+                long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
+
+                if (tweetId < 1)
                 {
                     return BadRequest();
                 }

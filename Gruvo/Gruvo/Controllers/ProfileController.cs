@@ -11,10 +11,12 @@ namespace Gruvo.Controllers
     public class ProfileController : ControllerBase
     {
         private BaseRepository _repository;
+        private ITokenUserPairs _tokenUserPairs;
 
-        public ProfileController(BaseRepository repository)
+        public ProfileController(BaseRepository repository, ITokenUserPairs tokenUserPairs)
         {
             _repository = repository;
+            _tokenUserPairs = tokenUserPairs;
         }
 
         [Route("userInfo")]
@@ -24,7 +26,7 @@ namespace Gruvo.Controllers
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
                 return Ok(_repository.UserDAO.GetUser(userid));
             }
             catch (Exception)
@@ -39,7 +41,7 @@ namespace Gruvo.Controllers
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
                 return Ok(_repository.UserDAO.GetSubscribers(userid));
             }
             catch (Exception)
@@ -54,7 +56,7 @@ namespace Gruvo.Controllers
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
                 return Ok(_repository.UserDAO.GetSubscriptions(userid));
             }
             catch (Exception)
@@ -69,7 +71,7 @@ namespace Gruvo.Controllers
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
                 return Ok(_repository.TweetDAO.GetUserPosts(userid));
             }
             catch (Exception ex)
