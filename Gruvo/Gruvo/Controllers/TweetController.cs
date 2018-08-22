@@ -20,7 +20,7 @@ namespace Gruvo.Controllers
         }
 
         [Route("like")]
-        [HttpPost]
+        [HttpGet]
         public IActionResult Like()
         {
             try
@@ -48,7 +48,7 @@ namespace Gruvo.Controllers
         }
 
         [Route("tweetLikes")]
-        [HttpPost]
+        [HttpGet]
         [AllowAnonymous]// If we can see profile without logging in
         public IActionResult GetLikes()
         {
@@ -62,6 +62,20 @@ namespace Gruvo.Controllers
                 }
 
                 return Ok(_repository.TweetDAO.GetNumOfLikes(tweetId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [Route("checkLiked")]
+        [HttpGet]
+        public IActionResult CheckLiked()
+        {
+            try
+            {
+                return Ok();
             }
             catch (Exception ex)
             {

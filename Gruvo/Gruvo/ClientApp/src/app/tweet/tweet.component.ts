@@ -12,6 +12,7 @@ import { error } from 'protractor';
 export class TweetComponent implements OnInit {
   @Input() data: ITweet;
   likeUrl: string = '/assets/images/heart.png';
+  activeLikeUrl: string = '/assets/images/heart_red.png';
   isLiked: boolean = false;
   numOfLikes: number;
 
@@ -37,5 +38,9 @@ export class TweetComponent implements OnInit {
       }, error => {
         console.log(error);
       });
+  }
+  
+  checkIfUserLiked() {
+    
   }
 }

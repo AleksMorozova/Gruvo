@@ -11,7 +11,8 @@
   <div class="action-list">
     <div class="action action-like">
       <button class="btn-action action-like" (click)="like()">
-        <img src="{{likeUrl}}" class="icon icon-like">
+        <img *ngIf="isLiked" src="{{activeLikeUrl}}" class="icon icon-like">
+        <img *ngIf="!isLiked" src="{{likeUrl}}" class="icon icon-like">
         <span class="count">{{numOfLikes}}</span>
       </button>
     </div>

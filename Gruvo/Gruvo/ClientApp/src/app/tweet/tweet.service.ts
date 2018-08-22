@@ -12,15 +12,16 @@ export class TweetService {
 
   like(tweetId: number): Observable<any> {
     let myHeader = new HttpHeaders().set('tweetId', tweetId.toString());
-    return this.http.post(this.tweetLikeApiUrl, {}, {headers: myHeader});
+    return this.http.get(this.tweetLikeApiUrl, {headers: myHeader});
   }
 
   getNumOfLikes(tweetId: number): Observable<number> {
     let myHeader = new HttpHeaders().set('tweetId', tweetId.toString());
-    return this.http.post<number>(this.tweetGetLikesApiURL, {}, {headers: myHeader});
+    return this.http.get<number>(this.tweetGetLikesApiURL, {headers: myHeader});
   }
 
-  checkLiked() {
-
-  }
+  //checkLiked(tweetId: number) {
+  //  let myHeader = new HttpHeaders().set('tweetId', tweetId.toString());
+  //  return this.http.get<boolean>(this.)
+  //}
 }
