@@ -20,6 +20,9 @@ import { AuthGuard } from '@app/auth.guard';
 import { FeedComponent } from '@app/feed/feed.component';
 import { FeedService } from '@app/feed/feed.service';
 import { RecommendationComponent } from '@app/recommendation/recommendation.component';
+import { SettingsComponent } from '@app/settings/settings.component';
+import { SettingsService } from '@app/settings/settings.service';
+import { PasswordEditComponent } from '@app/password-edit/password-edit.component';
 
 
 @NgModule({
@@ -33,7 +36,9 @@ import { RecommendationComponent } from '@app/recommendation/recommendation.comp
     MenuComponent,
     TweetComponent,
     FeedComponent,
-    RecommendationComponent
+    RecommendationComponent,
+    SettingsComponent,
+    PasswordEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -57,6 +62,7 @@ import { RecommendationComponent } from '@app/recommendation/recommendation.comp
      ProfileService,
      FeedService,
      LoginGuard,
+     SettingsService,
      AuthGuard
       ]
 })
