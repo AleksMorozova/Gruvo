@@ -226,12 +226,12 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"SELECT * FROM likes WHERE PostId = @post_id";
+                    command.CommandText = @"SELECT COUNT(*) FROM likes WHERE PostId = @post_id";
 
                     command.Parameters.Add("@post_id", SqlDbType.BigInt);
                     command.Parameters["@post_id"].Value = postId;
 
-                    return command.ExecuteNonQuery();
+                    return Convert.ToInt32(command.ExecuteScalar());
                 }
             }
             catch (SqlException ex)

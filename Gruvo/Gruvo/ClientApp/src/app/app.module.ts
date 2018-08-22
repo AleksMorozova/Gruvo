@@ -20,6 +20,7 @@ import { AuthGuard } from '@app/auth.guard';
 import { FeedComponent } from '@app/feed/feed.component';
 import { FeedService } from '@app/feed/feed.service';
 import { RecommendationComponent } from '@app/recommendation/recommendation.component';
+import { TweetService } from '@app/tweet/tweet.service';
 
 
 @NgModule({
@@ -52,10 +53,14 @@ import { RecommendationComponent } from '@app/recommendation/recommendation.comp
     { provide: 'PROFILE_SUBSCRIPTIONS_URL', useValue: 'api/profile/subscriptions' },
     { provide: 'PROFILE_SUBSRIBERS_URL', useValue: 'api/profile/subscribers' },
     { provide: 'FEED_TWEETS_URL', useValue: 'api/feed/tweets' },
-    { provide: 'FEED_RECOMMENDATIONS_URL', useValue: 'api/feed/recommendations'},
+    { provide: 'FEED_RECOMMENDATIONS_URL', useValue: 'api/feed/recommendations' },
+    { provide: 'TWEET_LIKES_URL', useValue: 'api/tweet/tweetlikes' },
+    { provide: 'TWEET_LIKE_URL', useValue: 'api/tweet/like' },
+
      LoginService,
      ProfileService,
      FeedService,
+     TweetService,
      LoginGuard,
      AuthGuard
       ]

@@ -5,6 +5,15 @@
   <blockquote>
     <p>{{data.message}}</p>
     <footer>{{ data.sendingDateTime | date:'MMM d, y, h:mm a' }}</footer>
-</blockquote>
-      <hr>
+  </blockquote>
+  <hr>
+
+  <div class="action-list">
+    <div class="action action-like">
+      <button class="btn-action action-like" (click)="like()">
+        <img src="{{likeUrl}}" class="icon icon-like">
+        <span class="count">{{numOfLikes}}</span>
+      </button>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,15 @@
+.action-list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-action {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.icon-like {
+    
+}
