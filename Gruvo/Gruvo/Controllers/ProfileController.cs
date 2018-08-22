@@ -122,6 +122,25 @@ namespace Gruvo.Controllers
                 return BadRequest(e);
             }
         }
+        [Route("postTweet")]
+        [HttpPost]
+        public IActionResult PostTweet([FromBody] string message)
+        {
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+
+                _repository.TweetDAO.AddPost(userid, message, DateTime.Now);
+
+                return Ok("Success!");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+        }
 
     }
 }

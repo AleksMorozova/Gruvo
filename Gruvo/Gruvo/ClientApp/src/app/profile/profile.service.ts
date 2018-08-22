@@ -33,4 +33,5 @@ export class ProfileService {
   getUserPostsQuality(): Observable<number> {
     return this.http.get<number>(this.profilePostsQltApiURL);
   }
+  
 }

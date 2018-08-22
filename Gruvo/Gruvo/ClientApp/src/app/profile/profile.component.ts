@@ -12,7 +12,8 @@ import { ITweet } from '../tweet/tweet.model';
 export class ProfileComponent implements OnInit {
 
   user: IUser;
-  userPostsQlt: number;
+  userTweets: Array<ITweet>;
+  userTweetsQlt: number;
   subscriptionsQlt: number;
   subscribersQlt: number;
 
@@ -20,6 +21,10 @@ export class ProfileComponent implements OnInit {
     this.profileService.getUserData()
       .subscribe((user) => {
         this.user = user;
+      });
+    this.profileService.getUserTweets()
+      .subscribe((tweets) => {
+        this.userTweets = tweets;
       });
     this.profileService.getSubscriptionsQuality()
       .subscribe((subscriptionsQlt) => {
@@ -31,7 +36,7 @@ export class ProfileComponent implements OnInit {
       });
     this.profileService.getUserPostsQuality()
       .subscribe((postsQlt) => {
-        this.userPostsQlt = postsQlt;
+        this.userTweetsQlt = postsQlt;
       });
   }
 

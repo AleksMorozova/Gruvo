@@ -19,6 +19,8 @@ import { LoginGuard } from '@app/login-guard';
 import { FeedComponent } from '@app/feed/feed.component';
 import { FeedService } from '@app/feed/feed.service';
 import { RecommendationComponent } from '@app/recommendation/recommendation.component';
+import { CreateTweetComponent } from '@app/createtweet/createtweet.component';
+import { CreateTweetService } from '@app/createtweet/createtweet.service';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { RecommendationComponent } from '@app/recommendation/recommendation.comp
     MenuComponent,
     TweetComponent,
     FeedComponent,
-    RecommendationComponent
+    RecommendationComponent,
+    CreateTweetComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -51,11 +54,13 @@ import { RecommendationComponent } from '@app/recommendation/recommendation.comp
     { provide: 'PROFILE_SUBSCRIPTIONS_QLT_URL', useValue: 'api/profile/subscriptionsQuality' },
     { provide: 'PROFILE_SUBSRIBERS_QLT_URL', useValue: 'api/profile/subscribersQuality' },
     { provide: 'PROFILE_USER_POSTS_QLT_URL', useValue: 'api/profile/userPostsQuality' },
+    { provide: 'CREATETWEET_POST_TWEET_URL', useValue: 'api/profile/postTweet' },
     { provide: 'FEED_TWEETS_URL', useValue: 'api/feed/tweets' },
     { provide: 'FEED_RECOMMENDATIONS_URL', useValue: 'api/feed/recommendations'},
      LoginService,
      ProfileService,
      FeedService,
+     CreateTweetService,
      LoginGuard
       ]
 })

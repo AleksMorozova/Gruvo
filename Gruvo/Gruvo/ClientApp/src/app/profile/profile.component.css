@@ -21,20 +21,6 @@
     border-bottom: 1px solid lightgrey;
 }
 
-.make-post{
-    display: flex;
-    flex-direction: column;
-}
-
-  .make-post textarea {
-    resize: none;
-  }
-
-  .make-post input {
-    width: 75px;
-    margin-top: 10px;
-    margin-left: auto;
-  }
 
 .info{
     padding: 10px;
@@ -43,7 +29,7 @@
     background-color: white;
 }
 
-.left, .right-top, .right-bottom{
+.left, .right-bottom{
     margin-top: 20px;
     margin-bottom: 20px;
     margin-left: 10px;
@@ -55,7 +41,7 @@
     width:var(--picturew);
 }
 
-.right-top, .right-bottom {
+.right-bottom {
   padding: 20px;
   width: var(--blockw);
 }

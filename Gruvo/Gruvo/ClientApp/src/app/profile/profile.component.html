@@ -26,18 +26,13 @@
           <td>
             <a href="#">Posts</a>
           </td>
-          <td>{{userPostsQlt}}</td>
+          <td>{{userTweetsQlt}}</td>
         </tr>
       </table>
     </div>
   </div>
   <div class="right">
-    <div class="right-top">
-      <div class="make-post">
-        <textarea class="form-control message" rows="2" maxlength="256" placeholder="What are you up to?"></textarea>
-        <input type="button" class="btn btn-success" value="Post">
-      </div>
-    </div>
+    <gr-createtweet></gr-createtweet>
     <div class="right-bottom">
       <gr-tweet *ngFor="let tweet of userTweets" [data]="tweet"></gr-tweet>
     </div>
