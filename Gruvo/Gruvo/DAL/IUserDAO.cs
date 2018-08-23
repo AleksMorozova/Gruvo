@@ -20,6 +20,8 @@ namespace Gruvo.DAL
 
         void Subscribe(long userId1, long userId2, DateTime subdate);
 
+        bool IsSubscribed(long userId1, long userId2);
+
         IEnumerable<UserInfo> GetSubscribers(long id);
         IEnumerable<UserInfo> GetSubscriptions(long id);
         IEnumerable<UserInfo> GetRandomUsers(int count);
