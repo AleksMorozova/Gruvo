@@ -11,16 +11,19 @@ import { error } from 'protractor';
 
 export class TweetComponent implements OnInit {
   @Input() data: ITweet;
-  likeUrl: string = '/assets/images/heart.png';
-  activeLikeUrl: string = '/assets/images/heart_red.png';
-  isLiked: boolean = false;
+  likeUrl: string;
+  activeLikeUrl: string;
+  isLiked: boolean;
   numOfLikes: number;
 
   constructor(private tweetService: TweetService) {
-
+    this.likeUrl = '/assets/images/heart.png';
+    this.activeLikeUrl = '/assets/images/heart_red.png';
+    this.isLiked = false;
   }
 
   ngOnInit() {
+    this.checkIfUserLiked();
     this.getNumOfLikes();
   }
 
@@ -41,6 +44,9 @@ export class TweetComponent implements OnInit {
   }
   
   checkIfUserLiked() {
-    
+    this.tweetService.checkLiked(this.data.id)
+      .subscribe(res => {
+        this.isLiked = res;
+      });
   }
 }

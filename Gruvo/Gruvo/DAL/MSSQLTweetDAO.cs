@@ -240,5 +240,32 @@ namespace Gruvo.DAL
                 throw;
             }
         }
+
+        public bool CheckIfUserLiked(long postId, long userId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"SELECT COUNT(*) FROM likes WHERE PostId = @post_id AND UserId = @user_id";
+
+                    command.Parameters.Add("@post_id", SqlDbType.BigInt);
+                    command.Parameters["@post_id"].Value = postId;
+
+                    command.Parameters.Add("@user_id", SqlDbType.BigInt);
+                    command.Parameters["@user_id"].Value = userId;
+
+                    return Convert.ToInt32(command.ExecuteScalar()) == 1 ? true : false;
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
     }
 }

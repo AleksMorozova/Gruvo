@@ -56,6 +56,7 @@ import { TweetService } from '@app/tweet/tweet.service';
     { provide: 'FEED_RECOMMENDATIONS_URL', useValue: 'api/feed/recommendations' },
     { provide: 'TWEET_LIKES_URL', useValue: 'api/tweet/tweetlikes' },
     { provide: 'TWEET_LIKE_URL', useValue: 'api/tweet/like' },
+    { provide: 'TWEET_CHECKLIKED_URL', useValue: 'api/tweet/checkLiked' },
 
      LoginService,
      ProfileService,

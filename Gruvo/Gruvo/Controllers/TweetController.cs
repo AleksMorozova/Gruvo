@@ -75,7 +75,16 @@ namespace Gruvo.Controllers
         {
             try
             {
-                return Ok();
+                long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
+
+                if (tweetId < 1)
+                {
+                    return BadRequest();
+                }
+
+                long userId = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
+
+                return Ok(_repository.TweetDAO.CheckIfUserLiked(tweetId, userId));
             }
             catch (Exception ex)
             {
