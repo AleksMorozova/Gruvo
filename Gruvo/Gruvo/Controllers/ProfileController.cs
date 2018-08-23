@@ -150,7 +150,7 @@ namespace Gruvo.Controllers
                 string cookie = Request.Cookies["Gruvo"];
                 long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
 
-                _repository.TweetDAO.DeletePost(userid);
+                _repository.TweetDAO.DeletePost(id);
 
                 return Ok("Success!");
             }
