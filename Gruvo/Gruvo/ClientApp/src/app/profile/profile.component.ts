@@ -12,7 +12,7 @@ import { ITweet } from '@app/tweet/tweet.model';
 export class ProfileComponent implements OnInit {
 
   user: IUser;
-  userTweets: Array<ITweet>;
+  userTweets: ITweet[] = [];
   subscriptions: IUser[];
   subscribers: IUser[];
 
@@ -35,8 +35,6 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  constructor(private profileService: ProfileService) {
-   
-
+  constructor(private profileService: ProfileService) { 
   }
 }
