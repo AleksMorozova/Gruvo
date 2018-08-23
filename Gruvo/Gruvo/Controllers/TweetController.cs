@@ -68,5 +68,28 @@ namespace Gruvo.Controllers
                 return BadRequest("Something went wrong");
             }
         }
+
+        [Route("checkLiked")]
+        [HttpGet]
+        public IActionResult CheckLiked()
+        {
+            try
+            {
+                long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
+
+                if (tweetId < 1)
+                {
+                    return BadRequest();
+                }
+
+                long userId = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
+
+                return Ok(_repository.TweetDAO.CheckIfUserLiked(tweetId, userId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
     }
 }
