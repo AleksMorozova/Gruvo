@@ -11,6 +11,9 @@ import { ITweet } from '../tweet/tweet.model';
 
 export class ProfileComponent implements OnInit {
 
+  constructor(private profileService: ProfileService) {
+  }
+
   user: IUser;
   userTweets: Array<ITweet>;
   userTweetsQlt: number;
@@ -18,30 +21,40 @@ export class ProfileComponent implements OnInit {
   subscribersQlt: number;
 
   ngOnInit(): void {
+    this.loadUserData();
+    this.loadUserTweets();
+    this.loadSubscribersQuality();
+    this.loadSubscriptionsQuality();
+    this.loadUserPostsQuality();
+  }
+  loadUserData() {
     this.profileService.getUserData()
       .subscribe((user) => {
         this.user = user;
       });
+  }
+  loadUserTweets() {
     this.profileService.getUserTweets()
       .subscribe((tweets) => {
         this.userTweets = tweets;
       });
+  }
+  loadSubscriptionsQuality() {
     this.profileService.getSubscriptionsQuality()
       .subscribe((subscriptionsQlt) => {
         this.subscriptionsQlt = subscriptionsQlt;
       });
+  }
+  loadSubscribersQuality() {
     this.profileService.getSubscribersQuality()
       .subscribe((subscribersQlt) => {
         this.subscribersQlt = subscribersQlt;
       });
+  }
+  public loadUserPostsQuality() {
     this.profileService.getUserPostsQuality()
       .subscribe((postsQlt) => {
         this.userTweetsQlt = postsQlt;
       });
-  }
-
-  constructor(private profileService: ProfileService) {
-   
-
   }
 }

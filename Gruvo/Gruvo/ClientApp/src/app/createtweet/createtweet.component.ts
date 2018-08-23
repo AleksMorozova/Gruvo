@@ -10,17 +10,18 @@ import { ITweet } from '../tweet/tweet.model';
 
 export class CreateTweetComponent {
 
-  message = '';
+  message: string;
 
-  public postTweet() {
+  public postTweet(event) {
     this.createTweetService.postTweet(this.message)
       .subscribe(
         error => console.log(error)
-      );
+    );
+    event.preventDefault();
+    this.message = '';
    }
 
   constructor(private createTweetService: CreateTweetService) {
-   
-
+    this.message = '';
   }
 }

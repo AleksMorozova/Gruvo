@@ -141,6 +141,25 @@ namespace Gruvo.Controllers
             }
 
         }
+        [Route("deleteTweet")]
+        [HttpPost]
+        public IActionResult DeleteTweet([FromBody] long id)
+        {
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+
+                _repository.TweetDAO.DeletePost(userid);
+
+                return Ok("Success!");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+        }
 
     }
 }

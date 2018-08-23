@@ -12,6 +12,7 @@ import { SignupComponent } from '@app/signup/signup.component';
 import { HeaderComponent } from '@app/header/header.component';
 import { FooterComponent } from '@app/footer/footer.component';
 import { TweetComponent } from '@app/tweet/tweet.component';
+import { TweetService } from '@app/tweet/tweet.service';
 import { ProfileComponent } from '@app/profile/profile.component';
 import { ProfileService } from '@app/profile/profile.service';
 import { MenuComponent } from '@app/menu/menu.component';
@@ -55,12 +56,14 @@ import { CreateTweetService } from '@app/createtweet/createtweet.service';
     { provide: 'PROFILE_SUBSRIBERS_QLT_URL', useValue: 'api/profile/subscribersQuality' },
     { provide: 'PROFILE_USER_POSTS_QLT_URL', useValue: 'api/profile/userPostsQuality' },
     { provide: 'CREATETWEET_POST_TWEET_URL', useValue: 'api/profile/postTweet' },
+    { provide: 'TWEET_DELETE_TWEET_URL', useValue: 'api/profile/deleteTweet'},
     { provide: 'FEED_TWEETS_URL', useValue: 'api/feed/tweets' },
     { provide: 'FEED_RECOMMENDATIONS_URL', useValue: 'api/feed/recommendations'},
      LoginService,
      ProfileService,
      FeedService,
      CreateTweetService,
+     TweetService,
      LoginGuard
       ]
 })
