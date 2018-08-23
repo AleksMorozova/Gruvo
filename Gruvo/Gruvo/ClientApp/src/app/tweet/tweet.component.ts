@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ITweet } from '@app/tweet/tweet.model';
 import { TweetService } from '@app/tweet/tweet.service';
 import { error } from 'protractor';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'gr-tweet',
@@ -23,8 +24,7 @@ export class TweetComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.checkIfUserLiked();
-    this.getNumOfLikes();
+    this.refreshData();
   }
 
   getNumOfLikes() {
@@ -37,7 +37,7 @@ export class TweetComponent implements OnInit {
   like() {
     this.tweetService.like(this.data.id)
       .subscribe(object => {
-
+        this.refreshData();
       }, error => {
         console.log(error);
       });
@@ -49,4 +49,11 @@ export class TweetComponent implements OnInit {
         this.isLiked = res;
       });
   }
+
+  refreshData() {
+    this.checkIfUserLiked();
+    this.getNumOfLikes();
+  }
+
+
 }

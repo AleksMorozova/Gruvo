@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ITweet } from '@app/tweet/tweet.model';
 import { IUser } from '@app/profile/user.model';
 import { FeedService } from '@app/feed/feed.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subscriber } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'gr-feed',
@@ -10,12 +11,16 @@ import { Observable } from 'rxjs/Rx';
   styleUrls: ['./feed.component.css']
 })
 
-export class FeedComponent {
+export class FeedComponent implements OnInit, OnDestroy {
   tweets: ITweet[] = [];
   recommendations: IUser[] = [];
+  timerSubscription: Subscription;
 
   constructor(private feedService: FeedService) {
 
+  }
+
+  ngOnInit() {
     this.feedService.getTweets()
       .subscribe((tweets) => {
         this.tweets = tweets;
@@ -25,5 +30,33 @@ export class FeedComponent {
       .subscribe((recommendations) => {
         this.recommendations = recommendations;
       });
+
+    this.refreshData();
+  }
+
+  ngOnDestroy() {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+  }
+
+  refreshData() {
+    this.feedService.getTweets()
+      .subscribe((tweets) => {
+        this.tweets = tweets;
+      });
+
+    this.feedService.getRecommendations()
+      .subscribe((recommendations) => {
+        this.recommendations = recommendations;
+      });
+
+    this.subscribeToData();
+  }
+
+  subscribeToData() {
+    this.timerSubscription = Observable.timer(5000)
+      .first()
+      .subscribe(() => this.refreshData());
   }
 }
