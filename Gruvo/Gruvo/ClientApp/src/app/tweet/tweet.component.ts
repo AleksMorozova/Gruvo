@@ -13,6 +13,7 @@ export class TweetComponent  {
   public deleteTweet(event) {
     this.tweetService.deleteTweet(this.data.id)
       .subscribe(
+        deleted => console.log(deleted),
         error => console.log(error)
       );
     event.preventDefault();    

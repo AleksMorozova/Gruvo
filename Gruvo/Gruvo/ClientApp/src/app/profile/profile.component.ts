@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IUser } from './user.model';
 import { ProfileService } from './profile.service';
 import { ITweet } from '../tweet/tweet.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'gr-profile',
@@ -20,13 +21,17 @@ export class ProfileComponent implements OnInit {
   subscriptionsQlt: number;
   subscribersQlt: number;
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.loadUserData();
     this.loadUserTweets();
     this.loadSubscribersQuality();
     this.loadSubscriptionsQuality();
     this.loadUserPostsQuality();
   }
+  scrollToTop() {
+    window.scrollTo(0,0);
+  }
+
   loadUserData() {
     this.profileService.getUserData()
       .subscribe((user) => {
@@ -51,7 +56,7 @@ export class ProfileComponent implements OnInit {
         this.subscribersQlt = subscribersQlt;
       });
   }
-  public loadUserPostsQuality() {
+  loadUserPostsQuality() {
     this.profileService.getUserPostsQuality()
       .subscribe((postsQlt) => {
         this.userTweetsQlt = postsQlt;

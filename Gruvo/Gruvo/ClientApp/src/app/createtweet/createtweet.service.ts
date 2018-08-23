@@ -14,8 +14,7 @@ export class CreateTweetService {
     @Inject('CREATETWEET_POST_TWEET_URL') private createtweetPostTweetApiURL: string,
     private http: HttpClient) { }
 
-  postTweet(message: string) {
-    console.log(message);
+  postTweet(message: string) {   
     const headers = new HttpHeaders().set('Content-Type', 'application/json');  
     return this.http.post(this.createtweetPostTweetApiURL,
       JSON.stringify( message ), { headers: headers });    

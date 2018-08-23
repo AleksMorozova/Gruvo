@@ -23,7 +23,6 @@ import { RecommendationComponent } from '@app/recommendation/recommendation.comp
 import { CreateTweetComponent } from '@app/createtweet/createtweet.component';
 import { CreateTweetService } from '@app/createtweet/createtweet.service';
 
-
 @NgModule({
   declarations: [
     AppComponent,

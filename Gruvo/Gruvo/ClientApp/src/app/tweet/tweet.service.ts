@@ -11,8 +11,7 @@ export class TweetService {
     @Inject('TWEET_DELETE_TWEET_URL') private tweetDeleteTweetApiURL: string,
     private http: HttpClient) { }
 
-  deleteTweet(id: number) {
-    console.log(id);
+  deleteTweet(id: number) {   
     const headers = new HttpHeaders().set('Content-Type', 'application/json');  
     return this.http.post(this.tweetDeleteTweetApiURL,
       JSON.stringify( id ), { headers: headers });    

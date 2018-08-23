@@ -42,7 +42,6 @@
 }
 
 .right-bottom {
-  padding: 20px;
   width: var(--blockw);
 }
 
@@ -51,3 +50,26 @@ color: darkred;
 font-family: 'Montserrat', sans-serif;
 font-weight: bold;
 }
+
+.posts-list-footer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 20px;
+}
+
+.posts-list-footer i {
+  display: block;
+  font-size: 25px;
+}
+
+  .posts-list-footer i:hover {
+    color: #eb7a28;
+    cursor: pointer;
+  }
+
+  .posts-list-footer a:hover,
+  .posts-list-footer a:active,
+  .posts-list-footer a:visited {
+    text-decoration: none;    
+  }
