@@ -1,39 +1,41 @@
-<div class="content main">
+<div class="content">
   <gr-menu></gr-menu>
-  <div class="left">
-    <div class="photo">
-      <img class="img-responsive" src="https://media.alienwarearena.com/media/tux-r.jpg">
+  <div class="tweets-list gruvo-block col-xs-11" id="tweets">
+    <div class="media">
+      <div class="media-left">
+        <a href="#">
+          <div class="photo img-circle">
+            <img class="img-responsive " src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCQTDXAX0S-RLwVQY82kLEyKsyKV8Lxh5ecAKP6hLGA38Voims-w">
+          </div>
+        </a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">{{user?.login}}</h4>
+        {{user?.about}}
+      </div>
     </div>
-    <div class="info"  >
-      <h2 >{{user?.login}}</h2>
-      <br>
-      <p class="">{{user?.about}}</p>
-      <br>
-      <table class="table">
-        <tr>
-          <td>
-            <a href="#">Followers</a>
-          </td>
-          <td>{{subscribersQlt}}</td>
-        </tr>
-        <tr>
-          <td>
-            <a href="#">Followings</a>
-          </td>
-          <td>{{subscriptionsQlt}}</td>
-        </tr>
-        <tr>
-          <td>
-            <a href="#">Posts</a>
-          </td>
-          <td>{{userTweetsQlt}}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  <div class="right">
+    <br />
+    <table class="table table-striped">
+      <tr>
+        <td>
+          <a href="#">Followers</a>
+        </td>
+        <td>
+          <a href="#">Followings</a>
+        </td>
+        <td>
+          <a href="#">Posts</a>
+        </td>        
+      </tr>
+      <tr>
+        <td>{{subscribers?.length}}</td>
+        <td>{{subscriptions?.length}}</td>
+        <td>{{userTweets?.length}}</td>
+      </tr>
+    </table>
+    <hr />
     <gr-createtweet></gr-createtweet>
-    <div class="right-bottom">      
+    <div class="right-bottom">
       <gr-tweet *ngFor="let tweet of userTweets" [data]="tweet"></gr-tweet>
       <footer class="posts-list-footer">   
         <i class="fas fa-sort-amount-up" (click)="scrollToTop()"></i>       

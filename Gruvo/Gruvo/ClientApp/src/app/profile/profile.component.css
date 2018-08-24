@@ -1,27 +1,36 @@
-.main {
+.content {
   display: flex;
   flex-flow: row;
   min-height: 100vh;
   justify-content: center;
   align-items: flex-start;
-  margin-top: 100px;
-  margin-bottom: 100px;
-  --blockw: 600px;
-  --picturew: 280px;
-  --pictureh: 370px;
+  padding: 80px 0;
+  --picturew: 250px;
+  --pictureh: 340px;
 }
 
-.photo{
-    display: flex;
-    flex-flow: column;
-    justify-content:center;
-    background-color:white;
-    min-width:var(--picturew);
-    height:var(--pictureh);
-    border-bottom: 1px solid lightgrey;
+.photo {
+  display: block;
+  overflow: hidden;
+  width: 128px;
+  height: 128px;
 }
 
 
+  .make-post textarea {
+    resize: none;
+  }
+
+  .make-post input {
+    width: 75px;
+    margin-top: 10px;
+    margin-left: auto;
+  }
+
+.tweets-list {
+  width: 600px;
+  padding: 20px;
+  margin: 0 25px;
 .info{
     padding: 10px;
     display: flex;
@@ -45,11 +54,18 @@
   width: var(--blockw);
 }
 
-.info a{
-color: darkred;
-font-family: 'Montserrat', sans-serif;
-font-weight: bold;
+.table a {
+  color: darkred;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
 }
+td:last-of-type {
+  border-right: none;
+}
+td{
+  border-right:1px solid grey;
+}
+
 
 .posts-list-footer {
   display: flex;

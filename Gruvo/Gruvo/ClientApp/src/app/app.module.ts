@@ -16,7 +16,9 @@ import { TweetService } from '@app/tweet/tweet.service';
 import { ProfileComponent } from '@app/profile/profile.component';
 import { ProfileService } from '@app/profile/profile.service';
 import { MenuComponent } from '@app/menu/menu.component';
-import { LoginGuard } from '@app/login-guard';
+import { MenuItemsComponent } from '@app/menu-items/menu-items.component';
+import { LoginGuard } from '@app/login.guard';
+import { AuthGuard } from '@app/auth.guard';
 import { FeedComponent } from '@app/feed/feed.component';
 import { FeedService } from '@app/feed/feed.service';
 import { RecommendationComponent } from '@app/recommendation/recommendation.component';
@@ -32,6 +34,7 @@ import { CreateTweetService } from '@app/createtweet/createtweet.service';
     SignupComponent,
     ProfileComponent,
     MenuComponent,
+    MenuItemsComponent,
     TweetComponent,
     FeedComponent,
     RecommendationComponent,
@@ -62,8 +65,9 @@ import { CreateTweetService } from '@app/createtweet/createtweet.service';
      ProfileService,
      FeedService,
      CreateTweetService,
-     TweetService,
-     LoginGuard
+     TweetService,     
+     LoginGuard,
+     AuthGuard
       ]
 })
 export class AppModule { }
