@@ -12,15 +12,11 @@ import { Observable } from 'rxjs/Observable';
 
 export class TweetComponent implements OnInit {
   @Input() data: ITweet;
-  likeUrl: string;
-  activeLikeUrl: string;
-  isLiked: boolean;
+  likeImgUrl: string;
   numOfLikes: number;
 
   constructor(private tweetService: TweetService) {
-    this.likeUrl = '/assets/images/heart.png';
-    this.activeLikeUrl = '/assets/images/heart_red.png';
-    this.isLiked = false;
+
   }
 
   ngOnInit() {
@@ -47,8 +43,13 @@ export class TweetComponent implements OnInit {
   
   checkIfUserLiked() {
     this.tweetService.checkLiked(this.data.id)
-      .subscribe(res => {
-        this.isLiked = res;
+      .subscribe((res : boolean) => {
+        if (res) {
+          this.likeImgUrl = '/assets/images/heart_red.png';
+        }
+        else {
+          this.likeImgUrl = '/assets/images/heart.png';
+        }
       });
   }
 
