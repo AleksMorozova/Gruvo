@@ -21,16 +21,6 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.feedService.getTweets()
-      .subscribe((tweets) => {
-        this.tweets = tweets;
-      });
-
-    this.feedService.getRecommendations()
-      .subscribe((recommendations) => {
-        this.recommendations = recommendations;
-      });
-
     this.refreshData();
   }
 

@@ -24,7 +24,8 @@ export class TweetComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.refreshData();
+    this.checkIfUserLiked();
+    this.getNumOfLikes(); 
   }
 
   getNumOfLikes() {
@@ -37,7 +38,8 @@ export class TweetComponent implements OnInit {
   like() {
     this.tweetService.like(this.data.id)
       .subscribe(object => {
-        this.refreshData();
+        this.checkIfUserLiked();
+        this.getNumOfLikes();
       }, error => {
         console.log(error);
       });
@@ -49,11 +51,5 @@ export class TweetComponent implements OnInit {
         this.isLiked = res;
       });
   }
-
-  refreshData() {
-    this.checkIfUserLiked();
-    this.getNumOfLikes();
-  }
-
 
 }
