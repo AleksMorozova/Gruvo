@@ -11,7 +11,9 @@
   <div class="action-list">
     <div class="action action-like">
       <button class="btn-action action-like" (click)="like()">
-        <img src="{{likeImgUrl}}" class="icon icon-like">
+        <div>
+          <img src="{{likeImgUrl}}" class="icon icon-like img-responsive">
+        </div>
         <span class="count">{{numOfLikes}}</span>
       </button>
     </div>

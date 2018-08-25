@@ -8,8 +8,14 @@
     background-color: transparent;
     border: none;
     outline: none;
+    display: flex;
 }
 
 .icon-like {
-    
+    flex-flow: column;
+
+}
+
+.count {
+  flex-flow: column;
 }
