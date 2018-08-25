@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateTweetService } from './createtweet.service';
+import { CreateTweetService } from './create-tweet.service';
 import { ITweet } from '../tweet/tweet.model';
 import { MessageBundle } from '@angular/compiler';
 
 @Component({
-  selector: 'gr-createtweet',
-  templateUrl: './createtweet.component.html',
-  styleUrls: ['./createtweet.component.css']
+  selector: 'gr-create-tweet',
+  templateUrl: './create-tweet.component.html',
+  styleUrls: ['./create-tweet.component.css']
 })
 
 export class CreateTweetComponent {
@@ -22,6 +22,7 @@ export class CreateTweetComponent {
     event.preventDefault();
     this.message = '';
   }
+
   isMessageEmpty() {
     return !this.message.trim();
   }

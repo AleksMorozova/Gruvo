@@ -17,16 +17,16 @@ export class ProfileComponent implements OnInit {
 
   user: IUser;
   userTweets: Array<ITweet>;
-  userTweetsQlt: number;
-  subscriptionsQlt: number;
-  subscribersQlt: number;
+  userTweetsCount: number;
+  subscriptionsCount: number;
+  subscribersCount: number;
 
   ngOnInit(): void {    
     this.loadUserData();
     this.loadUserTweets();
-    this.loadSubscribersQuality();
-    this.loadSubscriptionsQuality();
-    this.loadUserPostsQuality();
+    this.loadSubscribersCount();
+    this.loadSubscriptionsCount();
+    this.loadUserPostsCount();
   }
   scrollToTop() {
     window.scrollTo(0,0);
@@ -38,28 +38,32 @@ export class ProfileComponent implements OnInit {
         this.user = user;
       });
   }
+
   loadUserTweets() {
     this.profileService.getUserTweets()
       .subscribe((tweets) => {
         this.userTweets = tweets;
       });
   }
-  loadSubscriptionsQuality() {
-    this.profileService.getSubscriptionsQuality()
-      .subscribe((subscriptionsQlt) => {
-        this.subscriptionsQlt = subscriptionsQlt;
+
+  loadSubscriptionsCount() {
+    this.profileService.getSubscriptionsCount()
+      .subscribe((subscriptionsCount) => {
+        this.subscriptionsCount = subscriptionsCount;
       });
   }
-  loadSubscribersQuality() {
-    this.profileService.getSubscribersQuality()
-      .subscribe((subscribersQlt) => {
-        this.subscribersQlt = subscribersQlt;
+
+  loadSubscribersCount() {
+    this.profileService.getSubscribersCount()
+      .subscribe((subscribersCount) => {
+        this.subscribersCount = subscribersCount;
       });
   }
-  loadUserPostsQuality() {
-    this.profileService.getUserPostsQuality()
-      .subscribe((postsQlt) => {
-        this.userTweetsQlt = postsQlt;
+
+  loadUserPostsCount() {
+    this.profileService.getUserPostsCount()
+      .subscribe((postsCount) => {
+        this.userTweetsCount = postsCount;
       });
   }
 }

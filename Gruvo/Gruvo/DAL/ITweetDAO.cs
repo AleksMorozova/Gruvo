@@ -12,7 +12,7 @@ namespace Gruvo.DAL
         IEnumerable<ReadableTweet> GetUserPosts(long id);
         ReadableTweet GetPost(long id);
 
-        Int32 GetUserPostsQuality(long id);
+        Int32 GetUserPostsCount(long id);
 
         void DeletePost(long id);
     }

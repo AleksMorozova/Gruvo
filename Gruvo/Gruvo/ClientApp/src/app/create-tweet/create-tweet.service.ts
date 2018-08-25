@@ -10,14 +10,16 @@ import { ITweet } from "@app/tweet/tweet.model";
 
 @Injectable()
 export class CreateTweetService {
+
+  headers = new HttpHeaders().set('Content-Type', 'application/json'); 
+
   constructor(
     @Inject('CREATETWEET_POST_TWEET_URL') private createtweetPostTweetApiURL: string,
     private http: HttpClient) { }
 
-  postTweet(message: string) {   
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');  
+  postTweet(message: string) {      
     return this.http.post(this.createtweetPostTweetApiURL,
-      JSON.stringify( message ), { headers: headers });    
+      JSON.stringify( message ), { headers: this.headers });    
   }
   
 }

@@ -75,7 +75,7 @@ namespace Gruvo.Controllers
                 return BadRequest("Something went wrong");
             }
         }
-        [Route("subscribersQuality")]
+        [Route("subscribersCount")]
         [HttpGet]
         public IActionResult GetSubscribersQuality()
         {
@@ -83,14 +83,14 @@ namespace Gruvo.Controllers
             {
                 string cookie = Request.Cookies["Gruvo"];
                 long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
-                return Ok(_repository.UserDAO.GetSubscribersQuality(userid));
+                return Ok(_repository.UserDAO.GetSubscribersCount(userid));
             }
             catch (Exception e)
             {
                 return BadRequest(e);
             }
         }
-        [Route("subscriptionsQuality")]
+        [Route("subscriptionsCount")]
         [HttpGet]
         public IActionResult GetSubscriptionsQuality()
         {
@@ -98,7 +98,7 @@ namespace Gruvo.Controllers
             {
                 string cookie = Request.Cookies["Gruvo"];
                 long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
-                return Ok(_repository.UserDAO.GetSubscriptionsQuality(userid));
+                return Ok(_repository.UserDAO.GetSubscriptionsCount(userid));
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Gruvo.Controllers
                 return BadRequest("Something went wrong");
             }
         }
-        [Route("userPostsQuality")]
+        [Route("userPostsCount")]
         [HttpGet]
         public IActionResult GetUserPostsQuality()
         {
@@ -128,7 +128,7 @@ namespace Gruvo.Controllers
             {
                 string cookie = Request.Cookies["Gruvo"];
                 long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
-                return Ok(_repository.TweetDAO.GetUserPostsQuality(userid));
+                return Ok(_repository.TweetDAO.GetUserPostsCount(userid));
             }
             catch (Exception e)
             {

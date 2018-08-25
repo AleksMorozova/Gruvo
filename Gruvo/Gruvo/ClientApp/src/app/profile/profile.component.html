@@ -28,13 +28,13 @@
         </td>        
       </tr>
       <tr>
-        <td>{{subscribers?.length}}</td>
-        <td>{{subscriptions?.length}}</td>
-        <td>{{userTweets?.length}}</td>
+        <td>{{subscribersCount}}</td>
+        <td>{{subscriptionsCount}}</td>
+        <td>{{userTweetsCount}}</td>
       </tr>
     </table>
     <hr />
-    <gr-createtweet></gr-createtweet>
+    <gr-create-tweet></gr-create-tweet>
     <div class="right-bottom">
       <gr-tweet *ngFor="let tweet of userTweets" [data]="tweet"></gr-tweet>
       <footer class="posts-list-footer">   

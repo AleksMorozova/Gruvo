@@ -128,7 +128,7 @@ namespace Gruvo.DAL
 
             return list;
         }
-        public Int32 GetUserPostsQuality(long id)
+        public Int32 GetUserPostsCount(long id)
         {
             Int32 qlt;
             try

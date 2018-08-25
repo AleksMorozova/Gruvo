@@ -22,8 +22,8 @@ import { AuthGuard } from '@app/auth.guard';
 import { FeedComponent } from '@app/feed/feed.component';
 import { FeedService } from '@app/feed/feed.service';
 import { RecommendationComponent } from '@app/recommendation/recommendation.component';
-import { CreateTweetComponent } from '@app/createtweet/createtweet.component';
-import { CreateTweetService } from '@app/createtweet/createtweet.service';
+import { CreateTweetComponent } from '@app/create-tweet/create-tweet.component';
+import { CreateTweetService } from '@app/create-tweet/create-tweet.service';
 
 @NgModule({
   declarations: [
@@ -54,9 +54,9 @@ import { CreateTweetService } from '@app/createtweet/createtweet.service';
     { provide: 'TEST_URL', useValue: 'api/auth/test' },
     { provide: 'PROFILE_INFO_URL', useValue: 'api/profile/userInfo' },
     { provide: 'PROFILE_TWEETS_URL', useValue: 'api/profile/userTweets'},
-    { provide: 'PROFILE_SUBSCRIPTIONS_QLT_URL', useValue: 'api/profile/subscriptionsQuality' },
-    { provide: 'PROFILE_SUBSRIBERS_QLT_URL', useValue: 'api/profile/subscribersQuality' },
-    { provide: 'PROFILE_USER_POSTS_QLT_URL', useValue: 'api/profile/userPostsQuality' },
+    { provide: 'PROFILE_SUBSCRIPTIONS_COUNT_URL', useValue: 'api/profile/subscriptionsCount' },
+    { provide: 'PROFILE_SUBSRIBERS_COUNT_URL', useValue: 'api/profile/subscribersCount' },
+    { provide: 'PROFILE_USER_POSTS_COUNT_URL', useValue: 'api/profile/userPostsCount' },
     { provide: 'CREATETWEET_POST_TWEET_URL', useValue: 'api/profile/postTweet' },
     { provide: 'TWEET_DELETE_TWEET_URL', useValue: 'api/profile/deleteTweet'},
     { provide: 'FEED_TWEETS_URL', useValue: 'api/feed/tweets' },

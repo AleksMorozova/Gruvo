@@ -333,7 +333,7 @@ namespace Gruvo.DAL
             return list;
         }
 
-        public Int32 GetSubscriptionsQuality(long id)
+        public Int32 GetSubscriptionsCount(long id)
         {
             Int32 qlt;
             try
@@ -387,7 +387,7 @@ namespace Gruvo.DAL
             return list;
         }
 
-        public Int32 GetSubscribersQuality(long id)
+        public Int32 GetSubscribersCount(long id)
         {
             Int32 qlt;
             try
