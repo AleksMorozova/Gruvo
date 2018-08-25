@@ -3,6 +3,7 @@ import { ITweet } from '@app/tweet/tweet.model';
 import { TweetService } from '@app/tweet/tweet.service';
 import { error } from 'protractor';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'gr-tweet',
@@ -10,10 +11,11 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./tweet.component.css']
 })
 
-export class TweetComponent implements OnInit {
+export class TweetComponent implements OnInit, OnDestroy {
   @Input() data: ITweet;
   likeImgUrl: string;
   numOfLikes: number;
+  timerSubscription: Subscription;
 
   constructor(private tweetService: TweetService) {
 
@@ -21,21 +23,21 @@ export class TweetComponent implements OnInit {
 
   ngOnInit() {
     this.checkIfUserLiked();
-    this.getNumOfLikes(); 
+
+    this.refreshData();
   }
 
-  getNumOfLikes() {
-    this.tweetService.getNumOfLikes(this.data.id)
-      .subscribe((numOfLikes: number) => {
-        this.numOfLikes = numOfLikes;
-      });
+  ngOnDestroy() {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
   }
 
   like() {
     this.tweetService.like(this.data.id)
       .subscribe(object => {
         this.checkIfUserLiked();
-        this.getNumOfLikes();
+        this.refreshData();
       }, error => {
         console.log(error);
       });
@@ -53,4 +55,18 @@ export class TweetComponent implements OnInit {
       });
   }
 
+  refreshData() {
+    this.tweetService.getNumOfLikes(this.data.id)
+      .subscribe((numOfLikes: number) => {
+        this.numOfLikes = numOfLikes;
+      });
+
+    this.subscribeToData();
+  }
+
+  subscribeToData() {
+    this.timerSubscription = Observable.timer(2000)
+      .first()
+      .subscribe(() => this.refreshData());
+  }
 }

@@ -22,6 +22,11 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.refreshData();
+
+    this.feedService.getRecommendations()
+      .subscribe((recommendations) => {
+        this.recommendations = recommendations;
+      });
   }
 
   ngOnDestroy() {
@@ -33,12 +38,14 @@ export class FeedComponent implements OnInit, OnDestroy {
   refreshData() {
     this.feedService.getTweets()
       .subscribe((tweets) => {
-        this.tweets = tweets;
-      });
-
-    this.feedService.getRecommendations()
-      .subscribe((recommendations) => {
-        this.recommendations = recommendations;
+        if (this.tweets[0]) {
+          if (this.tweets[0].id != tweets[0].id) {
+            this.tweets = tweets;
+          }
+        }
+        else {
+          this.tweets = tweets;
+        }
       });
 
     this.subscribeToData();
