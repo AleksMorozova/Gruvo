@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   subscribers: IUser[] = [];
   timerSubscription: Subscription;
 
+
   ngOnInit(): void {
     this.profileService.getUserData()
       .subscribe((user) => {
@@ -66,8 +67,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .subscribe(() => this.refreshData());
   }
 
-  constructor(private profileService: ProfileService) {
-   
-
+  constructor(private profileService: ProfileService) { 
   }
 }
