@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { NgForm, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import * as crypto from "crypto-js";
-import { IUser } from "@app/profile/user.model";
 import { SettingsService } from '@app/settings/settings.service';
 
 @Component({
@@ -11,27 +9,31 @@ import { SettingsService } from '@app/settings/settings.service';
   templateUrl: './password-edit.component.html',
   styleUrls: ['./password-edit.component.css']
 })
+
 export class PasswordEditComponent {
   editPasswordForm: FormGroup;
-  correctPassw: boolean = true;
+  correctPassword: boolean = true;
+  showMessage: boolean = false;
 
-  constructor(private _fb: FormBuilder, private _router: Router, private settingsService: SettingsService) {
-    this.editPasswordForm = this._fb.group({
+  constructor(private fb: FormBuilder, private settingsService: SettingsService) {
+    this.editPasswordForm = this.fb.group({
       'oldPassw': ['', Validators.required],
-      'newPassw': ['']
+      'newPassw': ['', Validators.required]
     });
   }
   
   isValidControl(controlName): boolean {
-    return !this.editPasswordForm.controls[controlName].valid && this.editPasswordForm.controls[controlName].touched;
+    return this.editPasswordForm.controls[controlName].valid || this.editPasswordForm.controls[controlName].untouched;
   }
 
-  editPassw(formData: any): void {
+  editPassword(formData: any) {
     this.settingsService.EditPassword(crypto.MD5(formData.oldPassw).toString(), crypto.MD5(formData.newPassw).toString()).subscribe(object => {
-      this.correctPassw = true;
+      this.showMessage = true;
+      this.correctPassword = true;
       console.log('Password edit completed!');
     }, error => {
-      this.correctPassw = false;
+      this.showMessage = true;
+      this.correctPassword = false;
       console.log(error);
     })
   }

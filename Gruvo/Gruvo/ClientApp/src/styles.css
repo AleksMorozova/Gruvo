@@ -11,3 +11,11 @@
   margin: 15px;
 }
 
+.successful-result {
+  padding: 10px;
+  max-height: 100px;
+  background-color: rgba(0,255,0,0.1);
+  border: solid rgba(0,255,0,0.2) 2px;
+  border-radius: 5px;
+  margin: 15px;
+}
