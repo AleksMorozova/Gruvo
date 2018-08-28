@@ -110,7 +110,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]);
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]);
                         }
                     }
                 }
@@ -141,7 +141,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]);
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]);
                         }
                     }
                 }
@@ -174,7 +174,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]);
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]);
                         }
                     }
                 }
@@ -234,7 +234,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            list.Add(new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]));
+                            list.Add(new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]));
                         }
                     }
                 }
@@ -365,7 +365,7 @@ namespace Gruvo.DAL
                     {
                         while (dr.Read())
                         {
-                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr["Regdate"]));
+                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], null, (DateTime)dr["Regdate"]));
                         }
                     }
                 }
@@ -395,7 +395,7 @@ namespace Gruvo.DAL
                     {
                         while (dr.Read())
                         {
-                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], (string)dr["email"], (DateTime)dr["Regdate"]));
+                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], null, (DateTime)dr["Regdate"]));
                         }
                     }
                 }
@@ -450,7 +450,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            list.Add(new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"]));
+                            list.Add(new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]));
                         }
                     }
                 }
@@ -460,6 +460,39 @@ namespace Gruvo.DAL
                 throw;
             }
             return list;
+        }
+
+        public bool IsSubscribed(long userId1, long userId2)
+        {
+            bool result = false;
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"select * from subscriptions where SubscriberId =@userid1 and SubscribedId = @userid2";
+                    command.Parameters.Add("@userid1", SqlDbType.BigInt);
+                    command.Parameters["@userid1"].Value = userId1;
+
+                    command.Parameters.Add("@userid2", SqlDbType.BigInt);
+                    command.Parameters["@userid2"].Value = userId2;
+
+                    using (SqlDataReader dr = command.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            result = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return result;
         }
     }
 }
