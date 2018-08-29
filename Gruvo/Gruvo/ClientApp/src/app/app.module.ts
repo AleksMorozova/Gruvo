@@ -23,6 +23,7 @@ import { RecommendationComponent } from '@app/recommendation/recommendation.comp
 import { SettingsComponent } from '@app/settings/settings.component';
 import { SettingsService } from '@app/settings/settings.service';
 import { PasswordEditComponent } from '@app/password-edit/password-edit.component';
+import { PhotoEditComponent } from '@app/photo/photo.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { PasswordEditComponent } from '@app/password-edit/password-edit.componen
     FeedComponent,
     RecommendationComponent,
     SettingsComponent,
-    PasswordEditComponent
+    PasswordEditComponent,
+    PhotoEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
