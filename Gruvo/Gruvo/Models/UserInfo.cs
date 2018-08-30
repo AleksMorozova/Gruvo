@@ -20,7 +20,7 @@ namespace Gruvo.Models
             this.RegDateTime = regDateTime;
         }
 
-        public UserInfo(long id, string login, string email, DateTime regDateTime, DateTime bday, string about)
+        public UserInfo(long id, string login, string email, DateTime regDateTime, DateTime? bday, string about)
         {
             this.Id = id;
             this.Login = login;
