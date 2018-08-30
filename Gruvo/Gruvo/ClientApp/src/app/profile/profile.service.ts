@@ -17,6 +17,7 @@ export class ProfileService {
     @Inject('PROFILE_SUBSRIBERS_URL') private profileSubscribersApiURL: string,
     @Inject('PROFILE_SUBSCRIBE_URL') private profileSubscribeApiURL: string,
     @Inject('PROFILE_UNSUBSCRIBE_URL') private profileUnsubscribeApiURL: string,
+     
     private http: HttpClient) { }
 
   getUserData(id?: number): Observable<IUser> {
@@ -36,5 +37,5 @@ export class ProfileService {
   }
   unsubscribe(id: number): Observable<any> {
     return this.http.post(this.profileUnsubscribeApiURL, id );
-  }
+  }  
 }

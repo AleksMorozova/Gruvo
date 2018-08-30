@@ -12,6 +12,7 @@ import { SignupComponent } from '@app/signup/signup.component';
 import { HeaderComponent } from '@app/header/header.component';
 import { FooterComponent } from '@app/footer/footer.component';
 import { TweetComponent } from '@app/tweet/tweet.component';
+import { TweetService } from '@app/tweet/tweet.service';
 import { ProfileComponent } from '@app/profile/profile.component';
 import { ProfileService } from '@app/profile/profile.service';
 import { MenuComponent } from '@app/menu/menu.component';
@@ -21,12 +22,13 @@ import { AuthGuard } from '@app/auth.guard';
 import { FeedComponent } from '@app/feed/feed.component';
 import { FeedService } from '@app/feed/feed.service';
 import { RecommendationComponent } from '@app/recommendation/recommendation.component';
+import { CreateTweetComponent } from '@app/create-tweet/create-tweet.component';
+import { CreateTweetService } from '@app/create-tweet/create-tweet.service';
 import { TweetService } from '@app/tweet/tweet.service';
 import { SettingsComponent } from '@app/settings/settings.component';
 import { SettingsService } from '@app/settings/settings.service';
 import { PasswordEditComponent } from '@app/password-edit/password-edit.component';
 import { PhotoEditComponent } from '@app/photo/photo.component';
-
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { PhotoEditComponent } from '@app/photo/photo.component';
     TweetComponent,
     FeedComponent,
     RecommendationComponent,
+    CreateTweetComponent,
     SettingsComponent,
     PasswordEditComponent,
     PhotoEditComponent
@@ -59,8 +62,11 @@ import { PhotoEditComponent } from '@app/photo/photo.component';
     { provide: 'TEST_URL', useValue: 'api/auth/test' },
     { provide: 'PROFILE_INFO_URL', useValue: 'api/profile/userInfo' },
     { provide: 'PROFILE_TWEETS_URL', useValue: 'api/profile/userTweets'},
-    { provide: 'PROFILE_SUBSCRIPTIONS_URL', useValue: 'api/profile/subscriptions' },
-    { provide: 'PROFILE_SUBSRIBERS_URL', useValue: 'api/profile/subscribers' },
+    { provide: 'PROFILE_SUBSCRIPTIONS_COUNT_URL', useValue: 'api/profile/subscriptionsCount' },
+    { provide: 'PROFILE_SUBSRIBERS_COUNT_URL', useValue: 'api/profile/subscribersCount' },
+    { provide: 'PROFILE_USER_POSTS_COUNT_URL', useValue: 'api/profile/userPostsCount' },
+    { provide: 'CREATETWEET_POST_TWEET_URL', useValue: 'api/profile/postTweet' },
+    { provide: 'TWEET_DELETE_TWEET_URL', useValue: 'api/profile/deleteTweet'},
     { provide: 'FEED_TWEETS_URL', useValue: 'api/feed/tweets' },
     { provide: 'FEED_RECOMMENDATIONS_URL', useValue: 'api/feed/recommendations' },
     { provide: 'TWEET_LIKES_URL', useValue: 'api/tweet/tweetlikes' },
@@ -74,6 +80,7 @@ import { PhotoEditComponent } from '@app/photo/photo.component';
      LoginService,
      ProfileService,
      FeedService,
+     CreateTweetService,
      TweetService,
      LoginGuard,
      SettingsService,

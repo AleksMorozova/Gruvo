@@ -1,0 +1,27 @@
+.make-post{
+    display: flex;
+    flex-direction: column;
+}
+
+  .make-post textarea {
+    display: block;
+    min-height: 80px;
+    resize: none;
+  }
+
+  .make-post button {
+    width: 75px;
+    margin-top: 10px;
+    margin-left: auto;
+    float: right;
+  }
+
+ .right-top{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+    padding: 20px;
+    width: var(--blockw);
+}

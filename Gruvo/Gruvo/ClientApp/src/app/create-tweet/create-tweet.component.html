@@ -1,0 +1,12 @@
+<div class="right-top">
+  <div class="make-post">
+    <form (submit)="postTweet($event)">
+      <textarea class="form-control message" [(ngModel)]="message" name="text"  rows="2" maxlength="256" placeholder="What are you up to?"></textarea>
+      <button type="submit" class="btn btn-success" [disabled]="isMessageEmpty()">Post</button>
+    </form>
+  </div>
+</div>
+
+
+
+

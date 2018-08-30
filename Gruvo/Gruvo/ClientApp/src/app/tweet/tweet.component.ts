@@ -43,6 +43,15 @@ export class TweetComponent implements OnInit, OnDestroy {
       });
   }
   
+  public deleteTweet(event) {
+    this.tweetService.deleteTweet(this.data.id)
+      .subscribe(
+        deleted => console.log(deleted),
+        error => console.log(error)
+      );
+    event.preventDefault();    
+  }
+  
   checkIfUserLiked() {
     this.tweetService.checkLiked(this.data.id)
       .subscribe((res : boolean) => {

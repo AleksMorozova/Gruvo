@@ -167,6 +167,46 @@ namespace Gruvo.Controllers
                 return BadRequest("Something went wrong");
             }
         }
+        
+        [Route("postTweet")]
+        [HttpPost]
+        public IActionResult PostTweet([FromBody] string message)
+        {
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+
+                _repository.TweetDAO.AddPost(userid, message, DateTime.Now);
+
+                return Ok("Success!");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+        }
+        
+        [Route("deleteTweet")]
+        [HttpPost]
+        public IActionResult DeleteTweet()
+        {
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+
+                _repository.TweetDAO.DeletePost(id);
+
+                return Ok("Success!");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+        }
 
     }
 }
