@@ -15,18 +15,26 @@ export class ProfileService {
     @Inject('PROFILE_TWEETS_URL') private profileTweetsApiURL: string,
     @Inject('PROFILE_SUBSCRIPTIONS_URL') private profileSubscriptionsApiURL: string,
     @Inject('PROFILE_SUBSRIBERS_URL') private profileSubscribersApiURL: string,
+    @Inject('PROFILE_SUBSCRIBE_URL') private profileSubscribeApiURL: string,
+    @Inject('PROFILE_UNSUBSCRIBE_URL') private profileUnsubscribeApiURL: string,
     private http: HttpClient) { }
 
-  getUserData(): Observable<IUser> {
-    return  this.http.get<IUser> (this.profileInfoApiURL);
+  getUserData(id?: number): Observable<IUser> {
+    return this.http.get<IUser>(id ? this.profileInfoApiURL+'/'+id: this.profileInfoApiURL);
   }
-  getUserTweets(): Observable<ITweet[]> {
-    return this.http.get<ITweet[]>(this.profileTweetsApiURL);
+  getUserTweets(id?: number): Observable<ITweet[]> {
+    return this.http.get<ITweet[]>(id ? this.profileTweetsApiURL + '/' + id : this.profileTweetsApiURL);
   }
-  getSubscriptions(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.profileSubscriptionsApiURL);
+  getSubscriptions(id?: number): Observable<IUser[]> {
+    return this.http.get<IUser[]>(id ? this.profileSubscriptionsApiURL + '/' + id : this.profileSubscriptionsApiURL);
   }
-  getSubscribers(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.profileSubscribersApiURL);
+  getSubscribers(id?: number): Observable<IUser[]> {
+    return this.http.get<IUser[]>(id ? this.profileSubscribersApiURL + '/' + id : this.profileSubscribersApiURL );
+  }
+  subscribe(id: number): Observable<any>  {
+    return this.http.post(this.profileSubscribeApiURL,  id );
+  }
+  unsubscribe(id: number): Observable<any> {
+    return this.http.post(this.profileUnsubscribeApiURL, id );
   }
 }

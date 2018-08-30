@@ -15,23 +15,14 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full', canActivate: [LoginGuard]},
   { path: 'signup', component: SignupComponent, pathMatch: 'full', canActivate: [LoginGuard] },
   { path: 'profile', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'profile/:id', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'feed', component: FeedComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'settings', component: SettingsComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/page404' },
 
-  /* TODO:
-   
-  { path: 'dashboard', canActivate: [AuthGuard], component: MainComponent, },
-  { path: 'login', .... *children: [
-      { path: 'edit', canActivate: [EditGuard], component: EditProfileComponent },
-      { path: 'followers',  component: FollowersComponent },
-      { path: 'subscribtions',  component: SubscribtionsComponent },
-      { path: 'status/:id',  component: ViewPostComponent }    //to show a one specific post
-    ]
-  },
-  { path: 'status/add', canActivate: [AuthGuard], component: AddPostComponent, },
+  /* TODO:   
   { path: 'page404', component: Page404Component }
-*/
+  */
 ];
 
 

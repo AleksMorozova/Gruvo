@@ -3,11 +3,10 @@
   <div class="tweets-list gruvo-block col-xs-11" id="tweets">
     <div class="media">
       <div class="media-left">
-        <a href="#">
-          <div class="photo img-circle">
-            <img class="img-responsive " src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCQTDXAX0S-RLwVQY82kLEyKsyKV8Lxh5ecAKP6hLGA38Voims-w">
-          </div>
-        </a>
+        <div class="photo img-circle">
+          <img class="img-responsive " src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCQTDXAX0S-RLwVQY82kLEyKsyKV8Lxh5ecAKP6hLGA38Voims-w">
+        </div>
+        <button id="sbscrbtn" *ngIf="paramId" class="center-block btn hidden" (click)="subfunc()"></button>
       </div>
       <div class="media-body">
         <h4 class="media-heading">{{user?.login}}</h4>

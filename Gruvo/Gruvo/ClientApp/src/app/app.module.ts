@@ -69,6 +69,8 @@ import { PhotoEditComponent } from '@app/photo/photo.component';
     { provide: 'PROFILE_EDIT_GET_INFO_URL', useValue: 'api/settings/userEditGetInfo' },
     { provide: 'PROFILE_EDIT_INFO_URL', useValue: 'api/settings/editInfo' },
     { provide: 'PROFILE_EDIT_PASSWORD_URL', useValue: 'api/settings/editPassword' },
+    { provide: 'PROFILE_SUBSCRIBE_URL', useValue: 'api/profile/subscribe' },
+    { provide: 'PROFILE_UNSUBSCRIBE_URL', useValue: 'api/profile/unsubscribe' },
      LoginService,
      ProfileService,
      FeedService,
