@@ -1,25 +1,32 @@
 .content {
   width: 100%;
   display: flex;
-  flex-flow: column;
-  align-content: center;
-  padding: 10px 0;
+  flex-flow: row;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .photo-title {
   border-bottom: 1px solid lightgrey;
 }
 
-.photo-upload {
-  display: flex;
-  align-items: flex-end;
-}
-
 .photo-upload img {
-  width: 128px;
-  height: 128px;
   border: 1px solid lightgrey;
   padding: 3px;
+  height: 128px;
+  width: 128px;
+}
+
+.buttons {
+  margin-bottom: 10px;
+  display: flex;
+  flex-flow: row;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.btn {
+  margin-right: 10px;
 }
 
 .photo-upload button {
@@ -33,7 +40,15 @@
 .photo-edit {
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
-  padding: 20px;
+
   box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
 }
+
+.uploaded-photo {
+  margin-bottom: 10px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+}
+
