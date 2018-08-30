@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
 
     ngOnInit(): void {
-        this.profileService.getUserData()
+        this.profileService.getUserData(this.paramId)
             .subscribe((user) => {
                 this.user = user;
                 this.button = document.getElementById('sbscrbtn');
@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     refreshData() {
-        this.profileService.getUserTweets()
+        this.profileService.getUserTweets(this.paramId)
             .subscribe((tweets) => {
                 if (this.userTweets[0]) {
                     if (this.userTweets[0].id != tweets[0].id) {
@@ -60,12 +60,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 }
             });
 
-        this.profileService.getSubscriptions()
+        this.profileService.getSubscriptions(this.paramId)
             .subscribe((subscriptions) => {
                 this.subscriptions = subscriptions;
             });
 
-        this.profileService.getSubscribers()
+        this.profileService.getSubscribers(this.paramId)
             .subscribe((subscribers) => {
                 this.subscribers = subscribers;
             });
@@ -80,9 +80,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
     constructor(private profileService: ProfileService, route: ActivatedRoute, private router: Router) {
         route.params.subscribe(
-            params => {
-                this.paramId = +params['id'];
-            }
+            params =>  this.paramId = +params['id']   
         );
     }
 
