@@ -6,6 +6,7 @@ namespace Gruvo.Models
     {
         public long Id { get; set; }
         public string Login { get; set; }
+        public string Email { get; set; }
         public string About { get; set; }
         public DateTime RegDateTime { get; set; }
         public DateTime? Bday { get; set; }
