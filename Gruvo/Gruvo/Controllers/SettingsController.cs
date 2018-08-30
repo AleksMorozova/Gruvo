@@ -13,10 +13,12 @@ namespace Gruvo.Controllers
     public class SettingsController : ControllerBase
     {
         private BaseRepository _repository;
+        private ITokenUserPairs _tokenUserPairs;
 
-        public SettingsController(BaseRepository repository)
+        public SettingsController(BaseRepository repository, ITokenUserPairs tokenUserPairs)
         {
             _repository = repository;
+            _tokenUserPairs = tokenUserPairs;
         }
         
         [Route("userEditGetInfo")]
@@ -25,8 +27,7 @@ namespace Gruvo.Controllers
         {
             try
             {
-                string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
                 return Ok(_repository.UserDAO.GetUser(userid));
             }
             catch (Exception)
@@ -41,8 +42,7 @@ namespace Gruvo.Controllers
         {
             try
             {
-                string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
 
                 if (user == null)
                 {
@@ -64,8 +64,7 @@ namespace Gruvo.Controllers
         {
             try
             {
-                string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
 
                 if (passwords == null)
                 {
