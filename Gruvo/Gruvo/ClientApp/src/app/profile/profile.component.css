@@ -10,6 +10,7 @@
 }
 
 .photo {
+  margin:5px;
   display: block;
   overflow: hidden;
   width: 128px;

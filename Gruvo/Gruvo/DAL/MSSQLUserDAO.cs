@@ -101,7 +101,8 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select UserId,Login,Email,RegDate from users where Userid = @id ";
+                    command.CommandText = @"select UserId,Login,Email,RegDate, DateOfBirth, About from users where Userid = @id ";
+
                     command.Parameters.Add("@id", SqlDbType.BigInt);
                     command.Parameters["@id"].Value = id;
 
@@ -109,7 +110,26 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]);
+                            DateTime? bday;
+                            string about;
+                            if (dataReader["DateOfBirth"] is DBNull)
+                            {
+                                bday = null;
+                            }
+                            else
+                            {
+                                bday = (DateTime?)dataReader["DateOfBirth"];
+                            }
+
+                            if (dataReader["about"] is DBNull)
+                            {
+                                about = null;
+                            }
+                            else
+                            {
+                                about = (string)dataReader["about"];
+                            }
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"], bday, about);
                         }
                     }
                 }
@@ -186,6 +206,38 @@ namespace Gruvo.DAL
             return user;
         }
 
+        public string GetUserPassword(long id)
+        {
+            string pwd = null;
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"select Password from users where Userid = @id";
+                    
+                    command.Parameters.Add("@id", SqlDbType.BigInt);
+                    command.Parameters["@id"].Value = id;
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            pwd= (string)dataReader["Password"];
+                        }
+                    }
+                }
+            }
+
+            catch (Exception)
+            {
+                throw;
+            }
+            return pwd;
+        }
+
         public IEnumerable<UserInfo> GetUsers()
         {
             List<UserInfo> list = new List<UserInfo>();
@@ -213,7 +265,7 @@ namespace Gruvo.DAL
             return list;
         }
 
-        public void UpdateCredentianals(long id, string login, string password, string email)
+        public void UpdatePassword(long id, string password)
         {
             try
             {
@@ -222,20 +274,10 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"update users set Login=@login, Password = @password, Email=@email where userid = @userid";
-
-                    command.Parameters.Add("@login", SqlDbType.VarChar);
-                    command.Parameters["@login"].Value = login;
-
+                    command.CommandText = @"update users set Password = @password";
+                    
                     command.Parameters.Add("@password", SqlDbType.VarChar);
                     command.Parameters["@password"].Value = password;
-
-                    command.Parameters.Add("@email", SqlDbType.VarChar);
-                    command.Parameters["@email"].Value = email;
-
-
-                    command.Parameters.Add("@userid", SqlDbType.BigInt);
-                    command.Parameters["@userid"].Value = id;
 
                     command.ExecuteNonQuery();
                 }
@@ -246,7 +288,7 @@ namespace Gruvo.DAL
             }
         }
 
-        public void UpdateUserInfo(long id, string about, DateTime bday)
+        public void UpdateUserInfo(long id, string login, string email, string about, DateTime? bday)
         {
             try
             {
@@ -255,14 +297,35 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"update users set DateOfBirth=@bday, about = @about where userid = @userid";
+                    command.CommandText = @"update users set Login=@login, Email=@email, DateOfBirth=@bday, about = @about where userid = @userid";
+
+                    command.Parameters.Add("@login", SqlDbType.VarChar);
+                    command.Parameters["@login"].Value = login;
+
+                    command.Parameters.Add("@email", SqlDbType.VarChar);
+                    command.Parameters["@email"].Value = email;
 
                     command.Parameters.Add("@bday", SqlDbType.Date);
-                    command.Parameters["@bday"].Value = bday;
+                    if (bday == null)
+                    {
+                        command.Parameters["@bday"].Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        command.Parameters["@bday"].Value = bday;
+                    }
 
                     command.Parameters.Add("@about", SqlDbType.VarChar);
-                    command.Parameters["@about"].Value = about;
 
+                    if (about==null)
+                    {
+                        command.Parameters["@about"].Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        command.Parameters["@about"].Value = about;
+                    }
+                    
                     command.Parameters.Add("@userid", SqlDbType.BigInt);
                     command.Parameters["@userid"].Value = id;
 

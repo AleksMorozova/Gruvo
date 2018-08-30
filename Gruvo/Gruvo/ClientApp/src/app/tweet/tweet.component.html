@@ -1,8 +1,21 @@
 <div class="post" id="{{ data.id }}">
   <h4 class="post-header">
-    <a class="post-title" href="users/{{data.userLogin}}">{{data.userLogin}}</a>
+    <a class="post-title" href="profile/{{data.userId}}">{{data.userLogin}}</a>
     <i class="far fa-trash-alt"  (click)="deleteTweet($event)"></i>
   </h4>
     <p class="post-text">{{data.message}}</p>
     <p class="post-date">{{ data.sendingDateTime | date:'MMM d, y, h:mm a' }}</p>
+
+  <hr>
+
+  <div class="action-list">
+    <div class="action action-like">
+      <button class="btn-action action-like" (click)="like()">
+        <div>
+          <img src="{{likeImgUrl}}" class="icon icon-like img-responsive">
+        </div>
+        <span class="count">{{numOfLikes}}</span>
+      </button>
+    </div>
+  </div>
 </div>

@@ -13,25 +13,29 @@ export class ProfileService {
   constructor(
     @Inject('PROFILE_INFO_URL') private profileInfoApiURL: string,
     @Inject('PROFILE_TWEETS_URL') private profileTweetsApiURL: string,
-    @Inject('PROFILE_SUBSCRIPTIONS_COUNT_URL') private profileSubscriptionsCountApiURL: string,
-    @Inject('PROFILE_SUBSRIBERS_COUNT_URL') private profileSubscribersCountApiURL: string,
-    @Inject('PROFILE_USER_POSTS_COUNT_URL') private profilePostsCountApiURL: string,
+    @Inject('PROFILE_SUBSCRIPTIONS_URL') private profileSubscriptionsApiURL: string,
+    @Inject('PROFILE_SUBSRIBERS_URL') private profileSubscribersApiURL: string,
+    @Inject('PROFILE_SUBSCRIBE_URL') private profileSubscribeApiURL: string,
+    @Inject('PROFILE_UNSUBSCRIBE_URL') private profileUnsubscribeApiURL: string,
+     
     private http: HttpClient) { }
 
-  getUserData(): Observable<IUser> {
-    return  this.http.get<IUser> (this.profileInfoApiURL);
+  getUserData(id?: number): Observable<IUser> {
+    return this.http.get<IUser>(id ? this.profileInfoApiURL+'/'+id: this.profileInfoApiURL);
   }
-  getUserTweets(): Observable<ITweet[]> {
-    return this.http.get<ITweet[]>(this.profileTweetsApiURL);
+  getUserTweets(id?: number): Observable<ITweet[]> {
+    return this.http.get<ITweet[]>(id ? this.profileTweetsApiURL + '/' + id : this.profileTweetsApiURL);
   }
-  getSubscriptionsCount(): Observable<number> {
-    return this.http.get<number>(this.profileSubscriptionsCountApiURL);
+  getSubscriptions(id?: number): Observable<IUser[]> {
+    return this.http.get<IUser[]>(id ? this.profileSubscriptionsApiURL + '/' + id : this.profileSubscriptionsApiURL);
   }
-  getSubscribersCount(): Observable<number> {
-    return this.http.get<number>(this.profileSubscribersCountApiURL);
+  getSubscribers(id?: number): Observable<IUser[]> {
+    return this.http.get<IUser[]>(id ? this.profileSubscribersApiURL + '/' + id : this.profileSubscribersApiURL );
   }
-  getUserPostsCount(): Observable<number> {
-    return this.http.get<number>(this.profilePostsCountApiURL);
+  subscribe(id: number): Observable<any>  {
+    return this.http.post(this.profileSubscribeApiURL,  id );
   }
-  
+  unsubscribe(id: number): Observable<any> {
+    return this.http.post(this.profileUnsubscribeApiURL, id );
+  }  
 }

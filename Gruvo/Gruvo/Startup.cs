@@ -26,6 +26,7 @@ namespace Gruvo
         {
             services.AddSingleton<IAuthorizationHandler, GruvoCookieHandler>();
             services.AddSingleton<BaseRepository, MSSQLRepository>();
+            services.AddSingleton<ITokenUserPairs, TokenUserPairs>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer();

@@ -3,5 +3,6 @@ export interface IUser {
   login: string;
   regDate: Date;
   about?: string;
+  isSubscribed?: boolean;
   birthDay?: Date;
   }

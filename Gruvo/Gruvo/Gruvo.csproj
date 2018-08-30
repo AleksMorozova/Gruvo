@@ -31,6 +31,7 @@
     <None Remove="ClientApp\src\app\recommendation.component.html" />
     <None Remove="ClientApp\src\app\recommendation.component.html" />
     <None Remove="ClientApp\src\app\recommendation\recommendation.component.ts" />
+    <None Remove="ClientApp\src\app\tweet\tweet.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +43,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\feed\feed.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\feed\feed.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\recommendation\recommendation.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\tweet\tweet.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -1,5 +1,6 @@
 export interface ITweet {
- id:number;
+ id: number;
+ userId: number;
  userLogin:string;
  message:string;
  sendingDateTime:Date;

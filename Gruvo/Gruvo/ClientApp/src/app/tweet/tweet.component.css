@@ -58,4 +58,24 @@
   text-align: justify;
 }
  
-      
+.action-list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-action {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    display: flex;
+}
+
+.icon-like {
+    flex-flow: column;
+
+}
+
+.count {
+  flex-flow: column;
+}

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Gruvo.BLL;
 using Gruvo.DAL.Repository;
+using Gruvo.DTL;
 using Gruvo.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +14,12 @@ namespace Gruvo.Controllers
     public class ProfileController : ControllerBase
     {
         private BaseRepository _repository;
+        private ITokenUserPairs _tokenUserPairs;
 
-        public ProfileController(BaseRepository repository)
+        public ProfileController(BaseRepository repository, ITokenUserPairs tokenUserPairs)
         {
             _repository = repository;
+            _tokenUserPairs = tokenUserPairs;
         }
 
         [Route("userInfo/{id?}")]
@@ -26,12 +30,13 @@ namespace Gruvo.Controllers
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
 
                 if (id.HasValue)
                 {
                     user = _repository.UserDAO.GetUser(id.Value);
                     user.IsSubscribed = _repository.UserDAO.IsSubscribed(userid, id.Value);
+                    if (id.Value == userid) throw new ArgumentException();
                 }
                 else
                 {
@@ -45,96 +50,124 @@ namespace Gruvo.Controllers
             }
         }
 
-        [Route("subscribers")]
+        [Route("subscribers/{id?}")]
         [HttpGet]
-        public IActionResult GetSubscribers()
+        public IActionResult GetSubscribers(long? id)
         {
+            IEnumerable<UserInfo> arr = null;
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
-                return Ok(_repository.UserDAO.GetSubscribers(userid));
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+
+                if (id.HasValue)
+                {
+                    arr = _repository.UserDAO.GetSubscribers(id.Value);
+                    if (arr == null) throw new NullReferenceException();
+                }
+                else
+                {
+                    arr = _repository.UserDAO.GetSubscribers(userid);
+                }
+                return Ok(arr);
+            
             }
             catch (Exception)
             {
                 return BadRequest("Something went wrong");
             }
         }
-        [Route("subscriptions")]
+
+        [Route("subscriptions/{id?}")]
         [HttpGet]
-        public IActionResult GetSubscriptions()
+        public IActionResult GetSubscriptions(long? id)
         {
+            IEnumerable<UserInfo> arr = null;
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
-                return Ok(_repository.UserDAO.GetSubscriptions(userid));
+                long userid = _tokenUserPairs.Pairs[cookie].Id; 
+
+                if (id.HasValue)
+                {
+                    arr = _repository.UserDAO.GetSubscriptions(id.Value);
+                    if (arr == null) throw new NullReferenceException();
+                }
+                else
+                {
+                    arr = _repository.UserDAO.GetSubscriptions(userid);
+                }
+                return Ok(arr);
+            
+
             }
             catch (Exception)
             {
                 return BadRequest("Something went wrong");
             }
         }
-        [Route("subscribersCount")]
+
+        [Route("userTweets/{id?}")]
         [HttpGet]
-        public IActionResult GetSubscribersQuality()
+        public IActionResult GetUserTweets(long? id)
         {
+            IEnumerable<ReadableTweet> arr = null;
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
-                return Ok(_repository.UserDAO.GetSubscribersCount(userid));
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+
+                if (id.HasValue)
+                {
+                    arr = _repository.TweetDAO.GetUserPosts(id.Value);
+                    if (arr == null) throw new NullReferenceException();
+                }
+                else
+                {
+                    arr = _repository.TweetDAO.GetUserPosts(userid);
+                }
+                return Ok(arr);
             }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
-        }
-        [Route("subscriptionsCount")]
-        [HttpGet]
-        public IActionResult GetSubscriptionsQuality()
-        {
-            try
-            {
-                string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
-                return Ok(_repository.UserDAO.GetSubscriptionsCount(userid));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
-        }
-        [Route("userTweets")]
-        [HttpGet]
-        public IActionResult GetUserTweets()
-        {
-            try
-            {
-                string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
-                return Ok(_repository.TweetDAO.GetUserPosts(userid));
-            }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("Something went wrong");
             }
         }
-        [Route("userPostsCount")]
-        [HttpGet]
-        public IActionResult GetUserPostsQuality()
+
+        [Route("subscribe")]
+        [HttpPost]
+        public IActionResult Subscribe([FromBody] long id)
         {
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
-                return Ok(_repository.TweetDAO.GetUserPostsCount(userid));
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+                _repository.UserDAO.Subscribe(userid,id,DateTime.Now);
+                return Ok();
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest("Something went wrong");
             }
         }
+        
+        [Route("unsubscribe")]
+        [HttpPost]
+        public IActionResult Unsubscribe([FromBody] long id)
+        {
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+                _repository.UserDAO.Unsubscribe(userid, id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+        
         [Route("postTweet")]
         [HttpPost]
         public IActionResult PostTweet([FromBody] string message)
@@ -142,7 +175,7 @@ namespace Gruvo.Controllers
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
 
                 _repository.TweetDAO.AddPost(userid, message, DateTime.Now);
 
@@ -154,14 +187,15 @@ namespace Gruvo.Controllers
             }
 
         }
+        
         [Route("deleteTweet")]
         [HttpPost]
-        public IActionResult DeleteTweet([FromBody] long id)
+        public IActionResult DeleteTweet()
         {
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
 
                 _repository.TweetDAO.DeletePost(id);
 
