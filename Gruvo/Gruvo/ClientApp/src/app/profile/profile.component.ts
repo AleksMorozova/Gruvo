@@ -16,6 +16,7 @@ export class ProfileComponent {
   subscriptions: IUser[];
   subscribers: IUser[];
   paramId: number;
+  button: any;
 
   constructor(private profileService: ProfileService, route: ActivatedRoute,private router:Router) {
     route.params.subscribe(
@@ -25,6 +26,16 @@ export class ProfileComponent {
         this.profileService.getUserData(this.paramId)
           .subscribe((user) => {
             this.user = user;
+            this.button = document.getElementById('sbscrbtn');
+            if (this.user.isSubscribed)
+            {
+              this.button.classList.add('btn-primary');
+              this.button.innerHTML = 'Unsubscribe';
+            } else {
+              this.button.classList.add('btn-success');
+              this.button.innerHTML = 'Subscribe';
+            }
+            this.button.classList.remove('hidden');
           },err => router.navigate(['profile']));
         this.profileService.getUserTweets(this.paramId)
           .subscribe((tweets) => {
@@ -37,20 +48,41 @@ export class ProfileComponent {
         this.profileService.getSubscribers(this.paramId)
           .subscribe((subscribers) => {
             this.subscribers = subscribers;
-          });
+          });        
+
       }
     );
   }
 
-  subscribe() {
-    this.profileService.subscribe(this.paramId).subscribe(
-      () => this.user.IsSubscribed = true
-    );
+  subfunc() {
+    if (this.button) {
+      this.button.setAttribute("disabled", "disabled");
+      if (this.user.isSubscribed) {
+        this.profileService.unsubscribe(this.paramId).subscribe(
+          () => {
+            this.user.isSubscribed = false;
+            this.button.classList.replace('btn-primary', 'btn-success');
+            this.button.innerHTML = 'Subscribe';
+            this.button.removeAttribute('disabled');
+          }
+        );
+      }
+      else {
+        this.profileService.subscribe(this.paramId).subscribe(
+          () => {
+            this.user.isSubscribed = true;
+            this.button.classList.replace('btn-success', 'btn-primary');
+            this.button.innerHTML = 'Unsubscribe';
+            this.button.removeAttribute('disabled');
+          }
+        );
+      }
+    }    
   }
 
   unsubscribe() {
     this.profileService.unsubscribe(this.paramId).subscribe(
-      () => this.user.IsSubscribed = false
+      () => this.user.isSubscribed = false
     );
   }
 

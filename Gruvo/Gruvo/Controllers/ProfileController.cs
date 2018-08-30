@@ -34,6 +34,7 @@ namespace Gruvo.Controllers
                 {
                     user = _repository.UserDAO.GetUser(id.Value);
                     user.IsSubscribed = _repository.UserDAO.IsSubscribed(userid, id.Value);
+                    if (id.Value == userid) throw new ArgumentException();
                 }
                 else
                 {
@@ -128,9 +129,9 @@ namespace Gruvo.Controllers
             }
         }
 
-        [Route("subscribe/{id}")]
-        [HttpGet]
-        public IActionResult Subscribe(long id)
+        [Route("subscribe")]
+        [HttpPost]
+        public IActionResult Subscribe([FromBody] long id)
         {
             try
             {
@@ -139,15 +140,15 @@ namespace Gruvo.Controllers
                 _repository.UserDAO.Subscribe(userid,id,DateTime.Now);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return BadRequest("Something went wrong");
             }
         }
         
-        [Route("unsubscribe/{id}")]
-        [HttpGet]
-        public IActionResult Unsubscribe(long id)
+        [Route("unsubscribe")]
+        [HttpPost]
+        public IActionResult Unsubscribe([FromBody] long id)
         {
             try
             {
@@ -156,7 +157,7 @@ namespace Gruvo.Controllers
                 _repository.UserDAO.Unsubscribe(userid, id);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return BadRequest("Something went wrong");
             }

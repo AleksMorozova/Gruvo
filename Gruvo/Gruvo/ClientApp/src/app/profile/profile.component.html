@@ -6,8 +6,7 @@
         <div class="photo img-circle">
           <img class="img-responsive " src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCQTDXAX0S-RLwVQY82kLEyKsyKV8Lxh5ecAKP6hLGA38Voims-w">
         </div>
-        <button *ngIf="!user?.isSubscribed && paramId" class="center-block btn btn-success"(click)="subscribe()">Subscribe</button>
-        <button *ngIf="user?.isSubscribed && paramId" class="center-block btn btn-primary" (click)="unsubscribe()">Unubscribe</button>
+        <button id="sbscrbtn" *ngIf="paramId" class="center-block btn hidden" (click)="subfunc()"></button>
       </div>
       <div class="media-body">
         <h4 class="media-heading">{{user?.login}}</h4>

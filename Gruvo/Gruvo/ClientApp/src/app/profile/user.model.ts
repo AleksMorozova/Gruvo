@@ -6,6 +6,6 @@ export interface IUser {
   followings: number;
   posts: number;
   about?: string;
-  IsSubscribed?: boolean;
+  isSubscribed?: boolean;
   birthDay?: Date;
   }

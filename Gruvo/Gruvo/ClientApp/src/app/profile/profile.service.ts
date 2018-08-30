@@ -32,9 +32,9 @@ export class ProfileService {
     return this.http.get<IUser[]>(id ? this.profileSubscribersApiURL + '/' + id : this.profileSubscribersApiURL );
   }
   subscribe(id: number): Observable<any>  {
-    return this.http.get(this.profileSubscribeApiURL + '/' + id);
+    return this.http.post(this.profileSubscribeApiURL,  id );
   }
   unsubscribe(id: number): Observable<any> {
-    return this.http.get(this.profileUnsubscribeApiURL + '/' + id);
+    return this.http.post(this.profileUnsubscribeApiURL, id );
   }
 }
