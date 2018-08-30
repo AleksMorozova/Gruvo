@@ -1,0 +1,21 @@
+<div class="content">
+  <form class="photo-edit container col-md-5" [formGroup]="editPhotoForm" (ngSubmit)="editPhoto()">
+
+    <div class="form-group photo-title">
+      <h4><b>Photo</b></h4>
+    </div>
+
+    <div class="form-group photo-upload">
+      <input [formControl]="editPhotoForm.controls['photoFile']" type="file"
+             class="form-control" style="display: none" accept=".jpg, .jpeg, .png" (change)="onFileChanged($event)"
+             #fileInput>
+      <img id="photo" src="https://media.alienwarearena.com/media/tux-r.jpg">
+        <button type="button" class="btn btn-success btn-md" (click)="fileInput.click()">Select File</button>
+        <label id="file-name">No file chosen</label>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-md" [disabled]="!editPhotoForm.valid">Submit</button>
+
+  </form>
+
+</div>
