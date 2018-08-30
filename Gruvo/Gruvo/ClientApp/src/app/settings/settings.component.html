@@ -1,61 +1,61 @@
 <div class="content">
   <gr-menu></gr-menu>
+  <div class="gruvo-block edit-options">
+    <gr-photo-edit></gr-photo-edit>
+    <div class="account-info">
+      <form class="settings col-xs-11" [formGroup]="editForm" (ngSubmit)="editInfo(editForm.value)">
 
-  <gr-photo-edit></gr-photo-edit>
-
-  <form class="settings container col-md-5" [formGroup]="editForm" (ngSubmit)="editInfo(editForm.value)">
-
-    <div class="form-group account-title">
-      <h4><b>Account</b></h4>
-    </div>
-
-    <div class="form-group" [ngClass]="{'has-error':!isValidControl('login')}">
-      <label for="Login">
-        Login
-        <span class="text-danger" *ngIf="!isValidControl('login')">is not valid!</span>
-      </label>
-      <input id="Login" [formControl]="editForm.controls['login']" type="text" class="form-control" value={{user?.login}}>
-    </div>
-
-    <div class="form-group" [ngClass]="{'has-error':!isValidControl('email')}">
-      <label for="Email">
-        Email
-        <span class="text-danger" *ngIf="!isValidControl('email')">is not valid!</span>
-      </label>
-      <input id="Email" [formControl]="editForm.controls['email']" type="email" class="form-control" value={{user?.email}}>
-    </div>
-
-    <div class="form-group">
-      <label for="About">
-        About
-      </label>
-      <textarea id="About" [formControl]="editForm.controls['about']" class="form-control" rows="2" a value={{user?.about}}></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="bday">
-        Birthday
-      </label>
-      <input id="bday" [formControl]="editForm.controls['bday']" type="date" class="form-control" value={{user?.birthDay}}>
-    </div>
-
-
-    <button type="submit" class="btn btn-success btn-md" [disabled]="!editForm.valid || !editForm.touched">Submit</button>
-
-    <div class="message-show" *ngIf="showMessage">
-      <div class="wrong-credentials" *ngIf="!successfulResult; else success">
-        Something went wrong.
-      </div>
-
-      <ng-template #success>
-        <div class="successful-result">
-          The changes are saved.
+        <div class="form-group account-title">
+          <h4><b>Account</b></h4>
         </div>
-      </ng-template>
+
+        <div class="form-group" [ngClass]="{'has-error':!isValidControl('login')}">
+          <label for="Login">
+            Login
+            <span class="text-danger" *ngIf="!isValidControl('login')">is not valid!</span>
+          </label>
+          <input id="Login" [formControl]="editForm.controls['login']" type="text" class="form-control" value={{user?.login}}>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-error':!isValidControl('email')}">
+          <label for="Email">
+            Email
+            <span class="text-danger" *ngIf="!isValidControl('email')">is not valid!</span>
+          </label>
+          <input id="Email" [formControl]="editForm.controls['email']" type="email" class="form-control" value={{user?.email}}>
+        </div>
+
+        <div class="form-group">
+          <label for="About">
+            About
+          </label>
+          <textarea id="About" [formControl]="editForm.controls['about']" class="form-control" rows="2" a value={{user?.about}}></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="bday">
+            Birthday
+          </label>
+          <input id="bday" [formControl]="editForm.controls['bday']" type="date" class="form-control" value={{user?.birthDay}}>
+        </div>
+
+        <div class="buttons">
+          <button type="submit" class="btn btn-success btn-md" [disabled]="!editForm.valid || !editForm.touched">Submit</button>
+        </div>
+        <div class="message-show" *ngIf="showMessage">
+          <div class="wrong-credentials" *ngIf="!successfulResult; else success">
+            Something went wrong.
+          </div>
+
+          <ng-template #success>
+            <div class="successful-result">
+              The changes are saved.
+            </div>
+          </ng-template>
+        </div>
+
+      </form>
     </div>
-
-  </form>
-
-  <gr-password-edit></gr-password-edit>
-
+    <gr-password-edit></gr-password-edit>
+  </div>
 </div>
