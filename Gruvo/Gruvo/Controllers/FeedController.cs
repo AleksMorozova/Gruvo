@@ -11,10 +11,12 @@ namespace Gruvo.Controllers
     public class FeedController : ControllerBase
     {
         private BaseRepository _repository;
+        private ITokenUserPairs _tokenUserPairs;
 
-        public FeedController(BaseRepository repository)
+        public FeedController(BaseRepository repository, ITokenUserPairs tokenUserPairs)
         {
             _repository = repository;
+            _tokenUserPairs = tokenUserPairs;
         }
 
         [HttpGet]
@@ -24,7 +26,7 @@ namespace Gruvo.Controllers
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
                 return Ok(_repository.TweetDAO.GetPostsForUser(userid));
             }
             catch (Exception ex)
