@@ -7,6 +7,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { LoginGuard } from './login.guard';
 import { AuthGuard } from './auth.guard';
 import { FeedComponent } from './feed/feed.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 const appRoutes: Routes = [
@@ -15,7 +16,8 @@ const appRoutes: Routes = [
   { path: 'signup', component: SignupComponent, pathMatch: 'full', canActivate: [LoginGuard] },
   { path: 'profile', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'profile/:id', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-  { path: 'feed', component: FeedComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+  { path: 'feed', component: FeedComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'settings', component: SettingsComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/page404' },
 
   /* TODO:   

@@ -14,10 +14,12 @@ namespace Gruvo.Controllers
     public class ProfileController : ControllerBase
     {
         private BaseRepository _repository;
+        private ITokenUserPairs _tokenUserPairs;
 
-        public ProfileController(BaseRepository repository)
+        public ProfileController(BaseRepository repository, ITokenUserPairs tokenUserPairs)
         {
             _repository = repository;
+            _tokenUserPairs = tokenUserPairs;
         }
 
         [Route("userInfo/{id?}")]
@@ -28,7 +30,7 @@ namespace Gruvo.Controllers
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
 
                 if (id.HasValue)
                 {
@@ -56,7 +58,7 @@ namespace Gruvo.Controllers
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
 
                 if (id.HasValue)
                 {
@@ -68,6 +70,7 @@ namespace Gruvo.Controllers
                     arr = _repository.UserDAO.GetSubscribers(userid);
                 }
                 return Ok(arr);
+            
             }
             catch (Exception)
             {
@@ -83,7 +86,7 @@ namespace Gruvo.Controllers
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id; 
 
                 if (id.HasValue)
                 {
@@ -95,6 +98,8 @@ namespace Gruvo.Controllers
                     arr = _repository.UserDAO.GetSubscriptions(userid);
                 }
                 return Ok(arr);
+            
+
             }
             catch (Exception)
             {
@@ -110,7 +115,7 @@ namespace Gruvo.Controllers
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
 
                 if (id.HasValue)
                 {
@@ -136,7 +141,7 @@ namespace Gruvo.Controllers
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
                 _repository.UserDAO.Subscribe(userid,id,DateTime.Now);
                 return Ok();
             }
@@ -153,7 +158,7 @@ namespace Gruvo.Controllers
             try
             {
                 string cookie = Request.Cookies["Gruvo"];
-                long userid = TokenUserPairs.GetInstance().GetPairs()[cookie].Id;
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
                 _repository.UserDAO.Unsubscribe(userid, id);
                 return Ok();
             }

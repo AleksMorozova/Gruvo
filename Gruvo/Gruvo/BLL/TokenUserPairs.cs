@@ -3,27 +3,8 @@ using System.Collections.Generic;
 
 namespace Gruvo.BLL
 {
-    public class TokenUserPairs
+    public class TokenUserPairs: ITokenUserPairs
     {
-        private static TokenUserPairs instance;
-
-        private static Dictionary<string, UserInfo> pairs;
-
-        private TokenUserPairs()
-        {
-            pairs = new Dictionary<string, UserInfo>();
-        }
-
-        public static TokenUserPairs GetInstance()
-        {
-            if (instance == null)
-                instance = new TokenUserPairs();
-            return instance;
-        }
-
-        public Dictionary<string, UserInfo> GetPairs()
-        {
-            return pairs;
-        }
+        public Dictionary<string, UserInfo> Pairs { get; } = new Dictionary<string, UserInfo>();
     }
 }

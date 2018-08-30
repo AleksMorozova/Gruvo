@@ -12,9 +12,10 @@ namespace Gruvo.DAL
         UserInfo GetUser(long id);
         UserInfo GetUser(string login);
         UserInfo GetUserByEmailAndPwd(string email, string password);
+        string GetUserPassword(long id);
 
-        void UpdateCredentianals(long id, string login, string password, string email);
-        void UpdateUserInfo(long id, string about, DateTime bday);
+        void UpdatePassword(long id,  string password);
+        void UpdateUserInfo(long id, string login, string email, string about, DateTime? bday);
         void DeleteUser(long id);
         void DeleteUser(string login);
 

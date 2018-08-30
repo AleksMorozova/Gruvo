@@ -12,10 +12,12 @@ namespace Gruvo.Controllers
     public class AuthController : ControllerBase
     {
         private BaseRepository _repository;
+        private ITokenUserPairs _tokenUserPairs;
 
-        public AuthController(BaseRepository repository)
+        public AuthController(BaseRepository repository, ITokenUserPairs tokenUserPairs)
         {
             _repository = repository;
+            _tokenUserPairs = tokenUserPairs;
         }
 
         [HttpPost, Route("login")]
@@ -37,7 +39,7 @@ namespace Gruvo.Controllers
 
                 string token = TokenManager.GenerateToken(userFromDB.Id);
 
-                TokenUserPairs.GetInstance().GetPairs().Add(token, userFromDB);
+                _tokenUserPairs.Pairs.Add(token, userFromDB);
                 Response.Cookies.Append("Gruvo", token);
 
                 return Ok("Success!");

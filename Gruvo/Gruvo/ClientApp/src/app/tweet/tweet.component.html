@@ -2,8 +2,20 @@
   <h4>
     <a href="profile/{{data.userId}}">{{data.userLogin}}</a>
   </h4>
-  <blockquote>    
-      <h5>{{data.message}}</h5>
-      <footer>{{ data.sendingDateTime | date:'MMM d, y, h:mm a' }}</footer>
-</blockquote>
+  <blockquote>
+    <p>{{data.message}}</p>
+    <footer>{{ data.sendingDateTime | date:'MMM d, y, h:mm a' }}</footer>
+  </blockquote>
+  <hr>
+
+  <div class="action-list">
+    <div class="action action-like">
+      <button class="btn-action action-like" (click)="like()">
+        <div>
+          <img src="{{likeImgUrl}}" class="icon icon-like img-responsive">
+        </div>
+        <span class="count">{{numOfLikes}}</span>
+      </button>
+    </div>
+  </div>
 </div>

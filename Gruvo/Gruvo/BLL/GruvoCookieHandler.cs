@@ -8,6 +8,12 @@ namespace Gruvo.BLL
     public class GruvoCookieHandler : AuthorizationHandler<GruvoCookieRequirement>
     {
         private HttpContext _httpContext;
+        private ITokenUserPairs _tokenUserPairs;
+
+        public GruvoCookieHandler(ITokenUserPairs tokenUserPairs)
+        {
+            _tokenUserPairs = tokenUserPairs;
+        }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, GruvoCookieRequirement requirement)
         {
@@ -15,7 +21,7 @@ namespace Gruvo.BLL
 
             if (_httpContext.Request.Cookies.ContainsKey("Gruvo"))
             {
-                if (TokenUserPairs.GetInstance().GetPairs().ContainsKey(_httpContext.Request.Cookies["Gruvo"]))
+                if (_tokenUserPairs.Pairs.ContainsKey(_httpContext.Request.Cookies["Gruvo"]))
                 {
                     context.Succeed(requirement);
                 }
