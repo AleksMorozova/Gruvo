@@ -22,6 +22,10 @@ import { FeedComponent } from '@app/feed/feed.component';
 import { FeedService } from '@app/feed/feed.service';
 import { RecommendationComponent } from '@app/recommendation/recommendation.component';
 import { TweetService } from '@app/tweet/tweet.service';
+import { SettingsComponent } from '@app/settings/settings.component';
+import { SettingsService } from '@app/settings/settings.service';
+import { PasswordEditComponent } from '@app/password-edit/password-edit.component';
+import { PhotoEditComponent } from '@app/photo/photo.component';
 
 
 @NgModule({
@@ -36,7 +40,10 @@ import { TweetService } from '@app/tweet/tweet.service';
     MenuItemsComponent,
     TweetComponent,
     FeedComponent,
-    RecommendationComponent
+    RecommendationComponent,
+    SettingsComponent,
+    PasswordEditComponent,
+    PhotoEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -59,12 +66,15 @@ import { TweetService } from '@app/tweet/tweet.service';
     { provide: 'TWEET_LIKES_URL', useValue: 'api/tweet/tweetlikes' },
     { provide: 'TWEET_LIKE_URL', useValue: 'api/tweet/like' },
     { provide: 'TWEET_CHECKLIKED_URL', useValue: 'api/tweet/checkLiked' },
-
+    { provide: 'PROFILE_EDIT_GET_INFO_URL', useValue: 'api/settings/userEditGetInfo' },
+    { provide: 'PROFILE_EDIT_INFO_URL', useValue: 'api/settings/editInfo' },
+    { provide: 'PROFILE_EDIT_PASSWORD_URL', useValue: 'api/settings/editPassword' },
      LoginService,
      ProfileService,
      FeedService,
      TweetService,
      LoginGuard,
+     SettingsService,
      AuthGuard
       ]
 })
