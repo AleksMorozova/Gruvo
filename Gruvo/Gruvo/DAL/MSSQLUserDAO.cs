@@ -110,7 +110,26 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]);
+                            DateTime? bday;
+                            string about;
+                            if (dataReader["DateOfBirth"] is DBNull)
+                            {
+                                bday = null;
+                            }
+                            else
+                            {
+                                bday = (DateTime?)dataReader["DateOfBirth"];
+                            }
+
+                            if (dataReader["about"] is DBNull)
+                            {
+                                about = null;
+                            }
+                            else
+                            {
+                                about = (string)dataReader["about"];
+                            }
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"], bday, about);
                         }
                     }
                 }
