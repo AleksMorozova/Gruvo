@@ -28,14 +28,8 @@
     background-color: white;
 }
 
-.left, .right-bottom{
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
 
-.left{
-    width:var(--picturew);
-}
+
 
 .table a {
   color: darkred;
@@ -49,7 +43,6 @@ td{
   border-right:1px solid grey;
 }
 
-
 .posts-list-footer {
   display: flex;
   width: 100%;
@@ -62,7 +55,7 @@ td{
   font-size: 25px;
 }
 
-  .posts-list-footer i:hover {
+  .posts-list-footer:hover {
     color: #eb7a28;
     cursor: pointer;
   }
