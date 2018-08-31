@@ -1,0 +1,18 @@
+
+.scroll-to-top {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 20px;
+}
+
+.scroll-to-top:hover {
+    color: #eb7a28;
+    cursor: pointer;
+  }
+
+  .scroll-to-top a:hover,
+  .scroll-to-top a:active,
+  .scroll-to-top a:visited {
+    text-decoration: none;    
+  }

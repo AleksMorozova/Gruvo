@@ -47,10 +47,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
     }
 
-    scrollToTop() {
-      window.scrollTo(0, 0);
-    }
-
     refreshData() {
         this.profileService.getUserTweets(this.paramId)
           .subscribe((tweets) => {

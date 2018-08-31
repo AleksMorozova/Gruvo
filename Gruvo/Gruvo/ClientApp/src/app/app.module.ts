@@ -28,6 +28,7 @@ import { SettingsComponent } from '@app/settings/settings.component';
 import { SettingsService } from '@app/settings/settings.service';
 import { PasswordEditComponent } from '@app/password-edit/password-edit.component';
 import { PhotoEditComponent } from '@app/photo/photo.component';
+import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { PhotoEditComponent } from '@app/photo/photo.component';
     CreateTweetComponent,
     SettingsComponent,
     PasswordEditComponent,
-    PhotoEditComponent
+    PhotoEditComponent,
+    ScrollToTopComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

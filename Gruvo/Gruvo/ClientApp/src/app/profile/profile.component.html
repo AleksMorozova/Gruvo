@@ -32,7 +32,7 @@
     <hr />
     <div class="right-bottom">
       <gr-tweet *ngFor="let tweet of userTweets" [data]="tweet"></gr-tweet>  
-        <i class=" posts-list-footer fas fa-sort-amount-up" (click)="scrollToTop()"></i>       
+      <gr-scroll-to-top></gr-scroll-to-top>
     </div>
   </div>
 </div>

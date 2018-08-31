@@ -3,8 +3,6 @@
     <div class="gruvo-block tweets-list col-xs-11" id="tweets">
         <gr-create-tweet></gr-create-tweet>
       <gr-tweet *ngFor="let tweet of tweets" [data]="tweet"></gr-tweet>
-      <footer class="posts-list-footer">
-        <i class="fas fa-sort-amount-up" (click)="scrollToTop()"></i>
-      </footer>
+      <gr-scroll-to-top></gr-scroll-to-top>
     </div>
 </div>

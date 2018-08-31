@@ -4,7 +4,6 @@ import { IUser } from '@app/profile/user.model';
 import { FeedService } from '@app/feed/feed.service';
 import { Observable, Subscriber } from 'rxjs/Rx';
 import { Subscription } from 'rxjs';
-import { ProfileComponent } from '@app/profile/profile.component';
 
 @Component({
   selector: 'gr-feed',
