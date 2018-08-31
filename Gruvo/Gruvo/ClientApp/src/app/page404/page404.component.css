@@ -16,14 +16,11 @@
   justify-content:center;
   align-items: center;
 }
-
 ._404 {
-  display:block;
-  text-align:center;
-  font-size: 220px;
+  font-size: 160px;
   height: 250px;
   letter-spacing: 15px;
-}
+  }
 
 ._1 {
   letter-spacing: 12px;
@@ -31,6 +28,7 @@
   line-height: 80%;
 }
 ._2 {
+  margin:10px 0;
   font-size: 20px;
 }
 
@@ -38,7 +36,7 @@
   background-color: rgb(51, 51, 102);
   position: relative;
   display: inline-block;
-  width: 350px;
+  width: 300px;
   padding: 5px;
   font-size: 25px;
   color: #33cc99;
