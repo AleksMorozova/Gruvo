@@ -274,10 +274,13 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"update users set Password = @password";
+                    command.CommandText = @"update users set Password = @password where userid = @userid";
                     
                     command.Parameters.Add("@password", SqlDbType.VarChar);
                     command.Parameters["@password"].Value = password;
+
+                    command.Parameters.Add("@userid", SqlDbType.BigInt);
+                    command.Parameters["@userid"].Value = id;
 
                     command.ExecuteNonQuery();
                 }
