@@ -12,7 +12,6 @@ import { SignupComponent } from '@app/signup/signup.component';
 import { HeaderComponent } from '@app/header/header.component';
 import { FooterComponent } from '@app/footer/footer.component';
 import { TweetComponent } from '@app/tweet/tweet.component';
-import { TweetService } from '@app/tweet/tweet.service';
 import { ProfileComponent } from '@app/profile/profile.component';
 import { ProfileService } from '@app/profile/profile.service';
 import { MenuComponent } from '@app/menu/menu.component';
@@ -29,6 +28,7 @@ import { SettingsComponent } from '@app/settings/settings.component';
 import { SettingsService } from '@app/settings/settings.service';
 import { PasswordEditComponent } from '@app/password-edit/password-edit.component';
 import { PhotoEditComponent } from '@app/photo/photo.component';
+import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,8 @@ import { PhotoEditComponent } from '@app/photo/photo.component';
     CreateTweetComponent,
     SettingsComponent,
     PasswordEditComponent,
-    PhotoEditComponent
+    PhotoEditComponent,
+    ScrollToTopComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -61,10 +62,9 @@ import { PhotoEditComponent } from '@app/photo/photo.component';
     { provide: 'SIGNUP_URL', useValue: 'api/auth/signup' },
     { provide: 'TEST_URL', useValue: 'api/auth/test' },
     { provide: 'PROFILE_INFO_URL', useValue: 'api/profile/userInfo' },
-    { provide: 'PROFILE_TWEETS_URL', useValue: 'api/profile/userTweets'},
-    { provide: 'PROFILE_SUBSCRIPTIONS_COUNT_URL', useValue: 'api/profile/subscriptionsCount' },
-    { provide: 'PROFILE_SUBSRIBERS_COUNT_URL', useValue: 'api/profile/subscribersCount' },
-    { provide: 'PROFILE_USER_POSTS_COUNT_URL', useValue: 'api/profile/userPostsCount' },
+    { provide: 'PROFILE_TWEETS_URL', useValue: 'api/profile/userTweets' },
+    { provide: 'PROFILE_SUBSCRIPTIONS_URL', useValue: 'api/profile/subscriptions' },
+    { provide: 'PROFILE_SUBSRIBERS_URL', useValue: 'api/profile/subscribers' },
     { provide: 'CREATETWEET_POST_TWEET_URL', useValue: 'api/profile/postTweet' },
     { provide: 'TWEET_DELETE_TWEET_URL', useValue: 'api/profile/deleteTweet'},
     { provide: 'FEED_TWEETS_URL', useValue: 'api/feed/tweets' },

@@ -4,4 +4,5 @@ export interface ITweet {
  userLogin:string;
  message:string;
  sendingDateTime:Date;
+ isDeletable:boolean;
 }

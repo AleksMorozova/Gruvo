@@ -3,9 +3,6 @@
   <div class="tweets-list gruvo-block col-xs-11" id="tweets">
     <div class="media">
       <div class="media-left">
-        <div class="photo img-circle">
-          <img class="img-responsive " src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCQTDXAX0S-RLwVQY82kLEyKsyKV8Lxh5ecAKP6hLGA38Voims-w">
-        </div>
         <button id="sbscrbtn" *ngIf="paramId" class="center-block btn hidden" (click)="subfunc()"></button>
       </div>
       <div class="media-body">
@@ -27,18 +24,15 @@
         </td>        
       </tr>
       <tr>
-        <td>{{subscribersCount}}</td>
-        <td>{{subscriptionsCount}}</td>
-        <td>{{userTweetsCount}}</td>
+        <td>{{subscribers.length}}</td>
+        <td>{{subscriptions.length}}</td>
+        <td>{{userTweets.length}}</td>
       </tr>
     </table>
     <hr />
-    <gr-create-tweet></gr-create-tweet>
     <div class="right-bottom">
-      <gr-tweet *ngFor="let tweet of userTweets" [data]="tweet"></gr-tweet>
-      <footer class="posts-list-footer">   
-        <i class="fas fa-sort-amount-up" (click)="scrollToTop()"></i>       
-      </footer>
+      <gr-tweet *ngFor="let tweet of userTweets" [data]="tweet"></gr-tweet>  
+      <gr-scroll-to-top></gr-scroll-to-top>
     </div>
   </div>
 </div>

@@ -1,12 +1,10 @@
 <div class="post" id="{{ data.id }}">
   <h4 class="post-header">
     <a class="post-title" href="profile/{{data.userId}}">{{data.userLogin}}</a>
-    <i class="far fa-trash-alt"  (click)="deleteTweet($event)"></i>
+    <i *ngIf="data.isDeletable" class="far fa-trash-alt"  (click)="deleteTweet($event)"></i>
   </h4>
     <p class="post-text">{{data.message}}</p>
     <p class="post-date">{{ data.sendingDateTime | date:'MMM d, y, h:mm a' }}</p>
-
-  <hr>
 
   <div class="action-list">
     <div class="action action-like">
