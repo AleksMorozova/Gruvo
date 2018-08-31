@@ -65,37 +65,6 @@ namespace Gruvo.DAL
             }
         }
 
-        public ReadableTweet GetPost(long id)
-        {
-            ReadableTweet tweet = null;
-            try
-            {
-                using (var connection = new SqlConnection(_connectionStr))
-                using (var command = connection.CreateCommand())
-                {
-                    connection.Open();
-
-                    command.CommandText = @"select postid,posts.userid,login,message,postdate from posts join users on users.userid = posts.userid where postid = @id ";
-                    command.Parameters.Add("@id", SqlDbType.BigInt);
-                    command.Parameters["@id"].Value = id;
-
-                    using (SqlDataReader dataReader = command.ExecuteReader())
-                    {
-                        while (dataReader.Read())
-                        {
-                            tweet = new ReadableTweet((long)dataReader["Postid"], (long)dataReader["userid"], (string)dataReader["login"], (string)dataReader["message"], (DateTimeOffset)dataReader["postdate"]);
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-            }
-
-            return tweet;
-        }
 
         public IEnumerable<ReadableTweet> GetPostsForUser(long id)
         {
@@ -115,7 +84,13 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            list.Add(new ReadableTweet((long)dataReader["Postid"], (long)dataReader["userid"], (string)dataReader["login"], (string)dataReader["message"], (DateTimeOffset)dataReader["postdate"]));
+                            list.Add(new ReadableTweet(
+                                (long)dataReader["Postid"],
+                                (long)dataReader["userid"],
+                                (string)dataReader["login"],
+                                (string)dataReader["message"],
+                                (long)dataReader["userid"]==id ? true : false,
+                                (DateTimeOffset)dataReader["postdate"]));
                         }
                     }
                 }
@@ -170,7 +145,12 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            list.Add(new ReadableTweet((long)dataReader["Postid"], (long)dataReader["userid"], (string)dataReader["login"], (string)dataReader["message"], (DateTimeOffset)dataReader["postdate"]));
+                            list.Add(new ReadableTweet((long)dataReader["Postid"],
+                            (long)dataReader["userid"], 
+                            (string)dataReader["login"],
+                            (string)dataReader["message"],
+                            true,
+                            (DateTimeOffset)dataReader["postdate"]));
                         }
                     }
                 }

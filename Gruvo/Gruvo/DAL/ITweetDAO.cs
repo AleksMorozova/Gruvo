@@ -10,7 +10,6 @@ namespace Gruvo.DAL
 
         IEnumerable<ReadableTweet> GetPostsForUser(long id);
         IEnumerable<ReadableTweet> GetUserPosts(long id);
-        ReadableTweet GetPost(long id);
 
         Int32 GetUserPostsCount(long id);
 
