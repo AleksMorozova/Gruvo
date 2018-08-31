@@ -5,8 +5,6 @@
   justify-content: center;
   align-items: flex-start;
   padding: 80px 0;
-  --picturew: 250px;
-  --pictureh: 340px;
 }
 
 .photo {
@@ -17,21 +15,10 @@
   height: 128px;
 }
 
-
-  .make-post textarea {
-    resize: none;
-  }
-
-  .make-post input {
-    width: 75px;
-    margin-top: 10px;
-    margin-left: auto;
-  }
-
 .tweets-list {
   width: 600px;
   padding: 20px;
-  margin: 0 25px;
+  margin: 0 20px;
 }
 
 .info{
@@ -44,17 +31,10 @@
 .left, .right-bottom{
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
-    box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
 }
 
 .left{
     width:var(--picturew);
-}
-
-.right-bottom {
-  width: var(--blockw);
 }
 
 .table a {
