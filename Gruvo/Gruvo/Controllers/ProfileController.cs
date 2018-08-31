@@ -194,10 +194,9 @@ namespace Gruvo.Controllers
         {
             try
             {
-                string cookie = Request.Cookies["Gruvo"];
-                long userid = _tokenUserPairs.Pairs[cookie].Id;
+                long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
 
-                _repository.TweetDAO.DeletePost(id);
+                _repository.TweetDAO.DeletePost(tweetId);
 
                 return Ok("Success!");
             }

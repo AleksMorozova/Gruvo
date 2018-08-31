@@ -27,8 +27,9 @@ export class TweetService {
     let myHeader = new HttpHeaders().set('tweetId', tweetId.toString());
     return this.http.get<boolean>(this.tweetCheckLikedApiUrl, { headers: myHeader });
   }
-  
-  deleteTweet(tweetId: number) {   
-    let myHeader = new HttpHeaders().set('tweetId', tweetId.toString());  
-    return this.http.post(this.tweetDeleteTweetApiURL, {}, { headers: headers });
+
+  deleteTweet(tweetId: number) {
+    let myHeader = new HttpHeaders().set('tweetId', tweetId.toString());
+    return this.http.post(this.tweetDeleteTweetApiURL, {}, { headers: myHeader });
+  }
 }

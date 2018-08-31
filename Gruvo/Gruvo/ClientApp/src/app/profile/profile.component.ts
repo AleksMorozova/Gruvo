@@ -47,18 +47,27 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
     }
 
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    }
+
     refreshData() {
         this.profileService.getUserTweets(this.paramId)
-            .subscribe((tweets) => {
-                if (this.userTweets[0]) {
-                    if (this.userTweets[0].id != tweets[0].id) {
-                        this.userTweets = tweets;
-                    }
+          .subscribe((tweets) => {
+            try {
+              if (this.userTweets[0]) {
+                if ((this.userTweets[0].id != tweets[0].id) || (tweets.length < this.userTweets.length) || (this.userTweets[this.userTweets.length - 1].id != tweets[this.userTweets.length - 1].id)) {
+                  this.userTweets = tweets;
                 }
-                else {
-                    this.userTweets = tweets;
-                }
-            });
+              }
+              else {
+                this.userTweets = tweets;
+              }
+            }
+            catch(e) {
+              this.userTweets = tweets;
+            }
+          });
 
         this.profileService.getSubscriptions(this.paramId)
             .subscribe((subscriptions) => {
@@ -74,7 +83,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     subscribeToData() {
-        this.timerSubscription = Observable.timer(5000)
+        this.timerSubscription = Observable.timer(2000)
             .first()
             .subscribe(() => this.refreshData());
     }

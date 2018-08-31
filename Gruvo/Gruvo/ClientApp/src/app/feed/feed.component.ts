@@ -38,12 +38,19 @@ export class FeedComponent implements OnInit, OnDestroy {
   refreshData() {
     this.feedService.getTweets()
       .subscribe((tweets) => {
-        if (this.tweets[0]) {
-          if (this.tweets[0].id != tweets[0].id) {
+        try {
+          if (this.tweets[0]) {
+            if ((this.tweets[0].id != tweets[0].id) ||
+               (tweets.length < this.tweets.length) ||
+               (this.tweets[this.tweets.length - 1].id != tweets[this.tweets.length - 1].id)) {
+              this.tweets = tweets;
+            }
+          }
+          else {
             this.tweets = tweets;
           }
         }
-        else {
+        catch (e) {
           this.tweets = tweets;
         }
       });
@@ -52,7 +59,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   subscribeToData() {
-    this.timerSubscription = Observable.timer(5000)
+    this.timerSubscription = Observable.timer(2000)
       .first()
       .subscribe(() => this.refreshData());
   }

@@ -29,7 +29,7 @@ namespace Gruvo.DAL
                     command.Parameters.Add("@message", SqlDbType.VarChar);
                     command.Parameters["@message"].Value = message;
 
-                    command.Parameters.Add("@postdate", SqlDbType.Date);
+                    command.Parameters.Add("@postdate", SqlDbType.DateTimeOffset);
                     command.Parameters["@postdate"].Value = postDateTime;
 
                     command.ExecuteNonQuery();

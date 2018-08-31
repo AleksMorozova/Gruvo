@@ -1,13 +1,9 @@
 <div class="content">
     <gr-menu></gr-menu>
-  <div class="gruvo-block tweets-list col-xs-11" id="tweets">
-    <div class="right-top">
-      <div class="make-post">
-        <textarea class="form-control message" rows="2" maxlength="256" placeholder="What are you up to?"></textarea>
-        <input type="button" class="btn btn-success" value="Post">
-      </div>
+    <div class="gruvo-block tweets-list col-xs-11" id="tweets">
+      <gr-tweet *ngFor="let tweet of tweets" [data]="tweet"></gr-tweet>
+      <footer class="posts-list-footer">
+        <i class="fas fa-sort-amount-up" (click)="scrollToTop()"></i>
+      </footer>
     </div>
-    <br />
-    <gr-tweet *ngFor="let tweet of tweets" [data]="tweet"></gr-tweet>
-  </div>
 </div>
