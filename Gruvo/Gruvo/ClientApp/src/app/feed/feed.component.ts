@@ -41,8 +41,8 @@ export class FeedComponent implements OnInit, OnDestroy {
         try {
           if (this.tweets[0]) {
             if ((this.tweets[0].id != tweets[0].id) ||
-               (tweets.length < this.tweets.length) ||
-               (this.tweets[this.tweets.length - 1].id != tweets[this.tweets.length - 1].id)) {
+              (tweets.length < this.tweets.length) ||
+              (this.tweets[this.tweets.length - 1].id != tweets[this.tweets.length - 1].id)) {
               this.tweets = tweets;
             }
           }
@@ -51,7 +51,7 @@ export class FeedComponent implements OnInit, OnDestroy {
           }
         }
         catch (e) {
-          this.tweets = tweets;
+          this.tweets = [];
         }
       });
 

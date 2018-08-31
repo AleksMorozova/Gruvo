@@ -52,6 +52,6 @@ namespace Gruvo.DAL
         /// <param name="postId">Tweet id</param>
         /// <param name="userId">User id</param>
         /// <returns></returns>
-        bool CheckIfUserHasTweet(long postId, long userId)
+        bool CheckIfUserHasTweet(long postId, long userId);
     }
 }
