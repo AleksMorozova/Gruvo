@@ -45,5 +45,13 @@ namespace Gruvo.DAL
         /// <param name="userId">User id</param>
         /// <returns></returns>
         bool CheckIfUserLiked(long postId, long userId);
+
+        /// <summary>
+        /// Returns true if user has tweet with specified id, false if not
+        /// </summary>
+        /// <param name="postId">Tweet id</param>
+        /// <param name="userId">User id</param>
+        /// <returns></returns>
+        bool CheckIfUserHasTweet(long postId, long userId);
     }
 }

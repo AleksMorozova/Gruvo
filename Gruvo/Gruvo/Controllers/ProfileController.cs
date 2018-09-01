@@ -194,11 +194,19 @@ namespace Gruvo.Controllers
         {
             try
             {
+                long userid = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
                 long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
 
-                _repository.TweetDAO.DeletePost(tweetId);
+                if(_repository.TweetDAO.CheckIfUserHasTweet(tweetId, userid))
+                {
+                    _repository.TweetDAO.DeletePost(tweetId);
 
-                return Ok("Success!");
+                    return Ok("Success!");
+                }
+                else
+                {
+                    return BadRequest("Invalid tweet id!");
+                }
             }
             catch (Exception e)
             {
