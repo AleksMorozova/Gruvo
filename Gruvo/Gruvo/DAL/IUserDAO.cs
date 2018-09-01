@@ -25,7 +25,7 @@ namespace Gruvo.DAL
 
         IEnumerable<UserInfo> GetSubscribers(long id);
         IEnumerable<UserInfo> GetSubscriptions(long id);
-        IEnumerable<UserInfo> GetRandomUsers(int count);
+        IEnumerable<UserInfo> GetRecommendations(long id, int count,int numofposts);
 
         Int32 GetSubscribersCount(long id);
         Int32 GetSubscriptionsCount(long id);

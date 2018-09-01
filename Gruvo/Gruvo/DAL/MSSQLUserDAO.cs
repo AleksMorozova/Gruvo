@@ -502,7 +502,7 @@ namespace Gruvo.DAL
             }
         }
 
-        public IEnumerable<UserInfo> GetRandomUsers(int count)
+        public IEnumerable<UserInfo> GetRecommendations(long id, int count,int numofposts)
         {
             List<UserInfo> list = new List<UserInfo>();
             try
@@ -512,7 +512,19 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select top (@count) * from users order by newid()";
+                    command.CommandText = @"select top (@count) users.userid, users.login, users.regdate, count(likes.PostId) as 'Num of likes'
+                                            from users join (select top (@nposts) * from posts order by PostDate desc) t 
+                                            on users.UserId=t.UserId join likes on t.PostId=likes.PostId 
+                                            join subscriptions on users.userid=subscriptions.subscribedid
+                                            where users.UserId<>@userid and subscriptions.subscriberid <>@userid 
+                                            group by users.userid, users.login, users.regdate;";
+
+                    command.Parameters.Add("@userid", SqlDbType.BigInt);
+                    command.Parameters["@userid"].Value = id;
+
+                    command.Parameters.Add("@nposts", SqlDbType.Int);
+                    command.Parameters["@nposts"].Value = numofposts;
+
                     command.Parameters.Add("@count", SqlDbType.Int);
                     command.Parameters["@count"].Value = count;
 
