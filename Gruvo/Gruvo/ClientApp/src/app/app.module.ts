@@ -30,6 +30,7 @@ import { PasswordEditComponent } from '@app/password-edit/password-edit.componen
 import { PhotoEditComponent } from '@app/photo/photo.component';
 import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component';
 import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.component';
+import { SubscribersComponent } from '@app/subscribers/subscribers.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
@@ -50,7 +51,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     PasswordEditComponent,
     PhotoEditComponent,
     ScrollToTopComponent,
-    SubscriptionsComponent
+    SubscriptionsComponent,
+    SubscribersComponent
   ],
   imports: [
     ModalModule.forRoot(),
@@ -61,6 +63,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     AppRoutingModule
   ],
   bootstrap: [AppComponent],
+  entryComponents: [
+    SubscriptionsComponent,
+    SubscribersComponent
+  ],
   providers: [
     { provide: 'LOGIN_URL', useValue: 'api/auth/login' },
     { provide: 'SIGNUP_URL', useValue: 'api/auth/signup' },

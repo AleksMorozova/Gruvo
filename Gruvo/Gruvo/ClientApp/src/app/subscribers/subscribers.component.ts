@@ -8,6 +8,6 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
   styleUrls: ['./subscriptions.component.css']
 })
 
-export class SubscriptionsComponent {
+export class SubscribersComponent {
   constructor(public modalRef: BsModalRef) {}
 }

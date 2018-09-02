@@ -5,6 +5,10 @@ import { ITweet } from '@app/tweet/tweet.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.component';
+import { SubscribersComponent } from '@app/subscribers/subscribers.component';
 
 @Component({
     selector: 'gr-profile',
@@ -21,6 +25,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     subscriptions: IUser[] = [];
     subscribers: IUser[] = [];
     timerSubscription: Subscription;
+    modalRef: BsModalRef;
 
 
     ngOnInit(): void {
@@ -45,6 +50,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
         if (this.timerSubscription) {
             this.timerSubscription.unsubscribe();
         }
+    }
+
+    openFollowingModal() {
+      this.modalService.show(SubscriptionsComponent);
+    }
+
+    openFollowersModal() {
+      this.modalService.show(SubscribersComponent);
     }
 
     refreshData() {
@@ -83,7 +96,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
             .first()
             .subscribe(() => this.refreshData());
     }
-    constructor(private profileService: ProfileService, route: ActivatedRoute, private router: Router) {
+
+    constructor(private profileService: ProfileService, route: ActivatedRoute, private router: Router, private modalService: BsModalService) {
         route.params.subscribe(
             params =>  this.paramId = +params['id']   
         );
