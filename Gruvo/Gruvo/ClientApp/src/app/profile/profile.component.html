@@ -21,7 +21,7 @@
         </td>
         <td>
           <a href="#">Posts</a>
-        </td>        
+        </td>
       </tr>
       <tr>
         <td>{{subscribers.length}}</td>
@@ -31,8 +31,9 @@
     </table>
     <hr />
     <div class="right-bottom">
-      <gr-tweet *ngFor="let tweet of userTweets" [data]="tweet"></gr-tweet>  
+      <gr-tweet *ngFor="let tweet of userTweets" [data]="tweet"></gr-tweet>
       <gr-scroll-to-top></gr-scroll-to-top>
     </div>
   </div>
 </div>
+<gr-subscriptions></gr-subscriptions>
