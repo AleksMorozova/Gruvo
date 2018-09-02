@@ -30,6 +30,7 @@ import { PasswordEditComponent } from '@app/password-edit/password-edit.componen
 import { PhotoEditComponent } from '@app/photo/photo.component';
 import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component';
 import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.compone
     SubscriptionsComponent
   ],
   imports: [
+    ModalModule.forRoot(),
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,

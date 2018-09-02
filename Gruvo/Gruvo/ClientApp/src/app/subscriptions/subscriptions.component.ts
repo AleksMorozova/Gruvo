@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { IUser } from '@app/profile/user.model';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 @Component({
   selector: 'gr-subscriptions',
@@ -10,5 +10,11 @@ import { IUser } from '@app/profile/user.model';
 })
 
 export class SubscriptionsComponent {
-  @Input() subscriptions: IUser[];
+  modalRef: BsModalRef;
+
+  constructor(private modalService: BsModalService) { }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
 }
