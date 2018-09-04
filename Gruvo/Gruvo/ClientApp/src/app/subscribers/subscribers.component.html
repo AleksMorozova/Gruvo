@@ -5,10 +5,10 @@
 <div class="modal-body">
   <ul>
     <li *ngFor="let user of subscribers">
-      {{user.name}}
+      <a href="profile/{{user.id}}">{{user.name}}</a>
     </li>
   </ul>
-  <button class="btn btn-success btn-sm">Show more</button>
+  <button class="btn btn-success btn-sm" (click)="getSubscribers()">Show more</button>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>

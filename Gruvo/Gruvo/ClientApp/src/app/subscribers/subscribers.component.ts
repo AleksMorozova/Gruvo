@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '@app/profile/user.model';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { ProfileService } from '@app/profile/profile.service';
 
 @Component({
   selector: 'gr-subscribers',
@@ -9,5 +10,15 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 })
 
 export class SubscribersComponent {
-  constructor(public modalRef: BsModalRef) {}
+  subscribers: IUser[];
+  paramId: number;
+
+  constructor(public modalRef: BsModalRef, private profileService: ProfileService) { }
+
+  getSubscribers() {
+    this.profileService.getSubscribers(this.paramId)
+      .subscribe((followers) => {
+        this.subscribers = followers;
+      });
+  }
 }

@@ -53,11 +53,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     openFollowingModal() {
-      this.modalService.show(SubscriptionsComponent);
+      this.modalRef = this.modalService.show(SubscriptionsComponent);
     }
 
     openFollowersModal() {
-      this.modalService.show(SubscribersComponent);
+      this.modalRef = this.modalService.show(SubscribersComponent);
+      this.modalRef.content.paramId = this.paramId;
     }
 
     refreshData() {
