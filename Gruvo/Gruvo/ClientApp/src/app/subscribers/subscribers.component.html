@@ -5,7 +5,7 @@
 <div class="modal-body">
   <ul>
     <li *ngFor="let user of subscribers">
-      <a href="profile/{{user.id}}">{{user.name}}</a>
+      <a href="profile/{{user.id}}">{{user.login}}</a>
     </li>
   </ul>
   <button class="btn btn-success btn-sm" (click)="getSubscribers()">Show more</button>
