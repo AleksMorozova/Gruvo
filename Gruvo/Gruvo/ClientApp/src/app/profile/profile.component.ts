@@ -22,8 +22,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     userTweets: ITweet[] = [];
     paramId: number;
     button: any;
-    subscriptions: IUser[] = [];
-    subscribers: IUser[] = [];
+    numOfSubscriptions: number;
+    numOfSubscribers: number;
     timerSubscription: Subscription;
     modalRef: BsModalRef;
 
@@ -79,14 +79,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
             }
           });
 
-        this.profileService.getSubscriptions(this.paramId)
-            .subscribe((subscriptions) => {
-                this.subscriptions = subscriptions;
+        this.profileService.getSubscriptionsCount(this.paramId)
+            .subscribe((numOfSubscriptions) => {
+                this.numOfSubscriptions = numOfSubscriptions;
             });
 
-        this.profileService.getSubscribers(this.paramId)
-            .subscribe((subscribers) => {
-                this.subscribers = subscribers;
+        this.profileService.getSubscribersCount(this.paramId)
+            .subscribe((numOfSubscribers) => {
+                this.numOfSubscribers = numOfSubscribers;
             });
 
         this.subscribeToData();

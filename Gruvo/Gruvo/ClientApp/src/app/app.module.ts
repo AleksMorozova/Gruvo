@@ -75,6 +75,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     { provide: 'PROFILE_TWEETS_URL', useValue: 'api/profile/userTweets' },
     { provide: 'PROFILE_SUBSCRIPTIONS_URL', useValue: 'api/profile/subscriptions' },
     { provide: 'PROFILE_SUBSRIBERS_URL', useValue: 'api/profile/subscribers' },
+    { provide: 'PROFILE_SUBSCRIPTIONS_COUNT_URL', useValue: 'api/profile/subscriptionsCount' },
+    { provide: 'PROFILE_SUBSCRIBERS_COUNT_URL', useValue: 'api/profile/subscribersCount' },
     { provide: 'CREATETWEET_POST_TWEET_URL', useValue: 'api/profile/postTweet' },
     { provide: 'TWEET_DELETE_TWEET_URL', useValue: 'api/profile/deleteTweet'},
     { provide: 'FEED_TWEETS_URL', useValue: 'api/feed/tweets' },

@@ -399,9 +399,9 @@ namespace Gruvo.DAL
             return list;
         }
 
-        public Int32 GetSubscriptionsCount(long id)
+        public int GetSubscriptionsCount(long id)
         {
-            Int32 qlt;
+            int numOfSubscriptions;
             try
             {
                 using (var connection = new SqlConnection(_connectionStr))
@@ -409,18 +409,18 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select count(*) from users join subscriptions on userid = subscribedid where subscriberid = @userid";
+                    command.CommandText = @"select count(*) from Subscriptions where SubscriberId = @userid";
                     command.Parameters.Add("@userid", SqlDbType.BigInt);
                     command.Parameters["@userid"].Value = id;
 
-                    qlt = (Int32) command.ExecuteScalar();
+                    numOfSubscriptions = (int) command.ExecuteScalar();
                 }
             }
             catch (Exception)
             {
                 throw;
             }
-            return qlt;
+            return numOfSubscriptions;
         }
 
         public IEnumerable<UserInfo> GetSubscribers(long id)
@@ -455,7 +455,7 @@ namespace Gruvo.DAL
 
         public Int32 GetSubscribersCount(long id)
         {
-            Int32 qlt;
+            int numOfSubscribers;
             try
             {
                 using (var connection = new SqlConnection(_connectionStr))
@@ -463,18 +463,18 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select count(*) from users join subscriptions on userid = subscriberid where subscribedid = @userid"; ;
+                    command.CommandText = @"select count(*) from Subscriptions where SubscribedId = @userid"; ;
                     command.Parameters.Add("@userid", SqlDbType.BigInt);
                     command.Parameters["@userid"].Value = id;
 
-                    qlt = (Int32)command.ExecuteScalar();
+                    numOfSubscribers = (int)command.ExecuteScalar();
                 }
             }
             catch (Exception)
             {
                 throw;
             }
-            return qlt;
+            return numOfSubscribers;
         }
 
         public void Unsubscribe(long userId1, long userId2)

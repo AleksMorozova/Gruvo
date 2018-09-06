@@ -17,6 +17,8 @@ export class ProfileService {
     @Inject('PROFILE_SUBSRIBERS_URL') private profileSubscribersApiURL: string,
     @Inject('PROFILE_SUBSCRIBE_URL') private profileSubscribeApiURL: string,
     @Inject('PROFILE_UNSUBSCRIBE_URL') private profileUnsubscribeApiURL: string,
+    @Inject('PROFILE_SUBSCRIPTIONS_COUNT_URL') private profileSubscriptionsCountURL: string,
+    @Inject('PROFILE_SUBSCRIBERS_COUNT_URL') private profileSubscribersCountURL: string,
      
     private http: HttpClient) { }
 
@@ -29,8 +31,14 @@ export class ProfileService {
   getSubscriptions(id?: number): Observable<IUser[]> {
     return this.http.get<IUser[]>(id ? this.profileSubscriptionsApiURL + '/' + id : this.profileSubscriptionsApiURL);
   }
+  getSubscriptionsCount(id?: number): Observable<number> {
+    return this.http.get<number>(id ? this.profileSubscriptionsCountURL + '/' + id : this.profileSubscriptionsCountURL);
+  }
   getSubscribers(id?: number): Observable<IUser[]> {
     return this.http.get<IUser[]>(id ? this.profileSubscribersApiURL + '/' + id : this.profileSubscribersApiURL );
+  }
+  getSubscribersCount(id?: number): Observable<number> {
+    return this.http.get<number>(id ? this.profileSubscribersCountURL + '/' + id : this.profileSubscribersCountURL);
   }
   subscribe(id: number): Observable<any>  {
     return this.http.post(this.profileSubscribeApiURL,  id );

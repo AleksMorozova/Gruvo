@@ -78,6 +78,33 @@ namespace Gruvo.Controllers
             }
         }
 
+        [Route("subscribersCount/{id?}")]
+        [HttpGet]
+        public IActionResult GetNumOfSubscribers(long? id)
+        {
+            int numOfSubscribers;
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+
+                if (id.HasValue)
+                {
+                    numOfSubscribers = _repository.UserDAO.GetSubscribersCount(id.Value);
+                }
+                else
+                {
+                    numOfSubscribers = _repository.UserDAO.GetSubscribersCount(userid);
+                }
+                return Ok(numOfSubscribers);
+
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
         [Route("subscriptions/{id?}")]
         [HttpGet]
         public IActionResult GetSubscriptions(long? id)
@@ -99,6 +126,33 @@ namespace Gruvo.Controllers
                 }
                 return Ok(arr);
             
+
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [Route("subscriptionsCount/{id?}")]
+        [HttpGet]
+        public IActionResult GetNumOfSubscriptions(long? id)
+        {
+            int numOfSubscriptions;
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+
+                if (id.HasValue)
+                {
+                    numOfSubscriptions = _repository.UserDAO.GetSubscriptionsCount(id.Value);
+                }
+                else
+                {
+                    numOfSubscriptions = _repository.UserDAO.GetSubscriptionsCount(userid);
+                }
+                return Ok(numOfSubscriptions);
 
             }
             catch (Exception)

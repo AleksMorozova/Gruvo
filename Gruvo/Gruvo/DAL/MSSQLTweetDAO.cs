@@ -113,7 +113,7 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select count(*) from posts join users on users.userid = posts.userid where posts.userid = @id";
+                    command.CommandText = @"select count(*) from posts where posts.userid = @id";
                     command.Parameters.Add("@id", SqlDbType.BigInt);
                     command.Parameters["@id"].Value = id;
 
