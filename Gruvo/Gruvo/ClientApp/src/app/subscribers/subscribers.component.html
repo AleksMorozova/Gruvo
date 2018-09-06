@@ -8,9 +8,8 @@
       <a class="user-profile" href="profile/{{user.id}}">{{user.login}}</a>
     </li>
   </ul>
-  <button class="btn btn-success btn-sm" (click)="getSubscribers()">Show more</button>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+  <div class="btn-show-more" (click)="getSubscribers()">
+    Show more
+  </div>
 </div>
 
