@@ -3,9 +3,9 @@
   <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">&times;</button>
 </div>
 <div class="modal-body">
-  <ul>
+  <ul class="subscribers-list">
     <li *ngFor="let user of subscribers">
-      <a href="profile/{{user.id}}">{{user.login}}</a>
+      <a class="user-profile" href="profile/{{user.id}}">{{user.login}}</a>
     </li>
   </ul>
   <button class="btn btn-success btn-sm" (click)="getSubscribers()">Show more</button>
