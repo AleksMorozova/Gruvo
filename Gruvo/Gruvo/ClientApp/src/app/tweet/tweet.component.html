@@ -1,6 +1,6 @@
 <div class="post" id="{{ data.id }}">
   <h4 class="post-header">
-    <a class="post-title" href="profile/{{data.userId}}">{{data.userLogin}}</a>
+    <a class="post-title" routerLink="/profile/{{data.userId}}">{{data.userLogin}}</a>
     <i *ngIf="data.isDeletable" class="far fa-trash-alt"  (click)="deleteTweet($event)"></i>
   </h4>
     <p class="post-text">{{data.message}}</p>
