@@ -43,7 +43,7 @@ namespace Gruvo.Controllers
             {
                 string cookie = Request.Cookies["Gruvo"];
                 long userid = _tokenUserPairs.Pairs[cookie].Id;
-                return Ok(_repository.UserDAO.GetRecommendations(userid, 3,100));
+                return Ok(_repository.UserDAO.GetRecommendations(userid));
             }
             catch (Exception ex)
             {
