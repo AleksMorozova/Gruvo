@@ -14,15 +14,15 @@
     <table class="table table-striped">
       <tr>
         <td>
-          <button class="btn-followers" (click)="openFollowersModal()">Followers</button>
+          <div class="btn-followers" (click)="openFollowersModal()">Followers</div>
         </td>
         <td>
-          <button class="btn-following" (click)="openFollowingModal()">Following</button>
+          <div class="btn-following" (click)="openFollowingModal()">Following</div>
         </td>
       </tr>
       <tr>
-        <td>{{numOfSubscribers}}</td>
-        <td>{{numOfSubscriptions}}</td>
+        <td class="subscribers-count">{{numOfSubscribers}}</td>
+        <td class="subscriptions-count">{{numOfSubscriptions}}</td>
       </tr>
     </table>
     <hr />

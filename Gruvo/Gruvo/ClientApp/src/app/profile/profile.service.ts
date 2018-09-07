@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { HttpResponse } from 'selenium-webdriver/http';
 
@@ -28,14 +28,16 @@ export class ProfileService {
   getUserTweets(id?: number): Observable<ITweet[]> {
     return this.http.get<ITweet[]>(id ? this.profileTweetsApiURL + '/' + id : this.profileTweetsApiURL);
   }
-  getSubscriptions(id?: number): Observable<IUser[]> {
-    return this.http.get<IUser[]>(id ? this.profileSubscriptionsApiURL + '/' + id : this.profileSubscriptionsApiURL);
+  getSubscriptions(lastSubscriptionId: number, id?: number): Observable<IUser[]> {
+    let params = new HttpParams().set("subscriptionId", lastSubscriptionId ? lastSubscriptionId.toString() : undefined);
+    return this.http.get<IUser[]>(id ? this.profileSubscriptionsApiURL + '/' + id : this.profileSubscriptionsApiURL, { params: params } );
   }
   getSubscriptionsCount(id?: number): Observable<number> {
     return this.http.get<number>(id ? this.profileSubscriptionsCountURL + '/' + id : this.profileSubscriptionsCountURL);
   }
-  getSubscribers(id?: number): Observable<IUser[]> {
-    return this.http.get<IUser[]>(id ? this.profileSubscribersApiURL + '/' + id : this.profileSubscribersApiURL );
+  getSubscribers(lastSubscriberId: number, id?: number): Observable<IUser[]> {
+    let params = new HttpParams().set("subscriberId", lastSubscriberId ? lastSubscriberId.toString() : undefined);
+    return this.http.get<IUser[]>(id ? this.profileSubscribersApiURL + '/' + id : this.profileSubscribersApiURL, { params: params} );
   }
   getSubscribersCount(id?: number): Observable<number> {
     return this.http.get<number>(id ? this.profileSubscribersCountURL + '/' + id : this.profileSubscribersCountURL);

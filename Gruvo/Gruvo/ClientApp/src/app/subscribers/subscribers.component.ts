@@ -9,16 +9,25 @@ import { ProfileService } from '@app/profile/profile.service';
   styleUrls: ['./subscribers.component.css']
 })
 
-export class SubscribersComponent {
+export class SubscribersComponent implements OnInit {
   subscribers: IUser[];
   paramId: number;
 
   constructor(public modalRef: BsModalRef, private profileService: ProfileService) { }
 
+  ngOnInit() {
+    this.getSubscribers();
+  }
+
   getSubscribers() {
-    this.profileService.getSubscribers(this.paramId)
+    this.profileService.getSubscribers(this.subscribers ? this.subscribers[this.subscribers.length - 1].id : undefined, this.paramId)
       .subscribe((followers) => {
-        this.subscribers = followers;
+        if (this.subscribers) {
+          this.subscribers = this.subscribers.concat(followers);
+        }
+        else {
+          this.subscribers = followers;
+        }
       });
   }
 }

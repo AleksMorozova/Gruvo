@@ -52,7 +52,7 @@ namespace Gruvo.Controllers
 
         [Route("subscribers/{id?}")]
         [HttpGet]
-        public IActionResult GetSubscribers(long? id)
+        public IActionResult GetSubscribers(long? id, [FromQuery] long? subscriberId)
         {
             IEnumerable<UserInfo> arr = null;
             try
@@ -62,17 +62,17 @@ namespace Gruvo.Controllers
 
                 if (id.HasValue)
                 {
-                    arr = _repository.UserDAO.GetSubscribers(id.Value);
+                    arr = _repository.UserDAO.GetSubscribers(id.Value, subscriberId, 5);
                     if (arr == null) throw new NullReferenceException();
                 }
                 else
                 {
-                    arr = _repository.UserDAO.GetSubscribers(userid);
+                    arr = _repository.UserDAO.GetSubscribers(userid, subscriberId, 5);
                 }
                 return Ok(arr);
             
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest("Something went wrong");
             }
@@ -107,7 +107,7 @@ namespace Gruvo.Controllers
 
         [Route("subscriptions/{id?}")]
         [HttpGet]
-        public IActionResult GetSubscriptions(long? id)
+        public IActionResult GetSubscriptions(long? id, [FromQuery] long? subscriptionId)
         {
             IEnumerable<UserInfo> arr = null;
             try
@@ -117,12 +117,12 @@ namespace Gruvo.Controllers
 
                 if (id.HasValue)
                 {
-                    arr = _repository.UserDAO.GetSubscriptions(id.Value);
+                    arr = _repository.UserDAO.GetSubscriptions(id.Value, subscriptionId, 5);
                     if (arr == null) throw new NullReferenceException();
                 }
                 else
                 {
-                    arr = _repository.UserDAO.GetSubscriptions(userid);
+                    arr = _repository.UserDAO.GetSubscriptions(userid, subscriptionId, 5);
                 }
                 return Ok(arr);
             

@@ -3,14 +3,13 @@
   <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">&times;</button>
 </div>
 <div class="modal-body">
-  <ul>
+  <ul class="subscriptions-list">
     <li *ngFor="let user of subscriptions">
-      {{user.name}}
+      <a class="user-profile" href="profile/{{user.id}}">{{user.login}}</a>
     </li>
   </ul>
-  <button class="btn btn-success btn-sm">Show more</button>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+  <div class="btn-show-more" (click)="getSubscriptions()">
+    Show more
+  </div>
 </div>
 
