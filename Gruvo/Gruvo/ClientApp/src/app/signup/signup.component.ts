@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from
 import { LoginService } from '@app/login/login.service';
 import { Router } from '@angular/router';
 import * as crypto from "crypto-js";
-import { PasswordValidation } from '@app/signup/PasswordValidation'
+import { PasswordValidation } from '@app/PasswordValidation'
 
 
 @Component({
