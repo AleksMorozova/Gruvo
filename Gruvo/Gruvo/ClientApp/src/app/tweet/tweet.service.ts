@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { HttpResponse } from 'selenium-webdriver/http';
 import { map } from 'rxjs/operators';
@@ -14,22 +14,22 @@ export class TweetService {
     private http: HttpClient) { }
 
   like(tweetId: number): Observable<any> {
-    let myHeader = new HttpHeaders().set('tweetId', tweetId.toString());
-    return this.http.get(this.tweetLikeApiUrl, { headers: myHeader });
+    let params = new HttpParams().set("tweetId", tweetId.toString());
+    return this.http.get(this.tweetLikeApiUrl, { params: params });
   }
 
   getNumOfLikes(tweetId: number): Observable<number> {
-    let myHeader = new HttpHeaders().set('tweetId', tweetId.toString());
-    return this.http.get<number>(this.tweetGetLikesApiURL, { headers: myHeader });
+    let params = new HttpParams().set("tweetId", tweetId.toString());
+    return this.http.get<number>(this.tweetGetLikesApiURL, { params: params });
   }
 
   checkLiked(tweetId: number): Observable<boolean> {
-    let myHeader = new HttpHeaders().set('tweetId', tweetId.toString());
-    return this.http.get<boolean>(this.tweetCheckLikedApiUrl, { headers: myHeader });
+    let params = new HttpParams().set("tweetId", tweetId.toString());
+    return this.http.get<boolean>(this.tweetCheckLikedApiUrl, { params: params });
   }
 
   deleteTweet(tweetId: number) {
-    let myHeader = new HttpHeaders().set('tweetId', tweetId.toString());
-    return this.http.post(this.tweetDeleteTweetApiURL, {}, { headers: myHeader });
+    let params = new HttpParams().set("tweetId", tweetId.toString());
+    return this.http.post(this.tweetDeleteTweetApiURL, {}, { params: params });
   }
 }

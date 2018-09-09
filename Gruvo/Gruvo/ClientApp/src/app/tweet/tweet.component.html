@@ -1,10 +1,11 @@
-<div class="post" id="{{ data.id }}">
+<div class="post" id="{{ tweet.id }}">
   <h4 class="post-header">
-    <a class="post-title" href="profile/{{data.userId}}">{{data.userLogin}}</a>
-    <i *ngIf="data.isDeletable" class="far fa-trash-alt"  (click)="deleteTweet($event)"></i>
+    <a class="post-title" href="profile/{{tweet.userId}}">{{tweet.userLogin}}</a>
+    <i *ngIf="tweet.isDeletable" class="far fa-trash-alt"  (click)="deleteTweet($event)"></i>
   </h4>
-    <p class="post-text">{{data.message}}</p>
-    <p class="post-date">{{ data.sendingDateTime | date:'MMM d, y, h:mm a' }}</p>
+  <p class="post-text">{{tweet.message}}</p>
+  <p class="post-date">{{tweet.sendingDateTime | date:'MMM d, y, h:mm a'}}</p>
+
   <div class="action-list">
     <div class="action action-like">
       <button class="btn-action action-like" (click)="like()">

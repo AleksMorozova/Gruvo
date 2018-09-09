@@ -5,6 +5,10 @@ import { ITweet } from '@app/tweet/tweet.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.component';
+import { SubscribersComponent } from '@app/subscribers/subscribers.component';
 
 @Component({
     selector: 'gr-profile',
@@ -18,9 +22,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     userTweets: ITweet[] = [];
     paramId: number;
     button: any;
-    subscriptions: IUser[] = [];
-    subscribers: IUser[] = [];
+    numOfSubscriptions: number;
+    numOfSubscribers: number;
     timerSubscription: Subscription;
+    modalRef: BsModalRef;
 
 
     ngOnInit(): void {
@@ -47,6 +52,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
     }
 
+    openFollowingModal() {
+      this.modalRef = this.modalService.show(SubscriptionsComponent, { class: 'modal-sm' });
+    }
+
+    openFollowersModal() {
+      this.modalRef = this.modalService.show(SubscribersComponent, { class: 'modal-sm' });
+      this.modalRef.content.paramId = this.paramId;
+    }
+
     refreshData() {
         this.profileService.getUserTweets(this.paramId)
           .subscribe((tweets) => {
@@ -65,14 +79,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
             }
           });
 
-        this.profileService.getSubscriptions(this.paramId)
-            .subscribe((subscriptions) => {
-                this.subscriptions = subscriptions;
+        this.profileService.getSubscriptionsCount(this.paramId)
+            .subscribe((numOfSubscriptions) => {
+                this.numOfSubscriptions = numOfSubscriptions;
             });
 
-        this.profileService.getSubscribers(this.paramId)
-            .subscribe((subscribers) => {
-                this.subscribers = subscribers;
+        this.profileService.getSubscribersCount(this.paramId)
+            .subscribe((numOfSubscribers) => {
+                this.numOfSubscribers = numOfSubscribers;
             });
 
         this.subscribeToData();
@@ -83,7 +97,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
             .first()
             .subscribe(() => this.refreshData());
     }
-    constructor(private profileService: ProfileService, route: ActivatedRoute, private router: Router) {
+
+    constructor(private profileService: ProfileService, route: ActivatedRoute, private router: Router, private modalService: BsModalService) {
         route.params.subscribe(
             params =>  this.paramId = +params['id']   
         );

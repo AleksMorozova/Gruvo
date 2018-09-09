@@ -20,14 +20,11 @@ namespace Gruvo.Controllers
             _tokenUserPairs = tokenUserPairs;
         }
 
-        [Route("like")]
-        [HttpGet]
-        public IActionResult Like()
+        [HttpGet("like")]
+        public IActionResult Like([FromQuery] long tweetId)
         {
             try
             {
-                long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
-
                 if (tweetId < 1)
                 {
                     return BadRequest();
@@ -48,15 +45,11 @@ namespace Gruvo.Controllers
             }
         }
 
-        [Route("tweetLikes")]
-        [HttpGet]
-        [AllowAnonymous]// If we can see profile without logging in
-        public IActionResult GetLikes()
+        [HttpGet("tweetLikes")]
+        public IActionResult GetLikes([FromQuery] long tweetId)
         {
             try
             {
-                long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
-
                 if (tweetId < 1)
                 {
                     return BadRequest();
@@ -70,14 +63,11 @@ namespace Gruvo.Controllers
             }
         }
 
-        [Route("checkLiked")]
-        [HttpGet]
-        public IActionResult CheckLiked()
+        [HttpGet("checkLiked")]
+        public IActionResult CheckLiked([FromQuery] long tweetId)
         {
             try
             {
-                long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
-
                 if (tweetId < 1)
                 {
                     return BadRequest();
