@@ -64,8 +64,7 @@ namespace Gruvo.DAL
                 throw;
             }
         }
-
-
+        
         public IEnumerable<ReadableTweet> GetPostsForUser(long id)
         {
             List<ReadableTweet> list = new List<ReadableTweet>();
@@ -289,6 +288,61 @@ namespace Gruvo.DAL
                     command.Parameters["@user_id"].Value = userId;
 
                     return Convert.ToInt32(command.ExecuteScalar()) == 1 ? true : false;
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        public void AddComment(long tweetId, long userId, string message, DateTime sendingDateTime)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"insert into comments (postid,userid,message,postdate) values (@tweetid, @userid, @message,@postdate)";
+                    command.Parameters.Add("@tweetid", SqlDbType.BigInt);
+                    command.Parameters["@tweetid"].Value = tweetId;
+
+                    command.Parameters.Add("@userid", SqlDbType.BigInt);
+                    command.Parameters["@userid"].Value = userId;
+
+                    command.Parameters.Add("@message", SqlDbType.VarChar);
+                    command.Parameters["@message"].Value = message;
+
+                    command.Parameters.Add("@postdate", SqlDbType.DateTimeOffset);
+                    command.Parameters["@postdate"].Value = sendingDateTime;
+
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        public void DeleteComment(long commentId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"delete from comments where commentid = @commentId ";
+                    command.Parameters.Add("@commentId", SqlDbType.BigInt);
+                    command.Parameters["@commentId"].Value = commentId;
+
+                    command.ExecuteNonQuery();
                 }
             }
             catch (SqlException ex)

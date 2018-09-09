@@ -1,6 +1,7 @@
 ﻿using System;
 using Gruvo.BLL;
 using Gruvo.DAL.Repository;
+using Gruvo.DTL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -85,6 +86,39 @@ namespace Gruvo.Controllers
                 long userId = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
 
                 return Ok(_repository.TweetDAO.CheckIfUserLiked(tweetId, userId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [Route("addcomment")]
+        [HttpPost]
+        public IActionResult AddComment([FromBody] Comment comment)
+        {
+            try
+            {
+                long userId = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
+                _repository.TweetDAO.AddComment(comment.TweetId,userId,comment.Message,DateTime.Now);
+                return Ok();                
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [Route("deletecomment")]
+        [HttpPost]
+        public IActionResult AddComment([FromBody] long commentid)
+        {
+            try
+            {
+                long userId = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
+                //TODO: check if it's user's comment;
+                _repository.TweetDAO.DeleteComment(commentid);
+                return Ok();
             }
             catch (Exception ex)
             {

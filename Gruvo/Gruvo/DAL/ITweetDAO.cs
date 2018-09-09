@@ -15,6 +15,10 @@ namespace Gruvo.DAL
 
         void DeletePost(long id);
 
+        void AddComment(long tweetId, long userId, string message , DateTime sendingDateTime);
+
+        void DeleteComment(long commentId);
+
         /// <summary>
         /// Returns number of affected rows
         /// </summary>
