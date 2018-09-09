@@ -126,7 +126,7 @@ namespace Gruvo.DAL
             return qlt;
         }
 
-        public IEnumerable<ReadableTweet> GetUserPosts(long id)
+        public IEnumerable<ReadableTweet> GetUserPosts(long id,bool otherUser)
         {
             List<ReadableTweet> list = new List<ReadableTweet>();
             try
@@ -148,7 +148,7 @@ namespace Gruvo.DAL
                             (long)dataReader["userid"], 
                             (string)dataReader["login"],
                             (string)dataReader["message"],
-                            true,
+                            otherUser,
                             (DateTimeOffset)dataReader["postdate"]));
                         }
                     }
@@ -350,6 +350,85 @@ namespace Gruvo.DAL
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+
+        public IEnumerable<Comment> GetComments(long tweetId,long userid)
+        {
+            List<Comment> list = new List<Comment>();
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"select comments.commentid,comments.postid,comments.userid,users.login,comments.message,comments.postdate 
+                                            from comments join users on users.userid=comments.userid
+                                            where postId = @tweetid order by postdate desc";
+                    command.Parameters.Add("@tweetid", SqlDbType.BigInt);
+                    command.Parameters["@tweetid"].Value = tweetId;
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            long uid = (long)dataReader["userid"];
+                            list.Add(new Comment((long)dataReader["commentId"],
+                                (long)dataReader["postid"],
+                            uid,
+                            (string)dataReader["login"],
+                            (string)dataReader["message"],
+                            (DateTimeOffset)dataReader["postdate"],
+                            uid==userid ? true:false));
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            return list;
+        }
+
+        public Comment GetComment(long commentId)
+        {
+            Comment item = null;
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"select comments.commentid,comments.postid,comments.userid,users.login,comments.message,comments.postdate 
+                                            from comments join users on users.userid=comments.userid
+                                            where commentid = @commentId";
+                    command.Parameters.Add("@commentId", SqlDbType.BigInt);
+                    command.Parameters["@commentId"].Value = commentId;
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            item=new Comment((long)dataReader["commentId"],
+                            (long)dataReader["postid"],
+                             (long)dataReader["userid"],
+                            (string)dataReader["login"],
+                            (string)dataReader["message"],
+                            (DateTimeOffset)dataReader["postdate"],
+                            null);
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            return item;
         }
     }
 }

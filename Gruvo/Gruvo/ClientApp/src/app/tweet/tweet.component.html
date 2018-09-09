@@ -16,5 +16,5 @@
       </button>
     </div>
   </div>
-  <a>Show comments...</a>
+  <a *ngIf="showComments" (click)="openCommentsModal()">Show comments...</a>
 </div>

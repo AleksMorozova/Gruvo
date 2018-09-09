@@ -83,15 +83,15 @@ namespace Gruvo.Controllers
             }
         }
 
-        [Route("addcomment")]
         [HttpPost]
+        [Route("addcomment")]
         public IActionResult AddComment([FromBody] Comment comment)
         {
             try
             {
                 long userId = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
-                _repository.TweetDAO.AddComment(comment.TweetId,userId,comment.Message,DateTime.Now);
-                return Ok();                
+                _repository.TweetDAO.AddComment(comment.TweetId, userId, comment.Message, DateTime.Now);
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -99,15 +99,40 @@ namespace Gruvo.Controllers
             }
         }
 
-        [Route("deletecomment")]
+        [HttpGet("comments")]
+        public IActionResult GetComments([FromQuery] long tweetId)
+        {
+            try
+            {
+                if (tweetId < 1)
+                {
+                    return BadRequest();
+                }
+                long userId = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
+                return Ok(_repository.TweetDAO.GetComments(tweetId, userId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
         [HttpPost]
-        public IActionResult AddComment([FromBody] long commentid)
+        [Route("deletecomment")]
+        public IActionResult DeleteComment([FromBody] long commentid)
         {
             try
             {
                 long userId = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
-                //TODO: check if it's user's comment;
-                _repository.TweetDAO.DeleteComment(commentid);
+                long commentOwnersId = _repository.TweetDAO.GetComment(commentid).UserId;
+                if (commentOwnersId == userId)
+                {
+                    _repository.TweetDAO.DeleteComment(commentid);
+                }
+                else
+                {
+                    throw new Exception();
+                }
                 return Ok();
             }
             catch (Exception ex)

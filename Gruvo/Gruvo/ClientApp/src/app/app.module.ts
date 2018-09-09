@@ -32,6 +32,7 @@ import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component
 import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.component';
 import { SubscribersComponent } from '@app/subscribers/subscribers.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { CommentsComponent } from './comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     PhotoEditComponent,
     ScrollToTopComponent,
     SubscriptionsComponent,
-    SubscribersComponent
+    SubscribersComponent,
+    CommentsComponent
   ],
   imports: [
     ModalModule.forRoot(),
@@ -65,7 +67,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
   bootstrap: [AppComponent],
   entryComponents: [
     SubscriptionsComponent,
-    SubscribersComponent
+    SubscribersComponent,
+    CommentsComponent
   ],
   providers: [
     { provide: 'LOGIN_URL', useValue: 'api/auth/login' },
@@ -89,6 +92,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     { provide: 'PROFILE_EDIT_PASSWORD_URL', useValue: 'api/settings/editPassword' },
     { provide: 'PROFILE_SUBSCRIBE_URL', useValue: 'api/profile/subscribe' },
     { provide: 'PROFILE_UNSUBSCRIBE_URL', useValue: 'api/profile/unsubscribe' },
+    { provide: 'TWEET_COMMENTS_URL', useValue: 'api/tweet/comments' },
+    { provide: 'TWEET_ADDCOMMENT_URL', useValue: 'api/tweet/addcomment' },
+    { provide: 'TWEET_DELETECOMMENT_URL', useValue: 'api/tweet/deletecomment' }, 
      LoginService,
      ProfileService,
      FeedService,
