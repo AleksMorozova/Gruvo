@@ -41,7 +41,7 @@ namespace Gruvo.DAL
         /// <returns></returns>
         IEnumerable<UserInfo> GetSubscriptions(long userId, long? subscriptionId, int numOfSubsToReturn);
 
-        IEnumerable<UserInfo> GetRandomUsers(int count);
+        IEnumerable<UserInfo> GetRecommendations(long id);
 
         Int32 GetSubscribersCount(long id);
         Int32 GetSubscriptionsCount(long id);
