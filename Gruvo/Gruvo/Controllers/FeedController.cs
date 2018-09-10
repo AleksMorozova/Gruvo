@@ -41,7 +41,9 @@ namespace Gruvo.Controllers
         {
             try
             {
-                return Ok(_repository.UserDAO.GetRandomUsers(3));
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+                return Ok(_repository.UserDAO.GetRecommendations(userid));
             }
             catch (Exception ex)
             {
