@@ -77,6 +77,8 @@ import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component
     { provide: 'PROFILE_EDIT_PASSWORD_URL', useValue: 'api/settings/editPassword' },
     { provide: 'PROFILE_SUBSCRIBE_URL', useValue: 'api/profile/subscribe' },
     { provide: 'PROFILE_UNSUBSCRIBE_URL', useValue: 'api/profile/unsubscribe' },
+    { provide: 'CONFIRM_EMAIL_URL', useValue: 'api/auth/confirmEmail' },
+    { provide: 'GET_VERIFICATION_CODE_URL', useValue: 'api/auth/getVerificationCode' },
      LoginService,
      ProfileService,
      FeedService,
