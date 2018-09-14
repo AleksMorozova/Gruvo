@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 })
 
 export class TweetComponent implements OnInit, OnDestroy {
-  @Input() data: ITweet;
+  @Input() tweet: ITweet;
   likeImgUrl: string;
   numOfLikes: number;
   timerSubscription: Subscription;
@@ -34,7 +34,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   }
 
   like() {
-    this.tweetService.like(this.data.id)
+    this.tweetService.like(this.tweet.id)
       .subscribe(object => {
         this.checkIfUserLiked();
         this.refreshData();
@@ -44,7 +44,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   }
   
   public deleteTweet(event) {
-    this.tweetService.deleteTweet(this.data.id)
+    this.tweetService.deleteTweet(this.tweet.id)
       .subscribe(
         deleted => {},
         error => console.log(error)
@@ -53,7 +53,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   }
   
   checkIfUserLiked() {
-    this.tweetService.checkLiked(this.data.id)
+    this.tweetService.checkLiked(this.tweet.id)
       .subscribe((res : boolean) => {
         if (res) {
           this.likeImgUrl = '/assets/images/heart_red.png';
@@ -65,7 +65,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   }
 
   refreshData() {
-    this.tweetService.getNumOfLikes(this.data.id)
+    this.tweetService.getNumOfLikes(this.tweet.id)
       .subscribe((numOfLikes: number) => {
         this.numOfLikes = numOfLikes;
       });

@@ -50,18 +50,18 @@
     color: #707070;
     font-size: 12px;
     margin: 0;
-    border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
   }
 .post p.post-text {
   padding-right: 1rem;
   text-align: justify;
 }
- 
+
 .action-list {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #ccc;
 }
 
 .btn-action {

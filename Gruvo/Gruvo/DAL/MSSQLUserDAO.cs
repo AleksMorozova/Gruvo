@@ -369,7 +369,7 @@ namespace Gruvo.DAL
             }
         }
 
-        public IEnumerable<UserInfo> GetSubscriptions(long id)
+        public IEnumerable<UserInfo> GetSubscriptions(long userId, long? subscriptionId, int numOfSubsToReturn)
         {
             List<UserInfo> list = new List<UserInfo>();
             try
@@ -379,9 +379,31 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select userid, login, email, Regdate from users join subscriptions on userid = subscribedid where subscriberid = @userid";
+                    if (subscriptionId.HasValue)
+                    {
+                        command.CommandText = @"SELECT TOP(@num) UserId, Login, RegDate 
+                                                FROM 
+                                                (SELECT * FROM users 
+                                                 JOIN subscriptions ON UserId = SubscribedId 
+                                                 WHERE SubscriberId = @userid AND SubscribedId > @subscriptionId
+                                                 ) AS followings";
+
+                        command.Parameters.Add("@subscriptionId", SqlDbType.BigInt);
+                        command.Parameters["@subscriptionId"].Value = subscriptionId;
+                    }
+                    else
+                    {
+                        command.CommandText = @"SELECT TOP(@num) userid, login, Regdate 
+                                                from users 
+                                                join subscriptions on userid = subscribedid 
+                                                where subscriberid = @userid";
+                    }
+
                     command.Parameters.Add("@userid", SqlDbType.BigInt);
-                    command.Parameters["@userid"].Value = id;
+                    command.Parameters["@userid"].Value = userId;
+
+                    command.Parameters.Add("@num", SqlDbType.BigInt);
+                    command.Parameters["@num"].Value = numOfSubsToReturn;
 
                     using (SqlDataReader dr = command.ExecuteReader())
                     {
@@ -399,9 +421,9 @@ namespace Gruvo.DAL
             return list;
         }
 
-        public Int32 GetSubscriptionsCount(long id)
+        public int GetSubscriptionsCount(long id)
         {
-            Int32 qlt;
+            int numOfSubscriptions;
             try
             {
                 using (var connection = new SqlConnection(_connectionStr))
@@ -409,21 +431,21 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select count(*) from users join subscriptions on userid = subscribedid where subscriberid = @userid";
+                    command.CommandText = @"select count(*) from Subscriptions where SubscriberId = @userid";
                     command.Parameters.Add("@userid", SqlDbType.BigInt);
                     command.Parameters["@userid"].Value = id;
 
-                    qlt = (Int32) command.ExecuteScalar();
+                    numOfSubscriptions = (int) command.ExecuteScalar();
                 }
             }
             catch (Exception)
             {
                 throw;
             }
-            return qlt;
+            return numOfSubscriptions;
         }
 
-        public IEnumerable<UserInfo> GetSubscribers(long id)
+        public IEnumerable<UserInfo> GetSubscribers(long userId, long? subscriberId, int numOfSubsToReturn)
         {
             List<UserInfo> list = new List<UserInfo>();
             try
@@ -433,9 +455,32 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select userid, login, users.email, Regdate from users join subscriptions on userid = subscriberid where subscribedid = @userid";
+
+                    if (subscriberId.HasValue)
+                    {
+                        command.CommandText = @"SELECT TOP (@num) UserId, Login, RegDate FROM 
+                                                (select * 
+                                                 from users 
+                                                 join subscriptions on userid = subscriberid 
+                                                 where subscribedid = @userid AND subscriberid > @subscriberId
+                                                ) AS followers";
+
+                        command.Parameters.Add("@subscriberId", SqlDbType.BigInt);
+                        command.Parameters["@subscriberId"].Value = subscriberId;
+                    }
+                    else
+                    {
+                        command.CommandText = @"select TOP (@num) userid, login, Regdate 
+                                                from users 
+                                                join subscriptions on userid = subscriberid 
+                                                where subscribedid = @userid";
+                    }
+
                     command.Parameters.Add("@userid", SqlDbType.BigInt);
-                    command.Parameters["@userid"].Value = id;
+                    command.Parameters["@userid"].Value = userId;
+
+                    command.Parameters.Add("@num", SqlDbType.BigInt);
+                    command.Parameters["@num"].Value = numOfSubsToReturn;
 
                     using (SqlDataReader dr = command.ExecuteReader())
                     {
@@ -455,7 +500,7 @@ namespace Gruvo.DAL
 
         public Int32 GetSubscribersCount(long id)
         {
-            Int32 qlt;
+            int numOfSubscribers;
             try
             {
                 using (var connection = new SqlConnection(_connectionStr))
@@ -463,18 +508,18 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select count(*) from users join subscriptions on userid = subscriberid where subscribedid = @userid"; ;
+                    command.CommandText = @"select count(*) from Subscriptions where SubscribedId = @userid"; ;
                     command.Parameters.Add("@userid", SqlDbType.BigInt);
                     command.Parameters["@userid"].Value = id;
 
-                    qlt = (Int32)command.ExecuteScalar();
+                    numOfSubscribers = (int)command.ExecuteScalar();
                 }
             }
             catch (Exception)
             {
                 throw;
             }
-            return qlt;
+            return numOfSubscribers;
         }
 
         public void Unsubscribe(long userId1, long userId2)
@@ -502,8 +547,11 @@ namespace Gruvo.DAL
             }
         }
 
-        public IEnumerable<UserInfo> GetRandomUsers(int count)
+        public IEnumerable<UserInfo> GetRecommendations(long id)
         {
+            int usersToDisplay = 3;
+            int postsToConsider = 100;    
+            
             List<UserInfo> list = new List<UserInfo>();
             try
             {
@@ -512,9 +560,29 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select top (@count) * from users order by newid()";
+                    command.CommandText = @"select top (@count) * from
+                                        ((select top (@count) * from users where userid in 
+                                        (select subscribedid from subscriptions where SubscriberId in 
+                                        (select top (@nposts) SubscribedId from subscriptions where SubscriberId=@userid)
+                                        and SubscribedId not in 
+                                        (select top (@nposts) SubscribedId from subscriptions where SubscriberId=@userid)
+                                        and SubscribedId <> @userid))
+                                        union 
+                                        (SELECT top (@count) * FROM users where 
+                                        (ABS(CAST( (BINARY_CHECKSUM(*) *  RAND()) as int)) % 100) < 25
+                                        and userid not in 
+                                        (select top (@nposts) SubscribedId from subscriptions where SubscriberId=@userid)
+                                        and userid <> @userid
+                                        ))as t order by newid();";
+
+                    command.Parameters.Add("@userid", SqlDbType.BigInt);
+                    command.Parameters["@userid"].Value = id;
+
+                    command.Parameters.Add("@nposts", SqlDbType.Int);
+                    command.Parameters["@nposts"].Value = postsToConsider;
+
                     command.Parameters.Add("@count", SqlDbType.Int);
-                    command.Parameters["@count"].Value = count;
+                    command.Parameters["@count"].Value = usersToDisplay;
 
                     using (SqlDataReader dataReader = command.ExecuteReader())
                     {

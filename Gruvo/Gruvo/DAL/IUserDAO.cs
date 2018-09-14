@@ -23,9 +23,25 @@ namespace Gruvo.DAL
 
         bool IsSubscribed(long userId1, long userId2);
 
-        IEnumerable<UserInfo> GetSubscribers(long id);
-        IEnumerable<UserInfo> GetSubscriptions(long id);
-        IEnumerable<UserInfo> GetRandomUsers(int count);
+        /// <summary>
+        /// Returns specified number of subscribers. If 'subscriberId' is specified, returns only subscribers with higher id(located after this subscriber).
+        /// </summary>
+        /// <param name="userId">User for whom we are selecting subscribers</param>
+        /// <param name="subscriberId">UserId of subscriber</param>
+        /// <param name="numOfSubsToReturn">Max number of subscribers that we will return in collection</param>
+        /// <returns></returns>
+        IEnumerable<UserInfo> GetSubscribers(long userId, long? subscriberId, int numOfSubsToReturn);
+
+        /// <summary>
+        /// Returns specified number of subscriptions. If 'subscriptionId' is specified, returns only subscriptions with higher id(located after this subscription).
+        /// </summary>
+        /// <param name="userId">User for whom we are selecting subscriptions</param>
+        /// <param name="subscriptionId">UserId of subscribed user</param>
+        /// <param name="numOfSubsToReturn">Max number of subscriptions that we will return in collection</param>
+        /// <returns></returns>
+        IEnumerable<UserInfo> GetSubscriptions(long userId, long? subscriptionId, int numOfSubsToReturn);
+
+        IEnumerable<UserInfo> GetRecommendations(long id);
 
         Int32 GetSubscribersCount(long id);
         Int32 GetSubscriptionsCount(long id);
