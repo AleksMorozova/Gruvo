@@ -547,8 +547,11 @@ namespace Gruvo.DAL
             }
         }
 
-        public IEnumerable<UserInfo> GetRandomUsers(int count)
+        public IEnumerable<UserInfo> GetRecommendations(long id)
         {
+            int usersToDisplay = 3;
+            int postsToConsider = 100;    
+            
             List<UserInfo> list = new List<UserInfo>();
             try
             {
@@ -557,9 +560,29 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select top (@count) * from users order by newid()";
+                    command.CommandText = @"select top (@count) * from
+                                        ((select top (@count) * from users where userid in 
+                                        (select subscribedid from subscriptions where SubscriberId in 
+                                        (select top (@nposts) SubscribedId from subscriptions where SubscriberId=@userid)
+                                        and SubscribedId not in 
+                                        (select top (@nposts) SubscribedId from subscriptions where SubscriberId=@userid)
+                                        and SubscribedId <> @userid))
+                                        union 
+                                        (SELECT top (@count) * FROM users where 
+                                        (ABS(CAST( (BINARY_CHECKSUM(*) *  RAND()) as int)) % 100) < 25
+                                        and userid not in 
+                                        (select top (@nposts) SubscribedId from subscriptions where SubscriberId=@userid)
+                                        and userid <> @userid
+                                        ))as t order by newid();";
+
+                    command.Parameters.Add("@userid", SqlDbType.BigInt);
+                    command.Parameters["@userid"].Value = id;
+
+                    command.Parameters.Add("@nposts", SqlDbType.Int);
+                    command.Parameters["@nposts"].Value = postsToConsider;
+
                     command.Parameters.Add("@count", SqlDbType.Int);
-                    command.Parameters["@count"].Value = count;
+                    command.Parameters["@count"].Value = usersToDisplay;
 
                     using (SqlDataReader dataReader = command.ExecuteReader())
                     {
