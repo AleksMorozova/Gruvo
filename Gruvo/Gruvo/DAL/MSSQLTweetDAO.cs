@@ -113,7 +113,7 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select count(*) from posts join users on users.userid = posts.userid where posts.userid = @id";
+                    command.CommandText = @"select count(*) from posts where posts.userid = @id";
                     command.Parameters.Add("@id", SqlDbType.BigInt);
                     command.Parameters["@id"].Value = id;
 
@@ -254,6 +254,33 @@ namespace Gruvo.DAL
                     connection.Open();
 
                     command.CommandText = @"SELECT COUNT(*) FROM likes WHERE PostId = @post_id AND UserId = @user_id";
+
+                    command.Parameters.Add("@post_id", SqlDbType.BigInt);
+                    command.Parameters["@post_id"].Value = postId;
+
+                    command.Parameters.Add("@user_id", SqlDbType.BigInt);
+                    command.Parameters["@user_id"].Value = userId;
+
+                    return Convert.ToInt32(command.ExecuteScalar()) == 1 ? true : false;
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        public bool CheckIfUserHasTweet(long postId, long userId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"SELECT COUNT(*) FROM posts WHERE PostId = @post_id AND UserId = @user_id";
 
                     command.Parameters.Add("@post_id", SqlDbType.BigInt);
                     command.Parameters["@post_id"].Value = postId;

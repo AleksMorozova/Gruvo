@@ -52,7 +52,7 @@ namespace Gruvo.Controllers
 
         [Route("subscribers/{id?}")]
         [HttpGet]
-        public IActionResult GetSubscribers(long? id)
+        public IActionResult GetSubscribers(long? id, [FromQuery] long? subscriberId)
         {
             IEnumerable<UserInfo> arr = null;
             try
@@ -62,15 +62,42 @@ namespace Gruvo.Controllers
 
                 if (id.HasValue)
                 {
-                    arr = _repository.UserDAO.GetSubscribers(id.Value);
+                    arr = _repository.UserDAO.GetSubscribers(id.Value, subscriberId, 5);
                     if (arr == null) throw new NullReferenceException();
                 }
                 else
                 {
-                    arr = _repository.UserDAO.GetSubscribers(userid);
+                    arr = _repository.UserDAO.GetSubscribers(userid, subscriberId, 5);
                 }
                 return Ok(arr);
             
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [Route("subscribersCount/{id?}")]
+        [HttpGet]
+        public IActionResult GetNumOfSubscribers(long? id)
+        {
+            int numOfSubscribers;
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+
+                if (id.HasValue)
+                {
+                    numOfSubscribers = _repository.UserDAO.GetSubscribersCount(id.Value);
+                }
+                else
+                {
+                    numOfSubscribers = _repository.UserDAO.GetSubscribersCount(userid);
+                }
+                return Ok(numOfSubscribers);
+
             }
             catch (Exception)
             {
@@ -80,7 +107,7 @@ namespace Gruvo.Controllers
 
         [Route("subscriptions/{id?}")]
         [HttpGet]
-        public IActionResult GetSubscriptions(long? id)
+        public IActionResult GetSubscriptions(long? id, [FromQuery] long? subscriptionId)
         {
             IEnumerable<UserInfo> arr = null;
             try
@@ -90,15 +117,42 @@ namespace Gruvo.Controllers
 
                 if (id.HasValue)
                 {
-                    arr = _repository.UserDAO.GetSubscriptions(id.Value);
+                    arr = _repository.UserDAO.GetSubscriptions(id.Value, subscriptionId, 5);
                     if (arr == null) throw new NullReferenceException();
                 }
                 else
                 {
-                    arr = _repository.UserDAO.GetSubscriptions(userid);
+                    arr = _repository.UserDAO.GetSubscriptions(userid, subscriptionId, 5);
                 }
                 return Ok(arr);
             
+
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [Route("subscriptionsCount/{id?}")]
+        [HttpGet]
+        public IActionResult GetNumOfSubscriptions(long? id)
+        {
+            int numOfSubscriptions;
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+
+                if (id.HasValue)
+                {
+                    numOfSubscriptions = _repository.UserDAO.GetSubscriptionsCount(id.Value);
+                }
+                else
+                {
+                    numOfSubscriptions = _repository.UserDAO.GetSubscriptionsCount(userid);
+                }
+                return Ok(numOfSubscriptions);
 
             }
             catch (Exception)
@@ -194,11 +248,19 @@ namespace Gruvo.Controllers
         {
             try
             {
+                long userid = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
                 long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
 
-                _repository.TweetDAO.DeletePost(tweetId);
+                if(_repository.TweetDAO.CheckIfUserHasTweet(tweetId, userid))
+                {
+                    _repository.TweetDAO.DeletePost(tweetId);
 
-                return Ok("Success!");
+                    return Ok("Success!");
+                }
+                else
+                {
+                    return BadRequest("Invalid tweet id!");
+                }
             }
             catch (Exception e)
             {
