@@ -17,9 +17,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   numOfLikes: number;
   timerSubscription: Subscription;
 
-  constructor(private tweetService: TweetService) {
-
-  }
+  constructor(private tweetService: TweetService) { }
 
   ngOnInit() {
     this.checkIfUserLiked();
@@ -74,7 +72,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   }
 
   subscribeToData() {
-    this.timerSubscription = Observable.timer(2000)
+    this.timerSubscription = Observable.timer(10000)
       .first()
       .subscribe(() => this.refreshData());
   }

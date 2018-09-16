@@ -30,6 +30,6 @@ export class TweetService {
 
   deleteTweet(tweetId: number) {
     let params = new HttpParams().set("tweetId", tweetId.toString());
-    return this.http.post(this.tweetDeleteTweetApiURL, {}, { params: params });
+    return this.http.post(this.tweetDeleteTweetApiURL, tweetId);
   }
 }

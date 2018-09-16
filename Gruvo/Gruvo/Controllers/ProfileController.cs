@@ -244,12 +244,12 @@ namespace Gruvo.Controllers
         
         [Route("deleteTweet")]
         [HttpPost]
-        public IActionResult DeleteTweet()
+        public IActionResult DeleteTweet([FromBody] long tweetId)
         {
             try
             {
                 long userid = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
-                long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
+                //long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
 
                 if(_repository.TweetDAO.CheckIfUserHasTweet(tweetId, userid))
                 {

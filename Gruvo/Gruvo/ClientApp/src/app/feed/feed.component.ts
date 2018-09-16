@@ -22,7 +22,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.refreshData();
+    this.loadMoreTweets();
 
     this.feedService.getRecommendations()
       .subscribe((recommendations) => {
@@ -36,21 +36,30 @@ export class FeedComponent implements OnInit, OnDestroy {
     }
   }
 
-  refreshData() {
+  checkForNewTweets() {
+    this.feedService.getTweetsBatch(new Date())
+      .subscribe((tweets) => {
+        for (var i = tweets.length - 1; i > 0; i--) {
+          if (this.tweets.every(x => x.id != tweets[i].id)) {
+            this.tweets.unshift(tweets[i]);
+          }
+        }
+      });
+  }
+
+  loadMoreTweets() {
     if (!this.lastdate) return;
     this.feedService.getTweetsBatch(this.lastdate)
       .subscribe((tweets) => {
-        //this.tweets = this.tweets.concat(tweets);
         for (var i = 0; i < tweets.length; i++) {
-          if (this.tweets.indexOf(tweets[i]) == -1) {
-            console.log(tweets[i]);
+          if (this.tweets.every(x => x.id != tweets[i].id)) {
             this.tweets.push(tweets[i]);
-          }
+          }        
         }
         this.lastdate = tweets.length ? new Date(tweets[tweets.length - 1].sendingDateTime) : undefined;
-        //this.lastdate = new Date(tweets[tweets.length - 1].sendingDateTime);
       }
-      );
+    );
+
     /*
     this.feedService.getTweets()
       .subscribe((tweets) => {
@@ -71,19 +80,20 @@ export class FeedComponent implements OnInit, OnDestroy {
         }
       });
       */
-    //this.subscribeToData();
+
+    this.subscribeToData();
 
   }
 
   subscribeToData() {
     this.timerSubscription = Observable.timer(2000)
       .first()
-      .subscribe(() => this.refreshData());
+      .subscribe(() => this.checkForNewTweets());
   }
 
   onScroll() {
     console.log("Scroll");
-    this.refreshData();
+    this.loadMoreTweets();
   }
 
 }
