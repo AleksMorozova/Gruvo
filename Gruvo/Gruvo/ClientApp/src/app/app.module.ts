@@ -3,6 +3,7 @@ import { NgModule, Inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppComponent } from '@app/app.component';
 import { AppRoutingModule } from '@app/app-routing.module';
@@ -60,7 +61,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    InfiniteScrollModule
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -89,6 +91,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     { provide: 'PROFILE_EDIT_PASSWORD_URL', useValue: 'api/settings/editPassword' },
     { provide: 'PROFILE_SUBSCRIBE_URL', useValue: 'api/profile/subscribe' },
     { provide: 'PROFILE_UNSUBSCRIBE_URL', useValue: 'api/profile/unsubscribe' },
+    { provide: 'TWEETS_BATCH_URL', useValue: 'api/feed/tweetsbatch' },
      LoginService,
      ProfileService,
      FeedService,

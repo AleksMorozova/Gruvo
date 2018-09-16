@@ -8,6 +8,8 @@ namespace Gruvo.DAL
     {
         void AddPost(long userId, string message, DateTime sendingDateTime);
 
+        IEnumerable<ReadableTweet> GetPostsBatchForUser(long id, DateTimeOffset date);
+
         IEnumerable<ReadableTweet> GetPostsForUser(long id);
         IEnumerable<ReadableTweet> GetUserPosts(long id);
 

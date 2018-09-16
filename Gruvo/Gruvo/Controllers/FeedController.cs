@@ -35,6 +35,22 @@ namespace Gruvo.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("tweetsbatch")]
+        public IActionResult GetTweetsBatch([FromBody] DateTimeOffset date)
+        {
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+                return Ok(_repository.TweetDAO.GetPostsBatchForUser(userid, date));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
         [HttpGet]
         [Route("recommendations")]
         public IActionResult GetRecommendations()

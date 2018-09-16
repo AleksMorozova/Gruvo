@@ -15,12 +15,13 @@ export class FeedComponent implements OnInit, OnDestroy {
   tweets: ITweet[] = [];
   recommendations: IUser[] = [];
   timerSubscription: Subscription;
+  lastdate: Date = new Date();
 
   constructor(private feedService: FeedService) {
-
   }
 
   ngOnInit() {
+
     this.refreshData();
 
     this.feedService.getRecommendations()
@@ -36,6 +37,21 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   refreshData() {
+    if (!this.lastdate) return;
+    this.feedService.getTweetsBatch(this.lastdate)
+      .subscribe((tweets) => {
+        //this.tweets = this.tweets.concat(tweets);
+        for (var i = 0; i < tweets.length; i++) {
+          if (this.tweets.indexOf(tweets[i]) == -1) {
+            console.log(tweets[i]);
+            this.tweets.push(tweets[i]);
+          }
+        }
+        this.lastdate = tweets.length ? new Date(tweets[tweets.length - 1].sendingDateTime) : undefined;
+        //this.lastdate = new Date(tweets[tweets.length - 1].sendingDateTime);
+      }
+      );
+    /*
     this.feedService.getTweets()
       .subscribe((tweets) => {
         try {
@@ -54,8 +70,9 @@ export class FeedComponent implements OnInit, OnDestroy {
           this.tweets = [];
         }
       });
+      */
+    //this.subscribeToData();
 
-    this.subscribeToData();
   }
 
   subscribeToData() {
@@ -63,4 +80,10 @@ export class FeedComponent implements OnInit, OnDestroy {
       .first()
       .subscribe(() => this.refreshData());
   }
+
+  onScroll() {
+    console.log("Scroll");
+    this.refreshData();
+  }
+
 }
