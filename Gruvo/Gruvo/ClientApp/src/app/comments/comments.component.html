@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Comments</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">&times;</button>
+</div>
+<div class="modal-body">
+  <gr-tweet [tweet]="tweet" [showComments]="false"></gr-tweet>
+  <hr />
+  <div class="add-comment">
+    <form >
+      <textarea class="form-control message" [(ngModel)]="message" name="text" rows="2" maxlength="256" placeholder="What do YOU think about it? Let everyone know!"></textarea>
+      <button type="submit" class="btn btn-success" (click)="addComment()">Post</button>
+    </form>
+  </div>
+  <div class="comments-list">   
+    <div class="comment" *ngFor="let comment of comments">
+      <hr />
+      <i *ngIf="comment.isDeletable" class="far fa-trash-alt" (click)="deleteComment(comment)"></i>
+      <a class="user-profile" href="profile/{{comment.userId}}"><h4>{{comment.userLogin}}</h4></a>
+      <p>{{comment.message}}</p>
+    </div>
+  </div>
+</div>
+
