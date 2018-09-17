@@ -29,6 +29,7 @@ import { SettingsService } from '@app/settings/settings.service';
 import { PasswordEditComponent } from '@app/password-edit/password-edit.component';
 import { PhotoEditComponent } from '@app/photo/photo.component';
 import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component';
+import { Page404Component } from '@app/page404/page404.component';
 import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.component';
 import { SubscribersComponent } from '@app/subscribers/subscribers.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -52,6 +53,7 @@ import { CommentsComponent } from './comments/comments.component';
     PasswordEditComponent,
     PhotoEditComponent,
     ScrollToTopComponent,
+    Page404Component,
     SubscriptionsComponent,
     SubscribersComponent,
     CommentsComponent

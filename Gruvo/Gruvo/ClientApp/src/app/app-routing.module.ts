@@ -8,6 +8,7 @@ import { LoginGuard } from './login.guard';
 import { AuthGuard } from './auth.guard';
 import { FeedComponent } from './feed/feed.component';
 import { SettingsComponent } from './settings/settings.component';
+import { Page404Component } from '@app/page404/page404.component'
 
 
 const appRoutes: Routes = [
@@ -18,10 +19,11 @@ const appRoutes: Routes = [
   { path: 'profile/:id', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'feed', component: FeedComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'settings', component: SettingsComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '/page404' },
+  { path: 'page404', component: Page404Component, pathMatch: 'full' },
+  { path: '**', redirectTo: 'page404' },
 
   /* TODO:   
-  { path: 'page404', component: Page404Component }
+
   */
 ];
 
