@@ -1,15 +1,14 @@
-<img src="/assets/images/heart_red.png" class="icon icon-like img-responsive"/>
-<img src="/assets/images/heart.png" class="icon icon-like img-responsive"/>
-<div class="content"
-     infiniteScroll
-     [infiniteScrollThrottle]="2000"
-    [infiniteScrollDistance]="1"
-    (scrolled)="onScroll()">
+<div class="content">
     <gr-menu></gr-menu>
-    <div class="gruvo-block tweets-list col-xs-11" id="tweets">
-        <gr-create-tweet></gr-create-tweet>
-        <gr-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></gr-tweet>
-        <gr-scroll-to-top></gr-scroll-to-top>
+    <div class="gruvo-block tweets-list col-xs-11" id="tweets"
+         infiniteScroll
+     [infiniteScrollThrottle]="1500"
+    [infiniteScrollDistance]="1"
+    (scrolled)="onScroll()"
+         >
+      <gr-create-tweet></gr-create-tweet>
+      <gr-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></gr-tweet>
+      <gr-scroll-to-top></gr-scroll-to-top>
     </div>
     
 </div>
