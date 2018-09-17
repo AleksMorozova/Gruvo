@@ -1,6 +1,6 @@
 <div class="post" id="{{ tweet.id }}">
   <h4 class="post-header">
-    <a class="post-title" routerLink="/profile/{{tweet.userId}}">{{data.userLogin}}</a>
+    <a class="post-title" routerLink="/profile/{{tweet.userId}}">{{tweet.userLogin}}</a>
     <i *ngIf="tweet.isDeletable" class="far fa-trash-alt"  (click)="deleteTweet($event)"></i>
   </h4>
   <p class="post-text">{{tweet.message}}</p>
@@ -16,4 +16,5 @@
       </button>
     </div>
   </div>
+  <a *ngIf="showComments" (click)="openCommentsModal()">Show comments...</a>
 </div>
