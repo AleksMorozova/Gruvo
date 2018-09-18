@@ -4,6 +4,9 @@ import { TweetService } from '@app/tweet/tweet.service';
 import { error } from 'protractor';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { CommentsComponent } from '@app/comments/comments.component';
 
 @Component({
   selector: 'gr-tweet',
@@ -12,12 +15,15 @@ import { Subscription } from 'rxjs';
 })
 
 export class TweetComponent implements OnInit, OnDestroy {
-  @Input() data: ITweet;
+  @Input() tweet: ITweet;
+  @Input() showComments: boolean = true;
   likeImgUrl: string;
   numOfLikes: number;
   timerSubscription: Subscription;
+  modalRef: BsModalRef;
 
-  constructor(private tweetService: TweetService) {
+
+  constructor(private tweetService: TweetService, private modalService: BsModalService) {
 
   }
 
@@ -34,7 +40,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   }
 
   like() {
-    this.tweetService.like(this.data.id)
+    this.tweetService.like(this.tweet.id)
       .subscribe(object => {
         this.checkIfUserLiked();
         this.refreshData();
@@ -43,8 +49,8 @@ export class TweetComponent implements OnInit, OnDestroy {
       });
   }
   
-  public deleteTweet(event) {
-    this.tweetService.deleteTweet(this.data.id)
+  deleteTweet(event) {
+    this.tweetService.deleteTweet(this.tweet.id)
       .subscribe(
         deleted => {},
         error => console.log(error)
@@ -53,7 +59,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   }
   
   checkIfUserLiked() {
-    this.tweetService.checkLiked(this.data.id)
+    this.tweetService.checkLiked(this.tweet.id)
       .subscribe((res : boolean) => {
         if (res) {
           this.likeImgUrl = '/assets/images/heart_red.png';
@@ -65,7 +71,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   }
 
   refreshData() {
-    this.tweetService.getNumOfLikes(this.data.id)
+    this.tweetService.getNumOfLikes(this.tweet.id)
       .subscribe((numOfLikes: number) => {
         this.numOfLikes = numOfLikes;
       });
@@ -77,5 +83,17 @@ export class TweetComponent implements OnInit, OnDestroy {
     this.timerSubscription = Observable.timer(2000)
       .first()
       .subscribe(() => this.refreshData());
+  }
+
+  openCommentsModal() {
+    let tweet = this.tweet;
+    
+    const initialState = {
+      paramId: this.tweet.id,
+      tweet: this.tweet,
+      class: 'modal-sm'
+    };
+
+    this.modalRef = this.modalService.show(CommentsComponent, { initialState });
   }
 }

@@ -47,6 +47,16 @@
 
     </div>
 
+    <div class="form-group" [ngClass]="{'has-error': signupForm.hasError('PasswordsDoNotMatch')}">
+      <label for="confirmPassword">
+        Confirm password
+        <span class="text-danger" *ngIf="signupForm.hasError('PasswordsDoNotMatch')">is not valid!</span>
+      </label>
+      <input id="confirmPassword" [formControl]="signupForm.controls['confirmPassword']" type="password" class="form-control" placeholder="Confirm password">
+    </div>
+
+    <button type="submit" class="btn btn-success btn-md" [disabled]="!signupForm.valid">Sign Up</button>
+
     <div class="wrong-credentials" *ngIf="!correctCredentials">
       Something gone wrong.
     </div>

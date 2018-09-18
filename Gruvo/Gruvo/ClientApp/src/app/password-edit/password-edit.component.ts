@@ -3,6 +3,7 @@ import { Http, Headers } from '@angular/http';
 import { NgForm, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import * as crypto from "crypto-js";
 import { SettingsService } from '@app/settings/settings.service';
+import { PasswordValidation } from '@app/PasswordValidation'
 
 @Component({
   selector: 'gr-password-edit',
@@ -18,8 +19,11 @@ export class PasswordEditComponent {
   constructor(private fb: FormBuilder, private settingsService: SettingsService) {
     this.editPasswordForm = this.fb.group({
       'oldPassw': ['', Validators.required],
-      'newPassw': ['', Validators.required]
-    });
+      'password': ['', Validators.required],
+      'confirmPassword': ['']
+    }, {
+        validator: PasswordValidation.PasswordsMatch
+      });
   }
   
   isValidControl(controlName): boolean {
@@ -27,7 +31,7 @@ export class PasswordEditComponent {
   }
 
   editPassword(formData: any) {
-    this.settingsService.EditPassword(crypto.MD5(formData.oldPassw).toString(), crypto.MD5(formData.newPassw).toString()).subscribe(object => {
+    this.settingsService.EditPassword(crypto.MD5(formData.oldPassw).toString(), crypto.MD5(formData.password).toString()).subscribe(object => {
       this.showMessage = true;
       this.correctPassword = true;
       console.log('Password edit completed!');

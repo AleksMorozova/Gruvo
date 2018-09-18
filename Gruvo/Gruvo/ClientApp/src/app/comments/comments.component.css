@@ -1,0 +1,59 @@
+
+.comments-list {
+  padding-left: 5px;
+  list-style: none;
+}
+
+.comment i:hover {
+  color: #eb7a28;
+  cursor: pointer;
+}
+
+
+.comment i {
+  padding: 10px;
+  display: flex;
+  flex-flow: column;
+}
+
+.comment i{
+  float:right;
+}
+
+  .comment:hover {
+    background-color: #f4f5f7;
+  }
+
+.user-profile {
+  text-decoration: none;
+  color: black;
+}
+
+.btn-show-more {
+  padding: 10px 10px 10px 10px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+  .btn-show-more:hover {
+    background-color: #f4f5f7;
+    cursor: pointer;
+  }
+
+.add-comment {
+  display: flex;
+  flex-direction: column;
+}
+
+  .add-comment textarea {
+    display: block;
+    min-height: 80px;
+    resize: none;
+  }
+
+  .add-comment button {
+    width: 75px;
+    margin: 10px 0;
+    margin-left: auto;
+    float: right;
+  }

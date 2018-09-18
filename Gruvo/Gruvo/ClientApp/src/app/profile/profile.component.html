@@ -14,24 +14,20 @@
     <table class="table table-striped">
       <tr>
         <td>
-          <a href="#">Followers</a>
+          <div class="btn-followers" (click)="openFollowersModal()">Followers</div>
         </td>
         <td>
-          <a href="#">Followings</a>
+          <div class="btn-following" (click)="openFollowingModal()">Following</div>
         </td>
-        <td>
-          <a href="#">Posts</a>
-        </td>        
       </tr>
       <tr>
-        <td>{{subscribers.length}}</td>
-        <td>{{subscriptions.length}}</td>
-        <td>{{userTweets.length}}</td>
+        <td class="subscribers-count">{{numOfSubscribers}}</td>
+        <td class="subscriptions-count">{{numOfSubscriptions}}</td>
       </tr>
     </table>
     <hr />
     <div class="right-bottom">
-      <gr-tweet *ngFor="let tweet of userTweets" [data]="tweet"></gr-tweet>  
+      <gr-tweet *ngFor="let tweet of userTweets" [tweet]="tweet"></gr-tweet>
       <gr-scroll-to-top></gr-scroll-to-top>
     </div>
   </div>

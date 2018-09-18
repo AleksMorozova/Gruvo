@@ -26,11 +26,14 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
+    <None Remove="ClientApp\src\app\comments\comment.model.ts" />
     <None Remove="ClientApp\src\app\feed\feed.component.ts" />
     <None Remove="ClientApp\src\app\feed\feed.service.ts" />
     <None Remove="ClientApp\src\app\recommendation.component.html" />
     <None Remove="ClientApp\src\app\recommendation.component.html" />
     <None Remove="ClientApp\src\app\recommendation\recommendation.component.ts" />
+    <None Remove="ClientApp\src\app\subscribers\subscribers.component.ts" />
+    <None Remove="ClientApp\src\app\subscriptions\subscriptions.component.ts" />
     <None Remove="ClientApp\src\app\tweet\tweet.service.ts" />
   </ItemGroup>
 
@@ -40,9 +43,12 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\comments\comment.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\feed\feed.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\feed\feed.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\recommendation\recommendation.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\subscribers\subscribers.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\subscriptions\subscriptions.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\tweet\tweet.service.ts" />
   </ItemGroup>
 

@@ -29,6 +29,11 @@ import { SettingsService } from '@app/settings/settings.service';
 import { PasswordEditComponent } from '@app/password-edit/password-edit.component';
 import { PhotoEditComponent } from '@app/photo/photo.component';
 import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component';
+import { Page404Component } from '@app/page404/page404.component';
+import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.component';
+import { SubscribersComponent } from '@app/subscribers/subscribers.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { CommentsComponent } from './comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -47,9 +52,14 @@ import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component
     SettingsComponent,
     PasswordEditComponent,
     PhotoEditComponent,
-    ScrollToTopComponent
+    ScrollToTopComponent,
+    Page404Component,
+    SubscriptionsComponent,
+    SubscribersComponent,
+    CommentsComponent
   ],
   imports: [
+    ModalModule.forRoot(),
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
@@ -57,6 +67,11 @@ import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component
     AppRoutingModule
   ],
   bootstrap: [AppComponent],
+  entryComponents: [
+    SubscriptionsComponent,
+    SubscribersComponent,
+    CommentsComponent
+  ],
   providers: [
     { provide: 'LOGIN_URL', useValue: 'api/auth/login' },
     { provide: 'SIGNUP_URL', useValue: 'api/auth/signup' },
@@ -65,6 +80,8 @@ import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component
     { provide: 'PROFILE_TWEETS_URL', useValue: 'api/profile/userTweets' },
     { provide: 'PROFILE_SUBSCRIPTIONS_URL', useValue: 'api/profile/subscriptions' },
     { provide: 'PROFILE_SUBSRIBERS_URL', useValue: 'api/profile/subscribers' },
+    { provide: 'PROFILE_SUBSCRIPTIONS_COUNT_URL', useValue: 'api/profile/subscriptionsCount' },
+    { provide: 'PROFILE_SUBSCRIBERS_COUNT_URL', useValue: 'api/profile/subscribersCount' },
     { provide: 'CREATETWEET_POST_TWEET_URL', useValue: 'api/profile/postTweet' },
     { provide: 'TWEET_DELETE_TWEET_URL', useValue: 'api/profile/deleteTweet'},
     { provide: 'FEED_TWEETS_URL', useValue: 'api/feed/tweets' },
@@ -79,6 +96,9 @@ import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component
     { provide: 'PROFILE_UNSUBSCRIBE_URL', useValue: 'api/profile/unsubscribe' },
     { provide: 'CONFIRM_EMAIL_URL', useValue: 'api/auth/confirmEmail' },
     { provide: 'GET_VERIFICATION_CODE_URL', useValue: 'api/auth/getVerificationCode' },
+    { provide: 'TWEET_COMMENTS_URL', useValue: 'api/tweet/comments' },
+    { provide: 'TWEET_ADDCOMMENT_URL', useValue: 'api/tweet/addcomment' },
+    { provide: 'TWEET_DELETECOMMENT_URL', useValue: 'api/tweet/deletecomment' }, 
      LoginService,
      ProfileService,
      FeedService,

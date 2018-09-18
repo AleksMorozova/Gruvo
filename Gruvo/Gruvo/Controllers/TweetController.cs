@@ -1,6 +1,7 @@
 ﻿using System;
 using Gruvo.BLL;
 using Gruvo.DAL.Repository;
+using Gruvo.DTL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,14 +20,11 @@ namespace Gruvo.Controllers
             _tokenUserPairs = tokenUserPairs;
         }
 
-        [Route("like")]
-        [HttpGet]
-        public IActionResult Like()
+        [HttpGet("like")]
+        public IActionResult Like([FromQuery] long tweetId)
         {
             try
             {
-                long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
-
                 if (tweetId < 1)
                 {
                     return BadRequest();
@@ -47,15 +45,11 @@ namespace Gruvo.Controllers
             }
         }
 
-        [Route("tweetLikes")]
-        [HttpGet]
-        [AllowAnonymous]// If we can see profile without logging in
-        public IActionResult GetLikes()
+        [HttpGet("tweetLikes")]
+        public IActionResult GetLikes([FromQuery] long tweetId)
         {
             try
             {
-                long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
-
                 if (tweetId < 1)
                 {
                     return BadRequest();
@@ -69,14 +63,11 @@ namespace Gruvo.Controllers
             }
         }
 
-        [Route("checkLiked")]
-        [HttpGet]
-        public IActionResult CheckLiked()
+        [HttpGet("checkLiked")]
+        public IActionResult CheckLiked([FromQuery] long tweetId)
         {
             try
             {
-                long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
-
                 if (tweetId < 1)
                 {
                     return BadRequest();
@@ -85,6 +76,64 @@ namespace Gruvo.Controllers
                 long userId = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
 
                 return Ok(_repository.TweetDAO.CheckIfUserLiked(tweetId, userId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [HttpPost]
+        [Route("addcomment")]
+        public IActionResult AddComment([FromBody] Comment comment)
+        {
+            try
+            {
+                long userId = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
+                _repository.TweetDAO.AddComment(comment.TweetId, userId, comment.Message, DateTime.Now);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [HttpGet("comments")]
+        public IActionResult GetComments([FromQuery] long tweetId)
+        {
+            try
+            {
+                if (tweetId < 1)
+                {
+                    return BadRequest();
+                }
+                long userId = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
+                return Ok(_repository.TweetDAO.GetComments(tweetId, userId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [HttpPost]
+        [Route("deletecomment")]
+        public IActionResult DeleteComment([FromBody] long commentid)
+        {
+            try
+            {
+                long userId = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
+                long commentOwnersId = _repository.TweetDAO.GetComment(commentid).UserId;
+                if (commentOwnersId == userId)
+                {
+                    _repository.TweetDAO.DeleteComment(commentid);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+                return Ok();
             }
             catch (Exception ex)
             {
