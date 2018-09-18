@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from
 import { LoginService } from '@app/login/login.service';
 import { Router } from '@angular/router';
 import * as crypto from "crypto-js";
+import { PasswordValidation } from '@app/PasswordValidation'
 
 
 @Component({
@@ -21,8 +22,11 @@ export class SignupComponent {
 
       'login': ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9_]{3,50}$/)])],
       'email': ['', Validators.compose([Validators.required, Validators.email])],
-      'password': ['', Validators.required]
-    });
+      'password': ['', Validators.required],
+      'confirmPassword': ['']
+    }, {
+        validator: PasswordValidation.PasswordsMatch
+      });
   }
 
   SignUp(formData: any): void {

@@ -173,12 +173,12 @@ namespace Gruvo.Controllers
 
                 if (id.HasValue)
                 {
-                    arr = _repository.TweetDAO.GetUserPosts(id.Value);
+                    arr = _repository.TweetDAO.GetUserPosts(id.Value,false);
                     if (arr == null) throw new NullReferenceException();
                 }
                 else
                 {
-                    arr = _repository.TweetDAO.GetUserPosts(userid);
+                    arr = _repository.TweetDAO.GetUserPosts(userid, true);
                 }
                 return Ok(arr);
             }
@@ -249,7 +249,6 @@ namespace Gruvo.Controllers
             try
             {
                 long userid = _tokenUserPairs.Pairs[Request.Cookies["Gruvo"]].Id;
-                //long tweetId = Convert.ToInt64(Request.Headers["tweetId"]);
 
                 if(_repository.TweetDAO.CheckIfUserHasTweet(tweetId, userid))
                 {

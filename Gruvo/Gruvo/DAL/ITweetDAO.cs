@@ -11,11 +11,19 @@ namespace Gruvo.DAL
         IEnumerable<ReadableTweet> GetPostsBatchForUser(long id, DateTimeOffset date);
 
         IEnumerable<ReadableTweet> GetPostsForUser(long id);
-        IEnumerable<ReadableTweet> GetUserPosts(long id);
+        IEnumerable<ReadableTweet> GetUserPosts(long id, bool otherUser);
 
         Int32 GetUserPostsCount(long id);
 
         void DeletePost(long id);
+
+        void AddComment(long tweetId, long userId, string message , DateTime sendingDateTime);
+
+        IEnumerable<Comment> GetComments(long tweetId,long userId);
+
+        Comment GetComment(long commentid);
+
+        void DeleteComment(long commentId);
 
         /// <summary>
         /// Returns number of affected rows

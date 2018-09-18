@@ -4,6 +4,9 @@ import { TweetService } from '@app/tweet/tweet.service';
 import { error } from 'protractor';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { CommentsComponent } from '@app/comments/comments.component';
 
 @Component({
   selector: 'gr-tweet',
@@ -13,11 +16,16 @@ import { Subscription } from 'rxjs';
 
 export class TweetComponent implements OnInit, OnDestroy {
   @Input() tweet: ITweet;
+  @Input() showComments: boolean = true;
   likeImgUrl: string;
   numOfLikes: number;
   timerSubscription: Subscription;
+  modalRef: BsModalRef;
 
-  constructor(private tweetService: TweetService) { }
+  constructor(private tweetService: TweetService, private modalService: BsModalService) {
+
+  }
+
 
   ngOnInit() {
     this.checkIfUserLiked();
@@ -41,7 +49,7 @@ export class TweetComponent implements OnInit, OnDestroy {
       });
   }
   
-  public deleteTweet(event) {
+  deleteTweet(event) {
     this.tweetService.deleteTweet(this.tweet.id)
       .subscribe(
         deleted => {},
@@ -75,5 +83,17 @@ export class TweetComponent implements OnInit, OnDestroy {
     this.timerSubscription = Observable.timer(10000)
       .first()
       .subscribe(() => this.refreshData());
+  }
+
+  openCommentsModal() {
+    let tweet = this.tweet;
+    
+    const initialState = {
+      paramId: this.tweet.id,
+      tweet: this.tweet,
+      class: 'modal-sm'
+    };
+
+    this.modalRef = this.modalService.show(CommentsComponent, { initialState });
   }
 }
