@@ -63,8 +63,8 @@ a:hover {
 .action-list {
   width: 100%;
   display: flex;
-  justify-content: center;
-  border-bottom: 1px solid #ccc;
+  flex-flow:row;
+  justify-content: flex-end;
 }
 
 .btn-action {

@@ -1,4 +1,4 @@
-<div class="post" id="{{ tweet.id }}">
+<div *ngIf="isDeleted" class="post" id="{{ tweet.id }}">
   <h4 class="post-header">
     <a class="post-title" routerLink="/profile/{{tweet.userId}}">{{tweet.userLogin}}</a>
     <i *ngIf="tweet.isDeletable" class="far fa-trash-alt"  (click)="deleteTweet($event)"></i>
@@ -7,7 +7,10 @@
   <p class="post-date">{{tweet.sendingDateTime | date:'MMM d, y, h:mm a'}}</p>
 
   <div class="action-list">
-    <div class="action action-like">
+    <a (click)="openCommentsModal()" *ngIf="showComments" class="btn btn-default">
+      <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+    </a>
+    <div class="btn btn-default action action-like">
       <button class="btn-action action-like" (click)="like()">
         <div>
           <img src="{{likeImgUrl}}" class="icon icon-like img-responsive">
@@ -15,6 +18,8 @@
         <span class="count">{{numOfLikes}}</span>
       </button>
     </div>
+
   </div>
-  <a *ngIf="showComments" (click)="openCommentsModal()">Show comments...</a>
+
+
 </div>

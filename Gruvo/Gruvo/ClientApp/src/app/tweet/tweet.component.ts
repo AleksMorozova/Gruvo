@@ -21,6 +21,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   numOfLikes: number;
   timerSubscription: Subscription;
   modalRef: BsModalRef;
+  isDeleted: boolean=true;
 
 
   constructor(private tweetService: TweetService, private modalService: BsModalService) {
@@ -52,7 +53,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   deleteTweet(event) {
     this.tweetService.deleteTweet(this.tweet.id)
       .subscribe(
-        deleted => {},
+      deleted => { this.isDeleted = false;},
         error => console.log(error)
       );
     event.preventDefault();    

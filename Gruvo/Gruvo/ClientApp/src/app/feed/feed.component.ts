@@ -21,6 +21,8 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    new Image().src = '/assets/images/heart_red.png';
+    new Image().src = '/assets/images/heart.png';
     this.refreshData();
 
     this.feedService.getRecommendations()
