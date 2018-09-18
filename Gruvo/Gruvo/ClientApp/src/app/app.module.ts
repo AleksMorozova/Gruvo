@@ -94,6 +94,8 @@ import { CommentsComponent } from './comments/comments.component';
     { provide: 'PROFILE_EDIT_PASSWORD_URL', useValue: 'api/settings/editPassword' },
     { provide: 'PROFILE_SUBSCRIBE_URL', useValue: 'api/profile/subscribe' },
     { provide: 'PROFILE_UNSUBSCRIBE_URL', useValue: 'api/profile/unsubscribe' },
+    { provide: 'CONFIRM_EMAIL_URL', useValue: 'api/auth/confirmEmail' },
+    { provide: 'GET_VERIFICATION_CODE_URL', useValue: 'api/auth/getVerificationCode' },
     { provide: 'TWEET_COMMENTS_URL', useValue: 'api/tweet/comments' },
     { provide: 'TWEET_ADDCOMMENT_URL', useValue: 'api/tweet/addcomment' },
     { provide: 'TWEET_DELETECOMMENT_URL', useValue: 'api/tweet/deletecomment' }, 

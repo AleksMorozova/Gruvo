@@ -206,6 +206,69 @@ namespace Gruvo.DAL
             return user;
         }
 
+        public UserInfo GetUserByEmail (string email)
+        {
+            UserInfo user = null;
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"select UserId,Login,Email,RegDate from users where Email = @email";
+                    command.Parameters.Add("@email", SqlDbType.VarChar);
+                    command.Parameters["@email"].Value = email;
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]);
+                        }
+                    }
+                }
+            }
+
+            catch (Exception)
+            {
+                throw;
+            }
+            return user;
+        }
+
+
+        public UserInfo GetUserByLogin(string login)
+        {
+            UserInfo user = null;
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"select UserId,Login,Email,RegDate from users where Login = @login";
+                    command.Parameters.Add("@login", SqlDbType.VarChar);
+                    command.Parameters["@login"].Value = login;
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]);
+                        }
+                    }
+                }
+            }
+
+            catch (Exception)
+            {
+                throw;
+            }
+            return user;
+        }
+
         public string GetUserPassword(long id)
         {
             string pwd = null;

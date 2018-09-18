@@ -12,6 +12,8 @@ namespace Gruvo.DAL
         UserInfo GetUser(long id);
         UserInfo GetUser(string login);
         UserInfo GetUserByEmailAndPwd(string email, string password);
+        UserInfo GetUserByEmail(string email);
+        UserInfo GetUserByLogin(string login);
         string GetUserPassword(long id);
 
         void UpdatePassword(long id,  string password);
