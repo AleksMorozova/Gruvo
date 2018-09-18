@@ -15,20 +15,22 @@ export class FeedComponent implements OnInit, OnDestroy {
   tweets: ITweet[] = [];
   recommendations: IUser[] = [];
   timerSubscription: Subscription;
+  lastdate: Date = new Date();
+  newTweets: boolean = false;
 
   constructor(private feedService: FeedService) {
-
   }
 
   ngOnInit() {
-    new Image().src = '/assets/images/heart_red.png';
-    new Image().src = '/assets/images/heart.png';
-    this.refreshData();
+    this.loadMoreTweets();
 
     this.feedService.getRecommendations()
       .subscribe((recommendations) => {
         this.recommendations = recommendations;
       });
+
+
+    this.subscribeToData();
   }
 
   ngOnDestroy() {
@@ -37,32 +39,42 @@ export class FeedComponent implements OnInit, OnDestroy {
     }
   }
 
-  refreshData() {
-    this.feedService.getTweets()
+  checkForNewTweets() {
+    this.feedService.getTweetsBatch(new Date())
       .subscribe((tweets) => {
-        try {
-          if (this.tweets[0]) {
-            if ((this.tweets[0].id != tweets[0].id) ||
-              (tweets.length < this.tweets.length) ||
-              (this.tweets[this.tweets.length - 1].id != tweets[this.tweets.length - 1].id)) {
-              this.tweets = tweets;
-            }
+        for (var i = tweets.length - 1; i >= 0; i--) {
+          if (this.tweets.every(x => x.id != tweets[i].id)) {
+            this.tweets.unshift(tweets[i]);
+            this.newTweets = true;
           }
-          else {
-            this.tweets = tweets;
-          }
-        }
-        catch (e) {
-          this.tweets = [];
         }
       });
-
     this.subscribeToData();
   }
 
-  subscribeToData() {
-    this.timerSubscription = Observable.timer(2000)
-      .first()
-      .subscribe(() => this.refreshData());
+  loadMoreTweets() {
+    if (!this.lastdate) return;
+    this.feedService.getTweetsBatch(this.lastdate)
+      .subscribe((tweets) => {
+        for (var i = 0; i < tweets.length; i++) {
+          if (this.tweets.every(x => x.id != tweets[i].id)) {
+            this.tweets.push(tweets[i]);
+          }        
+        }
+        this.lastdate = tweets.length ? new Date(tweets[tweets.length - 1].sendingDateTime) : undefined;
+      }
+    );
   }
+
+  subscribeToData() {
+    this.timerSubscription = Observable.timer(7000)
+      .first()
+      .subscribe(() => this.checkForNewTweets());
+  }
+
+  onScroll() {
+    console.log("Scrolled");
+    this.loadMoreTweets();
+  }
+
 }
