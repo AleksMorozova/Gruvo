@@ -188,6 +188,34 @@ namespace Gruvo.Controllers
             }
         }
 
+        [Route("userTweetsBatch")]
+        [HttpPost]
+        public IActionResult GetUserTweetsBatch([FromBody] ProfileState state)
+        {
+            IEnumerable<ReadableTweet> arr = null;
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+
+                if (state.id.HasValue)
+                {
+                    arr = _repository.TweetDAO.GetUserPostsBatch(state.id.Value,true, state.date);
+                    if (arr == null) throw new NullReferenceException();
+                }
+                else
+                {
+                    arr = _repository.TweetDAO.GetUserPostsBatch(userid,false, state.date);
+                }
+                return Ok(arr);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+
         [Route("subscribe")]
         [HttpPost]
         public IActionResult Subscribe([FromBody] long id)

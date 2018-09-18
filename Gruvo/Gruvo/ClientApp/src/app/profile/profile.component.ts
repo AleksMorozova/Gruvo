@@ -11,107 +11,108 @@ import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.compone
 import { SubscribersComponent } from '@app/subscribers/subscribers.component';
 
 @Component({
-    selector: 'gr-profile',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.css']
+  selector: 'gr-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
 
 export class ProfileComponent implements OnInit, OnDestroy {
 
-    user: IUser;
-    userTweets: ITweet[] = [];
-    paramId: number;
-    button: any;
-    numOfSubscriptions: number;
-    numOfSubscribers: number;
-    timerSubscription: Subscription;
-    modalRef: BsModalRef;
+  user: IUser;
+  tweets: ITweet[] = [];
+  paramId: number;
+  button: any;
+  numOfSubscriptions: number;
+  numOfSubscribers: number;
+  timerSubscription: Subscription;
+  modalRef: BsModalRef;
+  lastdate: Date = new Date();
 
+  constructor(private profileService: ProfileService, route: ActivatedRoute, private router: Router, private modalService: BsModalService) {
+    route.params.subscribe(
+      params => this.paramId = +params['id']
+    );
+  }
 
-    ngOnInit(): void {
-        this.profileService.getUserData(this.paramId)
-            .subscribe((user) => {
-                this.user = user;
-                this.button = document.getElementById('sbscrbtn');
-                if (this.user.isSubscribed) {
-                    this.button.classList.add('btn-primary');
-                    this.button.innerHTML = 'Unsubscribe';
-                } else {
-                    this.button.classList.add('btn-success');
-                    this.button.innerHTML = 'Subscribe';
-                }
-                this.button.classList.remove('hidden');
-            }, err => this.router.navigate(['profile']));
-
-        this.refreshData();
-    }
-
-    ngOnDestroy() {
-        if (this.timerSubscription) {
-            this.timerSubscription.unsubscribe();
+  ngOnInit() {
+    this.profileService.getUserData(this.paramId)
+      .subscribe((user) => {
+        this.user = user;
+        this.button = document.getElementById('sbscrbtn');
+        if (this.user.isSubscribed) {
+          this.button.classList.add('btn-primary');
+          this.button.innerHTML = 'Unsubscribe';
+        } else {
+          this.button.classList.add('btn-success');
+          this.button.innerHTML = 'Subscribe';
         }
+        this.button.classList.remove('hidden');
+      }, err => this.router.navigate(['profile']));
+
+    this.loadMoreTweets();
+  }
+
+  ngOnDestroy() {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
     }
+  }
 
-    openFollowingModal() {
-      const initialState = {
-        paramId: this.paramId,
-        class: 'modal-sm'
-      };
+  //refreshData() {
+  //  this.profileService.getUserTweets(this.paramId)
+  //    .subscribe((tweets) => {
+  //      try {
+  //        if (this.tweets[0]) {
+  //          if ((this.tweets[0].id != tweets[0].id) || (tweets.length < this.tweets.length) || (this.tweets[this.tweets.length - 1].id != tweets[this.tweets.length - 1].id)) {
+  //            this.tweets = tweets;
+  //          }
+  //        }
+  //        else {
+  //          this.tweets = tweets;
+  //        }
+  //      }
+  //      catch (e) {
+  //        this.tweets = tweets;
+  //      }
+  //    });
 
-      this.modalRef = this.modalService.show(SubscriptionsComponent, { initialState });
-    }
+  //  this.profileService.getSubscriptionsCount(this.paramId)
+  //    .subscribe((numOfSubscriptions) => {
+  //      this.numOfSubscriptions = numOfSubscriptions;
+  //    });
 
-    openFollowersModal() {
-      const initialState = {
-        paramId: this.paramId,
-        class: 'modal-sm'
-      };
+  //  this.profileService.getSubscribersCount(this.paramId)
+  //    .subscribe((numOfSubscribers) => {
+  //      this.numOfSubscribers = numOfSubscribers;
+  //    });
 
-      this.modalRef = this.modalService.show(SubscribersComponent, { initialState });
-    }
+  //  this.subscribeToData();
+  //}
 
-    refreshData() {
-        this.profileService.getUserTweets(this.paramId)
-          .subscribe((tweets) => {
-            try {
-              if (this.userTweets[0]) {
-                if ((this.userTweets[0].id != tweets[0].id) || (tweets.length < this.userTweets.length) || (this.userTweets[this.userTweets.length - 1].id != tweets[this.userTweets.length - 1].id)) {
-                  this.userTweets = tweets;
-                }
-              }
-              else {
-                this.userTweets = tweets;
-              }
-            }
-            catch(e) {
-              this.userTweets = tweets;
-            }
-          });
+  subscribeToData() {
+    this.timerSubscription = Observable.timer(10000)
+      .first()
+      .subscribe(() => this.loadMoreTweets());
+  }
 
-        this.profileService.getSubscriptionsCount(this.paramId)
-            .subscribe((numOfSubscriptions) => {
-                this.numOfSubscriptions = numOfSubscriptions;
-            });
+  onScroll() {
+    console.log("Scrolled");
+    this.loadMoreTweets();
+  }
 
-        this.profileService.getSubscribersCount(this.paramId)
-            .subscribe((numOfSubscribers) => {
-                this.numOfSubscribers = numOfSubscribers;
-            });
-
-        this.subscribeToData();
-    }
-
-    subscribeToData() {
-        this.timerSubscription = Observable.timer(2000)
-            .first()
-            .subscribe(() => this.refreshData());
-    }
-
-    constructor(private profileService: ProfileService, route: ActivatedRoute, private router: Router, private modalService: BsModalService) {
-        route.params.subscribe(
-            params =>  this.paramId = +params['id']   
-        );
-    }
+  loadMoreTweets() {
+    if (!this.lastdate) return;
+    this.profileService.getTweetsBatch(this.lastdate, this.paramId)
+      .subscribe((tweets) => {
+        for (var i = 0; i < tweets.length; i++) {
+          if (this.tweets.every(x => x.id != tweets[i].id)) {
+            this.tweets.push(tweets[i]);
+          }        
+        }
+        this.lastdate = tweets.length ? new Date(tweets[tweets.length - 1].sendingDateTime) : undefined;
+      }
+    );
+  }
 
     subfunc() {
         if (this.button) {
@@ -137,5 +138,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 );
             }
         }
-    }
+  }
+
+  openFollowingModal() {
+    const initialState = {
+      paramId: this.paramId,
+      class: 'modal-sm'
+    };
+
+    this.modalRef = this.modalService.show(SubscriptionsComponent, { initialState });
+  }
+
+  openFollowersModal() {
+    const initialState = {
+      paramId: this.paramId,
+      class: 'modal-sm'
+    };
+
+    this.modalRef = this.modalService.show(SubscribersComponent, { initialState });
+  }
+
 }

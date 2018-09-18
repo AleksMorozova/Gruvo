@@ -19,7 +19,7 @@ export class ProfileService {
     @Inject('PROFILE_UNSUBSCRIBE_URL') private profileUnsubscribeApiURL: string,
     @Inject('PROFILE_SUBSCRIPTIONS_COUNT_URL') private profileSubscriptionsCountURL: string,
     @Inject('PROFILE_SUBSCRIBERS_COUNT_URL') private profileSubscribersCountURL: string,
-     
+    @Inject('USERTWEETS_BATCH_URL') private tweetsBatchApiUrl: string,
     private http: HttpClient) { }
 
   getUserData(id?: number): Observable<IUser> {
@@ -47,5 +47,8 @@ export class ProfileService {
   }
   unsubscribe(id: number): Observable<any> {
     return this.http.post(this.profileUnsubscribeApiURL, id );
-  }  
+  }
+  getTweetsBatch(date: Date, id?: number): Observable<ITweet[]> {
+    return this.http.post<ITweet[]>(this.tweetsBatchApiUrl, { date: date, id: id});
+  }
 }

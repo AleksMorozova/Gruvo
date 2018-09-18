@@ -114,6 +114,53 @@ namespace Gruvo.DAL
             return list;
         }
 
+        public IEnumerable<ReadableTweet> GetUserPostsBatch(long id, bool otherUser, DateTimeOffset date)
+        {
+            int count = 5;
+            List<ReadableTweet> list = new List<ReadableTweet>();
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"select top (@count) postid,posts.userid,login,message,postdate from 
+                                            posts join users on users.userid = posts.userid where 
+                                            postdate < @date and posts.userid = @id order by postdate desc";
+                    command.Parameters.Add("@id", SqlDbType.BigInt);
+                    command.Parameters["@id"].Value = id;
+
+                    command.Parameters.Add("@count", SqlDbType.Int);
+                    command.Parameters["@count"].Value = count;
+
+                    command.Parameters.Add("@date", SqlDbType.DateTimeOffset);
+                    command.Parameters["@date"].Value = date;
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            list.Add(new ReadableTweet((long)dataReader["Postid"],
+                            (long)dataReader["userid"],
+                            (string)dataReader["login"],
+                            (string)dataReader["message"],
+                            otherUser,
+                            (DateTimeOffset)dataReader["postdate"]));
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+            return list;
+        }
+
+
         public IEnumerable<ReadableTweet> GetPostsForUser(long id)
         {
             List<ReadableTweet> list = new List<ReadableTweet>();
@@ -479,5 +526,6 @@ namespace Gruvo.DAL
             }
             return item;
         }
+
     }
 }
