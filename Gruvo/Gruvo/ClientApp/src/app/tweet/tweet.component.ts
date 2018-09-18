@@ -22,10 +22,10 @@ export class TweetComponent implements OnInit, OnDestroy {
   timerSubscription: Subscription;
   modalRef: BsModalRef;
 
-
   constructor(private tweetService: TweetService, private modalService: BsModalService) {
 
   }
+
 
   ngOnInit() {
     this.checkIfUserLiked();
@@ -80,7 +80,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   }
 
   subscribeToData() {
-    this.timerSubscription = Observable.timer(2000)
+    this.timerSubscription = Observable.timer(10000)
       .first()
       .subscribe(() => this.refreshData());
   }
