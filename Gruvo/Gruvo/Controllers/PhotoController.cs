@@ -42,11 +42,9 @@ namespace Gruvo.Controllers
                 string cookie = Request.Cookies["Gruvo"];
                 long userid = _tokenUserPairs.Pairs[cookie].Id;
 
-                var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                var uploads = Path.Combine(_hostingEnvironment.ContentRootPath, "userPhotos");
                 var file = model.file;
-                Console.WriteLine(file.FileName.GetHashCode().ToString());
-                Console.WriteLine(file.FileName);
-                //_repository.UserDAO.UpdatePhoto(userid,);
+                _repository.UserDAO.UpdatePhoto(userid, file.FileName,0,0,0);
                 if (file.Length > 0)
                 {
                     var filePath = Path.Combine(uploads, file.FileName);
@@ -57,6 +55,27 @@ namespace Gruvo.Controllers
                 }               
 
                 return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [Route("request/{id?}")]
+        [HttpGet]
+        public IActionResult RequestPhoto(long? id)
+        {
+            try
+            {
+                string cookie = Request.Cookies["Gruvo"];
+                long userid = _tokenUserPairs.Pairs[cookie].Id;
+                if (id.HasValue) userid = id.Value;
+                string path = _repository.UserDAO.getPhoto(userid);
+                byte[] dataBytes = System.IO.File.ReadAllBytes("userPhotos/" + path);
+                var dataStream = new MemoryStream(dataBytes);
+
+                return Ok(dataStream);
             }
             catch (Exception)
             {

@@ -24,6 +24,8 @@ namespace Gruvo.DAL
 
         bool IsSubscribed(long userId1, long userId2);
 
+        string getPhoto(long userId);
+
         /// <summary>
         /// Returns specified number of subscribers. If 'subscriberId' is specified, returns only subscribers with higher id(located after this subscriber).
         /// </summary>

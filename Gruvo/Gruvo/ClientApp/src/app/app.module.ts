@@ -101,6 +101,7 @@ import { CommentsComponent } from './comments/comments.component';
     { provide: 'TWEET_ADDCOMMENT_URL', useValue: 'api/tweet/addcomment' },
     { provide: 'TWEET_DELETECOMMENT_URL', useValue: 'api/tweet/deletecomment' },
     { provide: 'USERTWEETS_BATCH_URL', useValue: 'api/profile/userTweetsBatch' },
+    { provide: 'PHOTO_URL', useValue: '/api/photo/request' },
      LoginService,
      ProfileService,
      FeedService,

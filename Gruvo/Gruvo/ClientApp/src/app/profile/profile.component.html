@@ -7,6 +7,9 @@
     (scrolled)="onScroll()">
     <div class="media">
       <div class="media-left">
+        <div class="photo  center-block">
+          <img [src]="imgData" class="photo img-responsive img-circle">
+        </div>
         <button id="sbscrbtn" *ngIf="paramId" class="center-block btn hidden" (click)="subfunc()"></button>
       </div>
       <div class="media-body">

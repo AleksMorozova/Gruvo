@@ -32,14 +32,6 @@
   margin-right:12px;
 }
 
-.photo {
-  overflow: hidden;
-  width: 128px;
-  height: 128px;
-  display: block;
-  background-color: white;
-}
-
 .mobile-menu-icon {
   font-size: 24px;
   color: white;

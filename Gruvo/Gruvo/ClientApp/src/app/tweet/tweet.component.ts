@@ -7,6 +7,8 @@ import { Subscription } from 'rxjs';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { CommentsComponent } from '@app/comments/comments.component';
+import { ProfileService } from '@app/profile/profile.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'gr-tweet',
@@ -24,12 +26,18 @@ export class TweetComponent implements OnInit, OnDestroy {
   timerSubscription: Subscription;
   modalRef: BsModalRef;
   isDeleted: boolean = false;
-
-  constructor(private tweetService: TweetService, private modalService: BsModalService) {  }
+  img : any;
+  
+  constructor(private tweetService: TweetService, private modalService: BsModalService, private profileService: ProfileService, private sanitizer: DomSanitizer) { }
 
 
   ngOnInit() {
     this.checkIfUserLiked();
+    this.profileService.getPhoto(this.tweet.userId).subscribe(blob => {
+      let urlCreator = window.URL;
+      this.img = this.sanitizer.bypassSecurityTrustUrl(
+        urlCreator.createObjectURL(blob));
+    }, () => { this.img = './assets/images/no_avatar_profile.png' });
 
     this.refreshData();
   }

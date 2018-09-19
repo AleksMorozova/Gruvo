@@ -20,6 +20,7 @@ export class ProfileService {
     @Inject('PROFILE_SUBSCRIPTIONS_COUNT_URL') private profileSubscriptionsCountURL: string,
     @Inject('PROFILE_SUBSCRIBERS_COUNT_URL') private profileSubscribersCountURL: string,
     @Inject('USERTWEETS_BATCH_URL') private tweetsBatchApiUrl: string,
+    @Inject('PHOTO_URL') private photoApiUrl: string,
     private http: HttpClient) { }
 
   getUserData(id?: number): Observable<IUser> {
@@ -50,5 +51,8 @@ export class ProfileService {
   }
   getTweetsBatch(date: Date, id?: number): Observable<ITweet[]> {
     return this.http.post<ITweet[]>(this.tweetsBatchApiUrl, { date: date, id: id});
+  }
+  getPhoto(id?: number): Observable<any> {
+    return this.http.get(id ? this.photoApiUrl + '/' + id : this.photoApiUrl, { responseType:'blob' });
   }
 }

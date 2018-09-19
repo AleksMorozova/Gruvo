@@ -8,11 +8,12 @@
 }
 
 .photo {
-  margin:5px;
-  display: block;
   overflow: hidden;
+  vertical-align: middle;
   width: 128px;
   height: 128px;
+  border-radius: 100px;
+  background-color: white;
 }
 
 .tweets-list {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { IUser } from '@app/profile/user.model';
 import { ProfileService } from '@app/profile/profile.service';
 import { ITweet } from '@app/tweet/tweet.model';
@@ -9,6 +9,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.component';
 import { SubscribersComponent } from '@app/subscribers/subscribers.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'gr-profile',
@@ -28,14 +29,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
   modalRef: BsModalRef;
   lastdate: Date = new Date();
   newTweets: boolean = false;
+  photosPath: string = '';
+  imgData: any;
 
-  constructor(private profileService: ProfileService, route: ActivatedRoute, private router: Router, private modalService: BsModalService) {
+  constructor(private profileService: ProfileService,
+    route: ActivatedRoute,
+    private router: Router,
+    private modalService: BsModalService,
+    private sanitizer: DomSanitizer) {
     route.params.subscribe(
       params => this.paramId = +params['id']
     );
   }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.profileService.getUserData(this.paramId)
       .subscribe((user) => {
         this.user = user;
@@ -50,6 +57,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.button.classList.remove('hidden');
       }
       }, err => this.router.navigate(['profile']));
+    this.profileService.getPhoto(this.paramId).subscribe(blob => {
+      let urlCreator = window.URL;
+      this.imgData = this.sanitizer.bypassSecurityTrustUrl(
+        urlCreator.createObjectURL(blob));
+    }, () => { this.imgData ='./assets/images/no_avatar_profile.png' });
 
     this.loadMoreTweets();
     this.subscribeToData();

@@ -7,12 +7,15 @@
 a:hover {
   cursor: pointer;
 }
-  .post hr {
-    color: #ccc;
-    margin-bottom: 0;
-    margin-top: 1rem;
-    border-top: 1px solid #ccc;
-  }
+
+.delete{
+}
+.post hr {
+  color: #ccc;
+  margin-bottom: 0;
+  margin-top: 1rem;
+  border-top: 1px solid #ccc;
+}
 .post .post-header {
   display: flex;
   align-items: center;
@@ -64,7 +67,8 @@ a:hover {
   width: 100%;
   display: flex;
   flex-flow:row;
-  justify-content: flex-end;
+  align-items:flex-end;
+  justify-content: space-between;
 }
 
 .btn-action {
