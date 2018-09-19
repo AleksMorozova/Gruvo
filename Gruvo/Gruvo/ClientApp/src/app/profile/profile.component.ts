@@ -9,6 +9,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.component';
 import { SubscribersComponent } from '@app/subscribers/subscribers.component';
+import { FeedService } from '@app/feed/feed.service';
 
 @Component({
     selector: 'gr-profile',
@@ -17,9 +18,9 @@ import { SubscribersComponent } from '@app/subscribers/subscribers.component';
 })
 
 export class ProfileComponent implements OnInit, OnDestroy {
-
     user: IUser;
     userTweets: ITweet[] = [];
+    recommendations: IUser[] = [];
     paramId: number;
     button: any;
     numOfSubscriptions: number;
@@ -41,7 +42,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
                     this.button.innerHTML = 'Subscribe';
                 }
                 this.button.classList.remove('hidden');
-            }, err => this.router.navigate(['profile']));
+        }, err => this.router.navigate(['profile']));
+
+        this.feedService.getRecommendations()
+          .subscribe((recommendations) => {
+            this.recommendations = recommendations;
+        });
 
         this.refreshData();
     }
@@ -107,7 +113,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             .subscribe(() => this.refreshData());
     }
 
-    constructor(private profileService: ProfileService, route: ActivatedRoute, private router: Router, private modalService: BsModalService) {
+    constructor(private profileService: ProfileService, route: ActivatedRoute, private router: Router, private modalService: BsModalService, private feedService: FeedService) {
         route.params.subscribe(
             params =>  this.paramId = +params['id']   
         );

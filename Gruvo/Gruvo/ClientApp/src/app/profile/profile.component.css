@@ -21,13 +21,6 @@
   margin: 0 20px;
 }
 
-.info{
-    padding: 10px;
-    display: flex;
-    flex-flow: column;
-    background-color: white;
-}
-
 .subscribers-count, .subscriptions-count {
   text-align: center;
 }
@@ -52,5 +45,9 @@
   [class*="tweets-list"] {
     margin: 0 10px;
     padding: 0;
+  }
+
+  [class*="recommendations"] {
+    display: none;
   }
 }

@@ -19,7 +19,7 @@
 }
 
 @media screen and (max-width: 768px){
-  .navbar-brand {
+  /*.navbar-brand {
     display: none;
-  }
+  }*/
 }

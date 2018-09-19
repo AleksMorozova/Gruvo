@@ -3,6 +3,7 @@ import { NgModule, Inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppComponent } from '@app/app.component';
@@ -15,7 +16,6 @@ import { FooterComponent } from '@app/footer/footer.component';
 import { TweetComponent } from '@app/tweet/tweet.component';
 import { ProfileComponent } from '@app/profile/profile.component';
 import { ProfileService } from '@app/profile/profile.service';
-import { MenuComponent } from '@app/menu/menu.component';
 import { LoginGuard } from '@app/login.guard';
 import { AuthGuard } from '@app/auth.guard';
 import { FeedComponent } from '@app/feed/feed.component';
@@ -32,7 +32,6 @@ import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component
 import { Page404Component } from '@app/page404/page404.component';
 import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.component';
 import { SubscribersComponent } from '@app/subscribers/subscribers.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { CommentsComponent } from '@app/comments/comments.component';
 import { HeaderMenuComponent } from '@app/header-menu/header-menu.component';
 
@@ -44,7 +43,6 @@ import { HeaderMenuComponent } from '@app/header-menu/header-menu.component';
     LoginComponent,
     SignupComponent,
     ProfileComponent,
-    MenuComponent,
     TweetComponent,
     FeedComponent,
     RecommendationComponent,

@@ -1,15 +1,15 @@
 <div class="header-menu">
   <div class="align-left">
     <div class="item item-feed">
-      <a [class.active]="option == 1" class="header-menu-item" routerLink="/feed" (click)="option = 1">Home</a>
+      <a [class.active]="activePage == 1" class="header-menu-item" routerLink="/feed" (click)="activePage = 1">Home</a>
     </div>
     <div class="item item-profile">
-      <a [class.active]="option == 2" class="header-menu-item" routerLink="/profile" (click)="option = 2">Profile</a>
+      <a [class.active]="activePage == 2" class="header-menu-item" routerLink="/profile" (click)="activePage = 2">Profile</a>
     </div>
   </div>
   <div class="align-right">
     <div class="item item-settings">
-      <a [class.active]="option == 3" class="header-menu-item" routerLink="/settings" (click)="option = 3">Settings</a>
+      <a [class.active]="activePage == 3" class="header-menu-item" routerLink="/settings" (click)="activePage = 3">Settings</a>
     </div>
     <div class="item item-logout">
       <a class="header-menu-item" href="api/auth/logout">Log out</a>

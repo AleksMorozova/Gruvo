@@ -6,5 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header-menu.component.css']
 })
 export class HeaderMenuComponent {
+  activePage: number;
 
+  constructor() {
+    this.activePage = 1;
+  }
 }
