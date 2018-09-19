@@ -16,7 +16,6 @@ import { TweetComponent } from '@app/tweet/tweet.component';
 import { ProfileComponent } from '@app/profile/profile.component';
 import { ProfileService } from '@app/profile/profile.service';
 import { MenuComponent } from '@app/menu/menu.component';
-import { MenuItemsComponent } from '@app/menu-items/menu-items.component';
 import { LoginGuard } from '@app/login.guard';
 import { AuthGuard } from '@app/auth.guard';
 import { FeedComponent } from '@app/feed/feed.component';
@@ -34,7 +33,8 @@ import { Page404Component } from '@app/page404/page404.component';
 import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.component';
 import { SubscribersComponent } from '@app/subscribers/subscribers.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { CommentsComponent } from './comments/comments.component';
+import { CommentsComponent } from '@app/comments/comments.component';
+import { HeaderMenuComponent } from '@app/header-menu/header-menu.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +45,6 @@ import { CommentsComponent } from './comments/comments.component';
     SignupComponent,
     ProfileComponent,
     MenuComponent,
-    MenuItemsComponent,
     TweetComponent,
     FeedComponent,
     RecommendationComponent,
@@ -57,7 +56,8 @@ import { CommentsComponent } from './comments/comments.component';
     Page404Component,
     SubscriptionsComponent,
     SubscribersComponent,
-    CommentsComponent
+    CommentsComponent,
+    HeaderMenuComponent
   ],
   imports: [
     ModalModule.forRoot(),
