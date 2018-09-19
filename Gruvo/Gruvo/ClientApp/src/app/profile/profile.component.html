@@ -1,4 +1,7 @@
 <div class="content">
+  <div class="recommendations gruvo-block">
+    <gr-recommendation *ngFor="let user of recommendations" [data]="user"></gr-recommendation>
+  </div>
   <div class="tweets-list gruvo-block col-xs-11" id="tweets">
     <div class="media">
       <div class="media-left">
@@ -29,8 +32,5 @@
       <gr-tweet *ngFor="let tweet of userTweets" [tweet]="tweet"></gr-tweet>
       <gr-scroll-to-top></gr-scroll-to-top>
     </div>
-  </div>
-  <div class="recommendations gruvo-block">
-    <gr-recommendation *ngFor="let user of recommendations" [data]="user"></gr-recommendation>
   </div>
 </div>
