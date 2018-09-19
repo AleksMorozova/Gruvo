@@ -4,6 +4,7 @@
   border-radius: 20px;
   margin-bottom: 20px;
   background-color: rgb(243, 243, 243);
+  box-shadow: 1px 1px 1px black;
 }
 
 .post:hover {

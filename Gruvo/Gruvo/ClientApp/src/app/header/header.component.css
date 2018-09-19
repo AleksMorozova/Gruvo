@@ -17,3 +17,9 @@
   width: 100%;
   box-shadow: 0px 0px 10px 3px rgba(0,0,0,0.5)
 }
+
+@media screen and (max-width: 768px){
+  .navbar-brand {
+    display: none;
+  }
+}
