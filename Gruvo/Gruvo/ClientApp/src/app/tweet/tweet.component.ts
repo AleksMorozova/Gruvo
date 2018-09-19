@@ -17,10 +17,10 @@ import { CommentsComponent } from '@app/comments/comments.component';
 export class TweetComponent implements OnInit, OnDestroy {
   @Input() tweet: ITweet;
   @Input() showComments: boolean = true;
-  likeImgUrl: string;
   numOfLikes: number;
   timerSubscription: Subscription;
   modalRef: BsModalRef;
+  isLikedByUser: boolean = true;
 
   constructor(private tweetService: TweetService, private modalService: BsModalService) {
 
@@ -62,10 +62,10 @@ export class TweetComponent implements OnInit, OnDestroy {
     this.tweetService.checkLiked(this.tweet.id)
       .subscribe((res : boolean) => {
         if (res) {
-          this.likeImgUrl = '/assets/images/heart_red.png';
+          this.isLikedByUser = true;
         }
         else {
-          this.likeImgUrl = '/assets/images/heart.png';
+          this.isLikedByUser = false;
         }
       });
   }

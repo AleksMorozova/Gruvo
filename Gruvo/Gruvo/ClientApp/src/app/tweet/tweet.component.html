@@ -15,7 +15,7 @@
     <div class="action action-like">
       <button class="btn-action action-like" (click)="like()">
         <div>
-          <img src="{{likeImgUrl}}" class="icon icon-like img-responsive">
+          <i [class.red]="isLikedByUser" class="glyphicon glyphicon-heart-empty icon-like"></i>
         </div>
         <span class="count">{{numOfLikes}}</span>
       </button>

@@ -78,11 +78,16 @@ a:hover {
 
 .icon-like {
     flex-flow: column;
-    mix-blend-mode: multiply;
+    font-size: 1.6em;
 }
 
 .count {
   flex-flow: column;
+  padding-left: 2px;
+}
+
+.red {
+  color: red;
 }
 
 .action {
