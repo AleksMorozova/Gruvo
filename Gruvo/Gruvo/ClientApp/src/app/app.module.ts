@@ -34,6 +34,7 @@ import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.compone
 import { SubscribersComponent } from '@app/subscribers/subscribers.component';
 import { CommentsComponent } from '@app/comments/comments.component';
 import { HeaderMenuComponent } from '@app/header-menu/header-menu.component';
+import { SearchBoxComponent } from '@app/search-box/search-box.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { HeaderMenuComponent } from '@app/header-menu/header-menu.component';
     SubscriptionsComponent,
     SubscribersComponent,
     CommentsComponent,
-    HeaderMenuComponent
+    HeaderMenuComponent,
+    SearchBoxComponent
   ],
   imports: [
     ModalModule.forRoot(),
