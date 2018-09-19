@@ -632,5 +632,41 @@ namespace Gruvo.DAL
             }
             return result;
         }
+
+        public void UpdatePhoto(long id, string path, int? x, int? y, int? radius)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"insert into photos (userid, name, x, y,radius) values
+                                            (@userid, @name, @x, @y,@radius)";
+                    
+                    command.Parameters.Add("@userid", SqlDbType.BigInt);
+                    command.Parameters["@userid"].Value = id;
+
+                    command.Parameters.Add("@name", SqlDbType.VarChar);
+                    command.Parameters["@name"].Value = path;
+
+                    command.Parameters.Add("@x", SqlDbType.Int);
+                    command.Parameters["@x"].Value = x;
+
+                    command.Parameters.Add("@y", SqlDbType.Int);
+                    command.Parameters["@y"].Value = y;
+
+                    command.Parameters.Add("@radius", SqlDbType.Int);
+                    command.Parameters["@radius"].Value = radius;
+
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

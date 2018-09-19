@@ -16,6 +16,7 @@ namespace Gruvo.DAL
 
         void UpdatePassword(long id,  string password);
         void UpdateUserInfo(long id, string login, string email, string about, DateTime? bday);
+        void UpdatePhoto(long id, string path,int? x, int? y, int? radius);
         void DeleteUser(long id);
         void DeleteUser(string login);
 
