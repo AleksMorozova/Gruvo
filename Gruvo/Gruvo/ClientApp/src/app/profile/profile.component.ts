@@ -27,6 +27,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   timerSubscription: Subscription;
   modalRef: BsModalRef;
   lastdate: Date = new Date();
+  newTweets: boolean = false;
 
   constructor(private profileService: ProfileService, route: ActivatedRoute, private router: Router, private modalService: BsModalService) {
     route.params.subscribe(
@@ -58,37 +59,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  //refreshData() {
-  //  this.profileService.getUserTweets(this.paramId)
-  //    .subscribe((tweets) => {
-  //      try {
-  //        if (this.tweets[0]) {
-  //          if ((this.tweets[0].id != tweets[0].id) || (tweets.length < this.tweets.length) || (this.tweets[this.tweets.length - 1].id != tweets[this.tweets.length - 1].id)) {
-  //            this.tweets = tweets;
-  //          }
-  //        }
-  //        else {
-  //          this.tweets = tweets;
-  //        }
-  //      }
-  //      catch (e) {
-  //        this.tweets = tweets;
-  //      }
-  //    });
-
-  //  this.profileService.getSubscriptionsCount(this.paramId)
-  //    .subscribe((numOfSubscriptions) => {
-  //      this.numOfSubscriptions = numOfSubscriptions;
-  //    });
-
-  //  this.profileService.getSubscribersCount(this.paramId)
-  //    .subscribe((numOfSubscribers) => {
-  //      this.numOfSubscribers = numOfSubscribers;
-  //    });
-
-  //  this.subscribeToData();
-  //}
-
   subscribeToData() {
     this.timerSubscription = Observable.timer(10000)
       .first()
@@ -101,19 +71,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   loadMoreTweets() {
-    if (!this.lastdate) return;
-    this.profileService.getTweetsBatch(this.lastdate, this.paramId)
-      .subscribe((tweets) => {
-        for (var i = 0; i < tweets.length; i++) {
-          if (this.tweets.every(x => x.id != tweets[i].id)) {
-            this.tweets.push(tweets[i]);
-          }        
+    if (this.lastdate){
+      this.newTweets=true;
+      this.profileService.getTweetsBatch(this.lastdate, this.paramId)
+        .subscribe((tweets) => {
+          for (var i = 0; i < tweets.length; i++) {
+            if (this.tweets.every(x => x.id != tweets[i].id)) {
+              this.tweets.push(tweets[i]);
+            }        
+          }
+          this.newTweets=false;
+          this.lastdate = tweets.length ? new Date(tweets[tweets.length - 1].sendingDateTime) : undefined;
         }
-        this.lastdate = tweets.length ? new Date(tweets[tweets.length - 1].sendingDateTime) : undefined;
-      }
-    );
+      );
+    }
   }
-
     subfunc() {
         if (this.button) {
             this.button.setAttribute("disabled", "disabled");

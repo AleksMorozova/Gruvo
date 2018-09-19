@@ -45,7 +45,6 @@ export class FeedComponent implements OnInit, OnDestroy {
         for (var i = tweets.length - 1; i >= 0; i--) {
           if (this.tweets.every(x => x.id != tweets[i].id)) {
             this.tweets.unshift(tweets[i]);
-            this.newTweets = true;
           }
         }
       });
@@ -53,17 +52,20 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   loadMoreTweets() {
-    if (!this.lastdate) return;
-    this.feedService.getTweetsBatch(this.lastdate)
-      .subscribe((tweets) => {
-        for (var i = 0; i < tweets.length; i++) {
-          if (this.tweets.every(x => x.id != tweets[i].id)) {
-            this.tweets.push(tweets[i]);
-          }        
+    if (this.lastdate) { 
+      this.newTweets=true;  
+      this.feedService.getTweetsBatch(this.lastdate)
+        .subscribe((tweets) => {
+          for (var i = 0; i < tweets.length; i++) {
+            if (this.tweets.every(x => x.id != tweets[i].id)) {
+              this.tweets.push(tweets[i]);
+            }   
+          } 
+          this.newTweets=false;
+          this.lastdate = tweets.length ? new Date(tweets[tweets.length - 1].sendingDateTime) : undefined;
         }
-        this.lastdate = tweets.length ? new Date(tweets[tweets.length - 1].sendingDateTime) : undefined;
-      }
-    );
+      );
+    }
   }
 
   subscribeToData() {

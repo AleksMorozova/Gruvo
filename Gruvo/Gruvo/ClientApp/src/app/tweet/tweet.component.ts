@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { ITweet } from '@app/tweet/tweet.model';
 import { TweetService } from '@app/tweet/tweet.service';
 import { error } from 'protractor';
@@ -17,15 +17,16 @@ import { CommentsComponent } from '@app/comments/comments.component';
 export class TweetComponent implements OnInit, OnDestroy {
   @Input() tweet: ITweet;
   @Input() showComments: boolean = true;
+  @Output() deleted: EventEmitter<any> = new EventEmitter();
+  
+
   likeImgUrl: string;
   numOfLikes: number;
   timerSubscription: Subscription;
   modalRef: BsModalRef;
-  isDeleted: boolean=true;
+  isDeleted: boolean = false;
 
-  constructor(private tweetService: TweetService, private modalService: BsModalService) {
-
-  }
+  constructor(private tweetService: TweetService, private modalService: BsModalService) {  }
 
 
   ngOnInit() {
@@ -53,8 +54,14 @@ export class TweetComponent implements OnInit, OnDestroy {
   deleteTweet(event) {
     this.tweetService.deleteTweet(this.tweet.id)
       .subscribe(
-      deleted => { this.isDeleted = false;},
-        error => console.log(error)
+        () => {
+          this.isDeleted = true;
+          this.deleted.emit();
+        },
+        () => {
+          this.isDeleted = true;
+          this.deleted.emit();
+        }
       );
     event.preventDefault();    
   }
@@ -83,15 +90,14 @@ export class TweetComponent implements OnInit, OnDestroy {
   subscribeToData() {
     this.timerSubscription = Observable.timer(10000)
       .first()
-      .subscribe(() => this.refreshData());
+      .subscribe(() => {this.refreshData();this.checkIfUserLiked();});
   }
 
   openCommentsModal() {
-    let tweet = this.tweet;
-    
+   
     const initialState = {
       paramId: this.tweet.id,
-      tweet: this.tweet,
+      tweetComp: this,
       class: 'modal-sm'
     };
 

@@ -32,6 +32,7 @@
     <hr />
     <div class="right-bottom">
       <gr-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></gr-tweet>
+      <div *ngIf="newTweets" class="canLoadMore"><div class="lds-dual-ring"></div></div>
       <gr-scroll-to-top></gr-scroll-to-top>
     </div>
   </div>
