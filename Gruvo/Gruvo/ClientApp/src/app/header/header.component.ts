@@ -11,6 +11,10 @@ export class HeaderComponent implements OnInit {
 
   constructor(public loginService: LoginService) {
     this.isLoggedIn = false;
+
+    this.loginService.isLoggedInSubject.subscribe((val) => {
+      this.isLoggedIn = val;
+    });
   }
 
   ngOnInit() {
@@ -19,5 +23,7 @@ export class HeaderComponent implements OnInit {
     }, err => {
       this.isLoggedIn = false;
       });
+
+
   }
  }
