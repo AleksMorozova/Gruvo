@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CreateTweetService } from './create-tweet.service';
 import { ITweet } from '../tweet/tweet.model';
 import { MessageBundle } from '@angular/compiler';
@@ -10,14 +10,15 @@ import { MessageBundle } from '@angular/compiler';
 })
 
 export class CreateTweetComponent {
+  @Output() tweeted: EventEmitter<any> = new EventEmitter();
 
   message: string;
 
   public postTweet(event) {
     this.createTweetService.postTweet(this.message)
       .subscribe(
-        tweet => console.log(tweet),
-        error => console.log(error)
+        tweet => {console.log(tweet);this.tweeted.emit();},
+        error => {console.log(error);this.tweeted.emit();}
     );
     event.preventDefault();
     this.message = '';

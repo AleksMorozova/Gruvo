@@ -5,7 +5,7 @@
     [infiniteScrollThrottle]="1500"
     [infiniteScrollDistance]="1"
     (scrolled)="onScroll()">
-      <gr-create-tweet></gr-create-tweet>
+      <gr-create-tweet (tweeted)="onTweet()" ></gr-create-tweet>
       <gr-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></gr-tweet>
       <div *ngIf="newTweets" class="canLoadMore"><div class="lds-dual-ring"></div></div>
       <gr-scroll-to-top></gr-scroll-to-top>

@@ -18,7 +18,6 @@ export class TweetComponent implements OnInit, OnDestroy {
   @Input() tweet: ITweet;
   @Input() showComments: boolean = true;
   @Output() deleted: EventEmitter<any> = new EventEmitter();
-  
 
   likeImgUrl: string;
   numOfLikes: number;

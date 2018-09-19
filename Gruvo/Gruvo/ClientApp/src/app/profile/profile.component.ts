@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.profileService.getUserData(this.paramId)
       .subscribe((user) => {
         this.user = user;
-        this.button = document.getElementById('sbscrbtn');
+        if(this.button = document.getElementById('sbscrbtn')){        
         if (this.user.isSubscribed) {
           this.button.classList.add('btn-primary');
           this.button.innerHTML = 'Unsubscribe';
@@ -48,9 +48,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.button.innerHTML = 'Subscribe';
         }
         this.button.classList.remove('hidden');
+      }
       }, err => this.router.navigate(['profile']));
 
     this.loadMoreTweets();
+    this.subscribeToData();
   }
 
   ngOnDestroy() {
@@ -62,7 +64,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
   subscribeToData() {
     this.timerSubscription = Observable.timer(10000)
       .first()
-      .subscribe(() => this.loadMoreTweets());
+      .subscribe(() => this.checkForNewTweets());
+  }
+
+  checkForNewTweets() {
+    this.profileService.getTweetsBatch(new Date(), this.paramId)
+      .subscribe((tweets) => {
+        console.log(tweets);
+        for (var i = tweets.length - 1; i >= 0; i--) {
+          if (this.tweets.every(x => x.id != tweets[i].id)) {
+            this.tweets.unshift(tweets[i]);
+          }
+        }
+      });
+    this.subscribeToData();
   }
 
   onScroll() {
@@ -86,7 +101,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       );
     }
   }
-    subfunc() {
+
+  subfunc() {
         if (this.button) {
             this.button.setAttribute("disabled", "disabled");
             if (this.user.isSubscribed) {

@@ -79,4 +79,15 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.loadMoreTweets();
   }
 
+  onTweet(){
+    this.feedService.getTweetsBatch(new Date())
+    .subscribe((tweets) => {
+      for (var i = tweets.length - 1; i >= 0; i--) {
+        if (this.tweets.every(x => x.id != tweets[i].id)) {
+          this.tweets.unshift(tweets[i]);
+        }
+      }
+    });
+
+  }
 }

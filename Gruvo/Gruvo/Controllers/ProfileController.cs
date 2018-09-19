@@ -36,7 +36,7 @@ namespace Gruvo.Controllers
                 {
                     user = _repository.UserDAO.GetUser(id.Value);
                     user.IsSubscribed = _repository.UserDAO.IsSubscribed(userid, id.Value);
-                    if (id.Value == userid) throw new ArgumentException();
+                    if (id.Value == userid) BadRequest("Something went wrong");
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace Gruvo.Controllers
                 if (id.HasValue)
                 {
                     arr = _repository.UserDAO.GetSubscribers(id.Value, subscriberId, 5);
-                    if (arr == null) throw new NullReferenceException();
+                    if (arr == null) BadRequest("Something went wrong");
                 }
                 else
                 {
@@ -118,7 +118,7 @@ namespace Gruvo.Controllers
                 if (id.HasValue)
                 {
                     arr = _repository.UserDAO.GetSubscriptions(id.Value, subscriptionId, 5);
-                    if (arr == null) throw new NullReferenceException();
+                    if (arr == null) BadRequest("Something went wrong");
                 }
                 else
                 {
@@ -174,7 +174,7 @@ namespace Gruvo.Controllers
                 if (id.HasValue)
                 {
                     arr = _repository.TweetDAO.GetUserPosts(id.Value,false);
-                    if (arr == null) throw new NullReferenceException();
+                    if (arr == null) BadRequest("Something went wrong");
                 }
                 else
                 {
@@ -200,12 +200,12 @@ namespace Gruvo.Controllers
 
                 if (state.id.HasValue)
                 {
-                    arr = _repository.TweetDAO.GetUserPostsBatch(state.id.Value,true, state.date);
-                    if (arr == null) throw new NullReferenceException();
+                    arr = _repository.TweetDAO.GetUserPostsBatch(state.id.Value,false, state.date);
+                    if (arr == null) BadRequest("Something went wrong");
                 }
                 else
                 {
-                    arr = _repository.TweetDAO.GetUserPostsBatch(userid,false, state.date);
+                    arr = _repository.TweetDAO.GetUserPostsBatch(userid,true, state.date);
                 }
                 return Ok(arr);
             }
