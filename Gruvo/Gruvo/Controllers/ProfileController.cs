@@ -36,7 +36,7 @@ namespace Gruvo.Controllers
                 {
                     user = _repository.UserDAO.GetUser(id.Value);
                     user.IsSubscribed = _repository.UserDAO.IsSubscribed(userid, id.Value);
-                    if (id.Value == userid) BadRequest("Something went wrong");
+                    if (id.Value == userid) return BadRequest("Something went wrong");
                 }
                 else
                 {
@@ -118,7 +118,7 @@ namespace Gruvo.Controllers
                 if (id.HasValue)
                 {
                     arr = _repository.UserDAO.GetSubscriptions(id.Value, subscriptionId, 5);
-                    if (arr == null) BadRequest("Something went wrong");
+                    if (arr == null) return BadRequest("Something went wrong");
                 }
                 else
                 {
@@ -174,7 +174,7 @@ namespace Gruvo.Controllers
                 if (id.HasValue)
                 {
                     arr = _repository.TweetDAO.GetUserPosts(id.Value,false);
-                    if (arr == null) BadRequest("Something went wrong");
+                    if (arr == null) return BadRequest("Something went wrong");
                 }
                 else
                 {
@@ -201,7 +201,7 @@ namespace Gruvo.Controllers
                 if (state.id.HasValue)
                 {
                     arr = _repository.TweetDAO.GetUserPostsBatch(state.id.Value,false, state.date);
-                    if (arr == null) BadRequest("Something went wrong");
+                    if (arr == null) return BadRequest("Something went wrong");
                 }
                 else
                 {

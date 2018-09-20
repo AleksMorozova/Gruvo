@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, OnChanges, DoCheck } from '@angular/core';
 import { IUser } from '@app/profile/user.model';
 import { ProfileService } from '@app/profile/profile.service';
 import { ITweet } from '@app/tweet/tweet.model';
@@ -29,7 +29,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   modalRef: BsModalRef;
   lastdate: Date = new Date();
   newTweets: boolean = false;
-  photosPath: string = '';
   imgData: any;
 
   constructor(private profileService: ProfileService,
@@ -38,11 +37,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private modalService: BsModalService,
     private sanitizer: DomSanitizer) {
     route.params.subscribe(
-      params => this.paramId = +params['id']
-    );
+      params =>{ 
+        this.paramId = +params['id'];
+        this.user=null;
+        this.tweets = [];
+        this.button=null;
+        this.timerSubscription=null;;
+        this.lastdate = new Date();
+        this.newTweets = false;
+        this.imgData=null;
+        this.ngOnInit();
+    });
   }
 
-  ngOnInit() {    
+  ngOnInit() { 
+ 
     this.profileService.getUserData(this.paramId)
       .subscribe((user) => {
         this.user = user;
@@ -57,6 +66,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.button.classList.remove('hidden');
       }
       }, err => this.router.navigate(['profile']));
+
     this.profileService.getPhoto(this.paramId).subscribe(blob => {
       let urlCreator = window.URL;
       this.imgData = this.sanitizer.bypassSecurityTrustUrl(
