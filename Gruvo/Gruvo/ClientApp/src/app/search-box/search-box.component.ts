@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
 })
 
 export class SearchBoxComponent {
-  
+  onFormEnter() {
+    console.log('form changed');
+  }
 }

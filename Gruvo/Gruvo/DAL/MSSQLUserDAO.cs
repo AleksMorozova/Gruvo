@@ -632,5 +632,56 @@ namespace Gruvo.DAL
             }
             return result;
         }
+
+        public IEnumerable<UserInfo> GetUsersByLogin(string login, int numOfUsersToReturn, long? lastUserId)
+        {
+            List<UserInfo> list = new List<UserInfo>();
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+
+                    if (lastUserId.HasValue)
+                    {
+                        command.CommandText = @"SELECT TOP (@num) UserId, Login, RegDate FROM 
+                                                (SELECT * 
+                                                 FROM users                                                  
+                                                 WHERE Login LIKE '%@login%' AND UserId > @lastUserId
+                                                ) AS u";
+
+                        command.Parameters.Add("@lastUserId", SqlDbType.BigInt);
+                        command.Parameters["@lastUserId"].Value = lastUserId;
+                    }
+                    else
+                    {
+                        command.CommandText = @"SELECT TOP (@num) UserId, Login, RegDate
+                                                FROM users 
+                                                WHERE Login LIKE '%@login%'";
+                    }
+
+                    command.Parameters.Add("@login", SqlDbType.NVarChar);
+                    command.Parameters["@login"].Value = numOfUsersToReturn;
+
+                    command.Parameters.Add("@num", SqlDbType.BigInt);
+                    command.Parameters["@num"].Value = numOfUsersToReturn;
+
+                    using (SqlDataReader dr = command.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], null, (DateTime)dr["Regdate"]));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return list;
+        }
     }
 }
