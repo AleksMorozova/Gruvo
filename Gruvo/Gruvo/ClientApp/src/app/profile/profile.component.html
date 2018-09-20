@@ -1,8 +1,15 @@
 <div class="content">
   <gr-menu></gr-menu>
-  <div class="tweets-list gruvo-block col-xs-11" id="tweets">
+  <div class="tweets-list gruvo-block col-xs-11" id="tweets"
+       infiniteScroll
+     [infiniteScrollThrottle]="1500"
+    [infiniteScrollDistance]="1"
+    (scrolled)="onScroll()">
     <div class="media">
       <div class="media-left">
+        <div class="photo  center-block">
+          <img [src]="imgData" class="photo img-responsive img-circle">
+        </div>
         <button id="sbscrbtn" *ngIf="paramId" class="center-block btn hidden" (click)="subfunc()"></button>
       </div>
       <div class="media-body">
@@ -27,7 +34,8 @@
     </table>
     <hr />
     <div class="right-bottom">
-      <gr-tweet *ngFor="let tweet of userTweets" [tweet]="tweet"></gr-tweet>
+      <gr-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></gr-tweet>
+      <div *ngIf="newTweets" class="canLoadMore"><div class="lds-dual-ring"></div></div>
       <gr-scroll-to-top></gr-scroll-to-top>
     </div>
   </div>

@@ -3,7 +3,7 @@
   <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">&times;</button>
 </div>
 <div class="modal-body">
-  <gr-tweet [tweet]="tweet" [showComments]="false"></gr-tweet>
+  <gr-tweet (deleted)="onDeleted()" [tweet]="tweetComp.tweet" [showComments]="false"></gr-tweet>
   <hr />
   <div class="add-comment">
     <form >

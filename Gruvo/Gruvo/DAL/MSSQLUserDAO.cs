@@ -100,8 +100,8 @@ namespace Gruvo.DAL
                 using (var command = connection.CreateCommand())
                 {
                     connection.Open();
-
-                    command.CommandText = @"select UserId,Login,Email,RegDate, DateOfBirth, About from users where Userid = @id ";
+                    command.CommandText = @"select users.UserId,Login,Email,RegDate, DateOfBirth, About, photos.name
+                                            from users left join photos on photos.userid=users.userid where users.Userid = @id ";
 
                     command.Parameters.Add("@id", SqlDbType.BigInt);
                     command.Parameters["@id"].Value = id;
@@ -112,6 +112,7 @@ namespace Gruvo.DAL
                         {
                             DateTime? bday;
                             string about;
+                            string imgPath;
                             if (dataReader["DateOfBirth"] is DBNull)
                             {
                                 bday = null;
@@ -129,7 +130,16 @@ namespace Gruvo.DAL
                             {
                                 about = (string)dataReader["about"];
                             }
-                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["email"], (DateTime)dataReader["RegDate"], bday, about);
+                            if (dataReader["name"] is DBNull)
+                            {
+                                imgPath = null;
+                            }
+                            else
+                            {
+                                imgPath = (string)dataReader["name"];
+                            }
+
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], imgPath, (string)dataReader["email"], (DateTime)dataReader["RegDate"], bday, about);
                         }
                     }
                 }
@@ -152,7 +162,8 @@ namespace Gruvo.DAL
                 {
                     connection.Open();
 
-                    command.CommandText = @"select UserId,Login,Email,RegDate from users where Login = @login ";
+                    command.CommandText = @"select users.UserId,Login,Email,RegDate, photos.name  from users 
+                                            join photos on photos.userid=users.userid where users.Userid = @id where Login = @login ";
                     command.Parameters.Add("@login", SqlDbType.VarChar);
                     command.Parameters["@login"].Value = login;
 
@@ -160,7 +171,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]);
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], (string)dataReader["name"], null, (DateTime)dataReader["RegDate"]);
                         }
                     }
                 }
@@ -193,7 +204,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]);
+                            user = new UserInfo((long)dataReader["UserId"], (string)dataReader["login"],null, null, (DateTime)dataReader["RegDate"]);
                         }
                     }
                 }
@@ -253,7 +264,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            list.Add(new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]));
+                            list.Add(new UserInfo((long)dataReader["UserId"], (string)dataReader["login"],null, null, (DateTime)dataReader["RegDate"]));
                         }
                     }
                 }
@@ -409,7 +420,11 @@ namespace Gruvo.DAL
                     {
                         while (dr.Read())
                         {
-                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], null, (DateTime)dr["Regdate"]));
+                            list.Add(new UserInfo((long)dr["userid"],
+                                (string)dr["login"],
+                                null, 
+                                null,
+                                (DateTime)dr["Regdate"]));
                         }
                     }
                 }
@@ -486,7 +501,7 @@ namespace Gruvo.DAL
                     {
                         while (dr.Read())
                         {
-                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], null, (DateTime)dr["Regdate"]));
+                            list.Add(new UserInfo((long)dr["userid"], (string)dr["login"], null, null, (DateTime)dr["Regdate"]));
                         }
                     }
                 }
@@ -588,7 +603,7 @@ namespace Gruvo.DAL
                     {
                         while (dataReader.Read())
                         {
-                            list.Add(new UserInfo((long)dataReader["UserId"], (string)dataReader["login"], null, (DateTime)dataReader["RegDate"]));
+                            list.Add(new UserInfo((long)dataReader["UserId"], (string)dataReader["login"],null, null, (DateTime)dataReader["RegDate"]));
                         }
                     }
                 }
@@ -631,6 +646,84 @@ namespace Gruvo.DAL
                 throw;
             }
             return result;
+        }
+
+        public void UpdatePhoto(long id, string path, int? x, int? y, int? radius)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"begin tran
+                                            if exists (select * from photos where userid = @userid)
+                                            begin
+                                               update photos set name = @name
+                                               where userid = @userid
+                                            end
+                                            else
+                                            begin
+                                               insert into photos (userid, name, x, y,radius) 
+                                                values (@userid, @name, @x, @y,@radius)
+                                            end
+                                            commit tran";
+
+
+                    command.Parameters.Add("@userid", SqlDbType.BigInt);
+                    command.Parameters["@userid"].Value = id;
+
+                    command.Parameters.Add("@name", SqlDbType.VarChar);
+                    command.Parameters["@name"].Value = path;
+
+                    command.Parameters.Add("@x", SqlDbType.Int);
+                    command.Parameters["@x"].Value = x;
+
+                    command.Parameters.Add("@y", SqlDbType.Int);
+                    command.Parameters["@y"].Value = y;
+
+                    command.Parameters.Add("@radius", SqlDbType.Int);
+                    command.Parameters["@radius"].Value = radius;
+
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public string getPhoto(long userId)
+        {
+            string path = null;
+            try
+            {
+                using (var connection = new SqlConnection(_connectionStr))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+
+                    command.CommandText = @"select name from photos where userid = @userid";
+                    
+                    command.Parameters.Add("@userid", SqlDbType.BigInt);
+                    command.Parameters["@userid"].Value = userId;
+
+                    using (SqlDataReader dr = command.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            path = (string)dr["name"];
+                        }
+                    }
+                }
+                return path;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

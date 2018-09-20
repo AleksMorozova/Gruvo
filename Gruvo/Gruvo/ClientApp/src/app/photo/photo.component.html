@@ -10,13 +10,13 @@
              class="form-control" style="display: none" accept=".jpg, .jpeg, .png" (change)="onFileChanged($event)"
              #fileInput>
       <div class="uploaded-photo">
-        <img class="img-responsive img-photo" id="photo" src="https://media.alienwarearena.com/media/tux-r.jpg">
+        <img class="img-responsive img-photo" id="photo" [src]="img">
       </div>
       <label id="file-name">No file chosen</label>
     </div>
     <div class="buttons">
       <button type="button" class="btn btn-success btn-md" (click)="fileInput.click()">Select File</button>
-      <button type="submit" class="btn btn-success btn-md" [disabled]="!editPhotoForm.valid">Submit</button>
+      <button (click)="submit()" class="btn btn-success btn-md" [disabled]="!editPhotoForm.valid" clic>Submit</button>
     </div>
   </form>
 

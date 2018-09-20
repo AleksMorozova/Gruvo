@@ -16,12 +16,15 @@ namespace Gruvo.DAL
 
         void UpdatePassword(long id,  string password);
         void UpdateUserInfo(long id, string login, string email, string about, DateTime? bday);
+        void UpdatePhoto(long id, string path,int? x, int? y, int? radius);
         void DeleteUser(long id);
         void DeleteUser(string login);
 
         void Subscribe(long userId1, long userId2, DateTime subdate);
 
         bool IsSubscribed(long userId1, long userId2);
+
+        string getPhoto(long userId);
 
         /// <summary>
         /// Returns specified number of subscribers. If 'subscriberId' is specified, returns only subscribers with higher id(located after this subscriber).
