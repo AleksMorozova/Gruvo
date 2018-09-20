@@ -35,6 +35,8 @@ import { SubscribersComponent } from '@app/subscribers/subscribers.component';
 import { CommentsComponent } from '@app/comments/comments.component';
 import { HeaderMenuComponent } from '@app/header-menu/header-menu.component';
 import { SearchBoxComponent } from '@app/search-box/search-box.component';
+import { SearchService } from '@app/search-box/search.service';
+import { SearchResultsComponent } from '@app/search-results/search-results.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,8 @@ import { SearchBoxComponent } from '@app/search-box/search-box.component';
     SubscribersComponent,
     CommentsComponent,
     HeaderMenuComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    SearchResultsComponent
   ],
   imports: [
     ModalModule.forRoot(),
@@ -72,7 +75,8 @@ import { SearchBoxComponent } from '@app/search-box/search-box.component';
   entryComponents: [
     SubscriptionsComponent,
     SubscribersComponent,
-    CommentsComponent
+    CommentsComponent,
+    SearchResultsComponent
   ],
   providers: [
     { provide: 'LOGIN_URL', useValue: 'api/auth/login' },
@@ -99,7 +103,8 @@ import { SearchBoxComponent } from '@app/search-box/search-box.component';
     { provide: 'TWEETS_BATCH_URL', useValue: 'api/feed/tweetsbatch' },
     { provide: 'TWEET_COMMENTS_URL', useValue: 'api/tweet/comments' },
     { provide: 'TWEET_ADDCOMMENT_URL', useValue: 'api/tweet/addcomment' },
-    { provide: 'TWEET_DELETECOMMENT_URL', useValue: 'api/tweet/deletecomment' }, 
+    { provide: 'TWEET_DELETECOMMENT_URL', useValue: 'api/tweet/deletecomment' },
+    { provide: 'SEARCH_USERS_URL', useValue: 'api/search/users' }, 
      LoginService,
      ProfileService,
      FeedService,
@@ -107,6 +112,7 @@ import { SearchBoxComponent } from '@app/search-box/search-box.component';
      TweetService,
      LoginGuard,
      SettingsService,
+     SearchService,
      AuthGuard
       ]
 })

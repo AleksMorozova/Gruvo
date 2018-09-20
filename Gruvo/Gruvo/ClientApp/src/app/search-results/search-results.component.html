@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Results</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">&times;</button>
+</div>
+<div class="modal-body">
+  <ul class="results-list">
+    <li *ngFor="let user of users">
+      <a class="user-profile" routerLink="profile/{{user.id}}">{{user.login}}</a>
+    </li>
+  </ul>
+  <div class="btn-show-more" (click)="getUsers()">
+    Show more
+  </div>
+</div>
+

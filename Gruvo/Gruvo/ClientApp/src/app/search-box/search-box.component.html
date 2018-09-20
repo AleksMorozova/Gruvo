@@ -1,7 +1,7 @@
 <div class="search-box">
   <form>
     <div class="form-group">
-      <input type="text" class="form-control" id="string" placeholder="Search Gruvo" list="suggestions" (keyup.enter)="onFormEnter()">
+      <input #search type="text" class="form-control" id="string" placeholder="Search Gruvo" list="suggestions" (keyup.enter)="openSearchResultsModal(search.value)">
       <datalist id="suggestions"></datalist>
     </div>
   </form>

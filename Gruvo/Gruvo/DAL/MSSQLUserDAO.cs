@@ -649,7 +649,7 @@ namespace Gruvo.DAL
                         command.CommandText = @"SELECT TOP (@num) UserId, Login, RegDate FROM 
                                                 (SELECT * 
                                                  FROM users                                                  
-                                                 WHERE Login LIKE '%@login%' AND UserId > @lastUserId
+                                                 WHERE Login LIKE @login AND UserId > @lastUserId
                                                 ) AS u";
 
                         command.Parameters.Add("@lastUserId", SqlDbType.BigInt);
@@ -659,11 +659,11 @@ namespace Gruvo.DAL
                     {
                         command.CommandText = @"SELECT TOP (@num) UserId, Login, RegDate
                                                 FROM users 
-                                                WHERE Login LIKE '%@login%'";
+                                                WHERE Login LIKE @login";
                     }
 
                     command.Parameters.Add("@login", SqlDbType.NVarChar);
-                    command.Parameters["@login"].Value = numOfUsersToReturn;
+                    command.Parameters["@login"].Value = '%' + login + '%';
 
                     command.Parameters.Add("@num", SqlDbType.BigInt);
                     command.Parameters["@num"].Value = numOfUsersToReturn;
