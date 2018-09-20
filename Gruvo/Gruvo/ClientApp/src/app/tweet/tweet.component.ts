@@ -29,6 +29,8 @@ export class TweetComponent implements OnInit, OnDestroy {
   img : any;
   
   constructor(private tweetService: TweetService, private modalService: BsModalService, private profileService: ProfileService, private sanitizer: DomSanitizer) { }
+  isLikedByUser: boolean = true;
+
 
 
   ngOnInit() {
@@ -77,10 +79,10 @@ export class TweetComponent implements OnInit, OnDestroy {
     this.tweetService.checkLiked(this.tweet.id)
       .subscribe((res : boolean) => {
         if (res) {
-          this.likeImgUrl = '/assets/images/heart_red.png';
+          this.isLikedByUser = true;
         }
         else {
-          this.likeImgUrl = '/assets/images/heart.png';
+          this.isLikedByUser = false;
         }
       });
   }

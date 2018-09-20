@@ -5,9 +5,11 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 import { HttpResponse } from 'selenium-webdriver/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class LoginService {
+  public isLoggedInSubject = new BehaviorSubject<boolean>(false);
 
   constructor(
     @Inject('LOGIN_URL') private loginApiURL: string,

@@ -1,4 +1,4 @@
-<div [hidden]="isDeleted" class="post" id="{{ tweet.id }}">
+<div *ngIf="!isDeleted" class="post" id="{{ tweet.id }}">
   <div class="media">
     <div class="media-left">
       <a routerLink="/profile/{{tweet.userId}}">
@@ -6,29 +6,29 @@
       </a>
     </div>
     <div class="media-body">
-      <h4 class="media-heading"><a class="post-title" routerLink="/profile/{{tweet.userId}}">{{tweet.userLogin}}</a></h4>
+      <h4 class="media-heading">
+        <a class="post-title" routerLink="/profile/{{tweet.userId}}">{{tweet.userLogin}}</a>
+        <span class="post-date"> {{tweet.sendingDateTime | date:'MMM d'}}</span>
+        <i *ngIf="tweet.isDeletable" class="far fa-trash-alt" (click)="deleteTweet($event)"></i>
+      </h4>
       <p class="post-text">{{tweet.message}}</p>
     </div>
   </div>
   <div class="action-list">
-    <p class="post-date">{{tweet.sendingDateTime | date:'MMM d, y, h:mm a'}}</p>
-    <div>
-      <a (click)="deleteTweet($event)" *ngIf="tweet.isDeletable" class="btn btn-default delete">
-        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+    <div class="action action-comment">
+      <a *ngIf="showComments" (click)="openCommentsModal()" class="comments">
+        <i class="glyphicon glyphicon-comment"></i>
       </a>
-      <a (click)="openCommentsModal()" *ngIf="showComments" class="btn btn-default">
-        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-      </a>
-      <div class="btn btn-default action action-like">
-        <div class="btn-action action-like" (click)="like()">
-          <div>
-            <img src="{{likeImgUrl}}" class="icon icon-like img-responsive">
-          </div>
-          <span class="count">{{numOfLikes}}</span>
-        </div>
-      </div>
     </div>
-  </div>
+    <div class="action action-like">
+      <button class="btn-action action-like" (click)="like()">
+        <div>
+          <i [class.red]="isLikedByUser" class="glyphicon glyphicon-heart-empty icon-like"></i>
+        </div>
+        <span class="count">{{numOfLikes}}</span>
+      </button>
+    </div>
 
+  </div>
 
 </div>

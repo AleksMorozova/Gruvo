@@ -31,3 +31,31 @@ BEGIN
 
 	SET @counter = @counter + 1
 END
+
+GO
+
+DECLARE @cnt INT = 0;
+
+WHILE @cnt < 100
+BEGIN
+   INSERT INTO users (Email, Password, Login, RegDate)
+   VALUES (CONCAT('lul', @cnt, '@gmail.com'), '827ccb0eea8a706c4c34a16891f84e7b', CONCAT('LuL', @cnt), GETDATE())
+   SET @cnt = @cnt + 1;
+END;
+
+GO
+
+DECLARE @cnt INT = 27;
+
+WHILE @cnt < 127
+BEGIN
+   INSERT INTO subscriptions (SubscriberId, SubscribedId, SubDate)
+   VALUES (@cnt, 7, GETDATE())
+
+   INSERT INTO subscriptions (SubscriberId, SubscribedId, SubDate)
+   VALUES (7, @cnt, GETDATE())
+
+   SET @cnt = @cnt + 1;
+END;
+
+GO

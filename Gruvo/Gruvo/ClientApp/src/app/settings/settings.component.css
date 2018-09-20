@@ -41,3 +41,12 @@
   align-items: center;
   justify-content: center;
 }
+
+@media screen and (max-width: 768px) {
+  [class*="gruvo-block"] {
+    padding: 0;
+    box-shadow: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

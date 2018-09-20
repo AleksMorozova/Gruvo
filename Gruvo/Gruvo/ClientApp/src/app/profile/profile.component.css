@@ -8,12 +8,21 @@
 }
 
 .photo {
-  overflow: hidden;
-  vertical-align: middle;
-  width: 128px;
-  height: 128px;
-  border-radius: 100px;
-  background-color: white;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 128px;
+    height: 128px;
+    border-radius: 100px;
+    background-color: white;
+    margin-bottom: 5px;
+}
+
+.media-heading {
+  margin-bottom: 0;
+}
+
+.recommendations {
+  margin-right: -10%;
 }
 
 .tweets-list {
@@ -22,11 +31,9 @@
   margin: 0 20px;
 }
 
-.info{
-    padding: 10px;
-    display: flex;
-    flex-flow: column;
-    background-color: white;
+.media-body {
+  vertical-align: middle;
+  justify-content: center;
 }
 
 .subscribers-count, .subscriptions-count {
@@ -37,9 +44,26 @@
   padding: 10px 10px 10px 10px;
   text-align: center;
   border-radius: 10px;
+  background-color: #f4f5f7;
 }
 
 .btn-followers:hover, .btn-following:hover {
   background-color: #f4f5f7;
   cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  [class*="gruvo-block"] {
+    padding: 0;
+    box-shadow: none;
+  }
+
+  [class*="tweets-list"] {
+    margin: 0 10px;
+    padding: 0;
+  }
+
+  [class*="recommendations"] {
+    display: none;
+  }
 }

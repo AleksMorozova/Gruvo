@@ -10,6 +10,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.component';
 import { SubscribersComponent } from '@app/subscribers/subscribers.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FeedService } from '@app/feed/feed.service';
 
 @Component({
   selector: 'gr-profile',
@@ -19,10 +20,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 export class ProfileComponent implements OnInit, OnDestroy {
 
-  user: IUser;
   tweets: ITweet[] = [];
-  paramId: number;
-  button: any;
   numOfSubscriptions: number;
   numOfSubscribers: number;
   timerSubscription: Subscription;
@@ -30,8 +28,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
   lastdate: Date = new Date();
   newTweets: boolean = false;
   imgData: any;
+  user: IUser;
+  userTweets: ITweet[] = [];
+  recommendations: IUser[] = [];
+  paramId: number;
+  button: any;
 
   constructor(private profileService: ProfileService,
+    private feedService: FeedService,
     route: ActivatedRoute,
     private router: Router,
     private modalService: BsModalService,
@@ -67,6 +71,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
       }
       }, err => this.router.navigate(['profile']));
 
+    this.profileService.getSubscriptionsCount(this.paramId)
+      .subscribe((numOfSubscriptions) => {
+        this.numOfSubscriptions = numOfSubscriptions;
+      });
+
+    this.profileService.getSubscribersCount(this.paramId)
+      .subscribe((numOfSubscribers) => {
+        this.numOfSubscribers = numOfSubscribers;
+      });
+
     this.profileService.getPhoto(this.paramId).subscribe(blob => {
       let urlCreator = window.URL;
       this.imgData = this.sanitizer.bypassSecurityTrustUrl(
@@ -75,7 +89,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     this.loadMoreTweets();
     this.subscribeToData();
-  }
+
+        this.feedService.getRecommendations()
+          .subscribe((recommendations) => {
+            this.recommendations = recommendations;
+        });
+    }
 
   ngOnDestroy() {
     if (this.timerSubscription) {
@@ -98,6 +117,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.tweets.unshift(tweets[i]);
           }
         }
+      });
+
+    this.profileService.getSubscriptionsCount(this.paramId)
+      .subscribe((numOfSubscriptions) => {
+        this.numOfSubscriptions = numOfSubscriptions;
+      });
+
+    this.profileService.getSubscribersCount(this.paramId)
+      .subscribe((numOfSubscribers) => {
+        this.numOfSubscribers = numOfSubscribers;
       });
     this.subscribeToData();
   }

@@ -32,4 +32,15 @@
   resize: none;
 }
 
+@media screen and (max-width: 768px) {
+  [class*="gruvo-block"] {
+    padding: 0;
+    box-shadow: none;
+  }
+
+  [class*="tweets-list"] {
+    margin: 0 10px;
+    padding: 0;
+  }
+}
 

@@ -1,10 +1,10 @@
 <div class="content">
-  <gr-menu></gr-menu>
   <div class="tweets-list gruvo-block col-xs-11" id="tweets"
        infiniteScroll
      [infiniteScrollThrottle]="1500"
     [infiniteScrollDistance]="1"
     (scrolled)="onScroll()">
+    <gr-search-box></gr-search-box>
     <div class="media">
       <div class="media-left">
         <div class="photo  center-block">
@@ -18,7 +18,7 @@
       </div>
     </div>
     <br />
-    <table class="table table-striped">
+    <table class="table">
       <tr>
         <td>
           <div class="btn-followers" (click)="openFollowersModal()">Followers</div>
@@ -38,5 +38,9 @@
       <div *ngIf="newTweets" class="canLoadMore"><div class="lds-dual-ring"></div></div>
       <gr-scroll-to-top></gr-scroll-to-top>
     </div>
+  </div>
+  <div class="recommendations gruvo-block">
+    <h4>Recommendations</h4>
+    <gr-recommendation *ngFor="let user of recommendations" [data]="user"></gr-recommendation>
   </div>
 </div>

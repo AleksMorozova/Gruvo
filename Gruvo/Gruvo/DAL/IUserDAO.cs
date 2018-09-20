@@ -9,6 +9,16 @@ namespace Gruvo.DAL
         void AddUser(string login, string password, string email, DateTime regDateTime);
 
         IEnumerable<UserInfo> GetUsers();
+
+        /// <summary>
+        /// Returns specified number of users. If 'lastUserId' is specified, returns only users with higher id(located after this user).
+        /// </summary>
+        /// <param name="login">Login of a user for search</param>
+        /// <param name="numOfUsersToReturn">Max number of users that we will return in collection</param>
+        /// <param name="lastUserId">UserId of last user in previous search batch</param>
+        /// <returns></returns>
+        IEnumerable<UserInfo> GetUsersByLogin(string login, int numOfUsersToReturn, long? lastUserId);
+
         UserInfo GetUser(long id);
         UserInfo GetUser(string login);
         UserInfo GetUserByEmailAndPwd(string email, string password);

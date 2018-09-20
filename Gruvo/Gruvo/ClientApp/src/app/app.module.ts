@@ -3,6 +3,7 @@ import { NgModule, Inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppComponent } from '@app/app.component';
@@ -15,8 +16,6 @@ import { FooterComponent } from '@app/footer/footer.component';
 import { TweetComponent } from '@app/tweet/tweet.component';
 import { ProfileComponent } from '@app/profile/profile.component';
 import { ProfileService } from '@app/profile/profile.service';
-import { MenuComponent } from '@app/menu/menu.component';
-import { MenuItemsComponent } from '@app/menu-items/menu-items.component';
 import { LoginGuard } from '@app/login.guard';
 import { AuthGuard } from '@app/auth.guard';
 import { FeedComponent } from '@app/feed/feed.component';
@@ -33,8 +32,11 @@ import { ScrollToTopComponent } from '@app/scroll-to-top/scroll-to-top.component
 import { Page404Component } from '@app/page404/page404.component';
 import { SubscriptionsComponent } from '@app/subscriptions/subscriptions.component';
 import { SubscribersComponent } from '@app/subscribers/subscribers.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { CommentsComponent } from './comments/comments.component';
+import { CommentsComponent } from '@app/comments/comments.component';
+import { HeaderMenuComponent } from '@app/header-menu/header-menu.component';
+import { SearchBoxComponent } from '@app/search-box/search-box.component';
+import { SearchService } from '@app/search-box/search.service';
+import { SearchResultsComponent } from '@app/search-results/search-results.component';
 
 @NgModule({
   declarations: [
@@ -44,8 +46,6 @@ import { CommentsComponent } from './comments/comments.component';
     LoginComponent,
     SignupComponent,
     ProfileComponent,
-    MenuComponent,
-    MenuItemsComponent,
     TweetComponent,
     FeedComponent,
     RecommendationComponent,
@@ -57,7 +57,10 @@ import { CommentsComponent } from './comments/comments.component';
     Page404Component,
     SubscriptionsComponent,
     SubscribersComponent,
-    CommentsComponent
+    CommentsComponent,
+    HeaderMenuComponent,
+    SearchBoxComponent,
+    SearchResultsComponent
   ],
   imports: [
     ModalModule.forRoot(),
@@ -72,7 +75,8 @@ import { CommentsComponent } from './comments/comments.component';
   entryComponents: [
     SubscriptionsComponent,
     SubscribersComponent,
-    CommentsComponent
+    CommentsComponent,
+    SearchResultsComponent
   ],
   providers: [
     { provide: 'LOGIN_URL', useValue: 'api/auth/login' },
@@ -102,6 +106,7 @@ import { CommentsComponent } from './comments/comments.component';
     { provide: 'TWEET_DELETECOMMENT_URL', useValue: 'api/tweet/deletecomment' },
     { provide: 'USERTWEETS_BATCH_URL', useValue: 'api/profile/userTweetsBatch' },
     { provide: 'PHOTO_URL', useValue: '/api/photo/request' },
+    { provide: 'SEARCH_USERS_URL', useValue: 'api/search/users' }, 
      LoginService,
      ProfileService,
      FeedService,
@@ -109,6 +114,7 @@ import { CommentsComponent } from './comments/comments.component';
      TweetService,
      LoginGuard,
      SettingsService,
+     SearchService,
      AuthGuard
       ]
 })
